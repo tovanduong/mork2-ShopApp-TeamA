@@ -36,6 +36,7 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
   const { productId } = useParams();
   const isEdit = Boolean(productId);
   const [listCategory, setListCategory] = useState();
+  const [imageProduct, setImageProduct] = useState(null);
 
   const {
     control,
@@ -46,12 +47,17 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
     resolver: yupResolver(schema),
   });
 
+  const handleImportFileChange = (file) => {
+    console.log(file);
+    setImageProduct(file);
+  };
+
   const handleClickMultipleSelect = (listCategorySelected) => {
     setListCategory(listCategorySelected);
   };
 
   const handleFormSubmit = (formValues) => {
-    const modifiedValues = { ...formValues, category: listCategory };
+    const modifiedValues = { ...formValues, category: listCategory, imageProduct };
     onSubmit(modifiedValues);
   };
 
@@ -134,7 +140,7 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
             <h2 className="titleProductForm">Images</h2>
             <div className="horizontalLine"></div>
             <Box mt={2} className="mlr30">
-              <ImportFileField />
+              <ImportFileField onImportFileChange={handleImportFileChange} />
             </Box>
           </div>
           <div className="categories">

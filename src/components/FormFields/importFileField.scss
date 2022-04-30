@@ -1,16 +1,52 @@
-.buttonChooseFile {
-  width: 124px;
-  height: 40px;
-  left: 1000px;
-  top: 417px;
-  background: #c4cdd5;
-  border-radius: 2px;
+.importFileFieldWrapper {
+  .buttonChooseFile {
+    width: 124px;
+    height: 40px;
+    left: 1000px;
+    top: 417px;
+    background: #c4cdd5;
+    border-radius: 2px;
 
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 21px;
-  letter-spacing: -0.02em;
-  color: #000000;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: -0.02em;
+    color: #000000;
 
-  border: none;
+    border: none;
+  }
+
+  .imageWrapper {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 1rem;
+
+    .imageImportFile {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+  }
+
+  .btnTextFieldWrapper {
+    display: flex;
+
+    .MuiButton-root {
+      background: #c4cdd5;
+      border-radius: 2px;
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      color: #000000;
+      flex: 3;
+    }
+    .nameImageField {
+      flex: 5;
+    }
+
+    .MuiOutlinedInput-input,
+    .MuiOutlinedInput-notchedOutline {
+      border-radius: 2px;
+    }
+  }
 }

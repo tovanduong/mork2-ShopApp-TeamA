@@ -1,7 +1,6 @@
 import axios from 'axios';
 import queryString from 'query-string';
-// import { POST_REFRESH_TOKEN } from "../constants/auth";
-
+import { POST_REFRESH_TOKEN } from '../constants/SubUrl';
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
@@ -10,40 +9,43 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
-// const refreshToken = async (data)1 => {
-// 	const result = await axios.post(
-// 		process.env.REACT_APP_API_URL + POST_REFRESH_TOKEN,
-// 		data
-// 	);
+const refreshToken = async (data) => {
+  const result = await axios.post(process.env.REACT_APP_API_URL + POST_REFRESH_TOKEN, data);
 
-// 	return result.data;
-// };
+  return result.data;
+};
 
 axiosClient.interceptors.request.use(async (req) => {
-  // const expires = Number(new Date(localStorage.getItem("access_expires")));
-  // const current = Number(new Date());
+  const AccessToken = JSON.parse(localStorage.getItem('access_token'));
+  const deviceId = localStorage.getItem('deviceId');
+  if (AccessToken) {
+    const token = AccessToken.access.token;
+    const tokenExpries = AccessToken.access.expires;
+    const expires = Number(new Date(tokenExpries));
+    const current = Number(new Date());
+    const refreshtoken = AccessToken.refresh.token;
+    console.log(expires - current);
+    if (expires && expires <= current) {
+      const data = {
+        refreshToken: refreshtoken,
+        deviceId: deviceId,
+      };
+      const result = await refreshToken(data);
+      console.log(result.data);
+      localStorage.setItem('access_token', JSON.stringify(result.data));
 
-  // if (expires && expires <= current) {
-  // 	const data = {
-  // 		refreshToken: localStorage.getItem("refresh_token"),
-  // 	};
-  // 	const result = await refreshToken(data);
+      req.headers = {
+        ...req.headers,
+        Authorization: `Bearer ${result.data.access.token}`,
+      };
+    }
+    req.headers = {
+      ...req.headers,
+      Authorization: `Bearer ${token}`,
+    };
+    return req;
+  }
 
-  // 	localStorage.setItem("access_token", result.access.token);
-  // 	localStorage.setItem("access_expires", result.access.expires);
-  // 	localStorage.setItem("refresh_token", result.refresh.token);
-
-  // 	req.headers = {
-  // 		...req.headers,
-  // 		Authorization: `Bearer ${result.access.token}`,
-  // 	};
-  // 	return req;
-  // }
-
-  req.headers = {
-    ...req.headers,
-    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-  };
   return req;
 });
 

@@ -1,57 +1,36 @@
-import { Box, Button, Input, Link, Typography } from "@mui/material";
-import { useForm } from "react-hook-form";
-import React from "react";
+import { Box, Link, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchSignUp } from '../authSlice';
+import SignUpForm from '../component/SignUpForm';
 
 const SignUp = ({ parentCallback }) => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data);
+  const dispatch = useDispatch();
   const sendData = () => {
-    parentCallback("in-actived");
-
+    parentCallback('in-actived');
   };
+  const initialValue = {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+  const handleSignUpSubmit = (value) => {
+    const { email, password, username } = value;
+    dispatch(fetchSignUp({ email, password, username }));
+  };
+
   return (
-    <Box padding='50px 46px 0px 50px' textAlign='center'>
-      <Typography variant="h6" mb='30px'>Welcome to Shop App</Typography>
-      <form className="form-auth" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          {...register("username")}
-          type="text"
-          name="username"
-          className="input-signup"
-          autoComplete="off"
-          placeholder="User Name"
-        />
-        <Input
-          {...register("email")}
-          type="text"
-          name="email"
-          className="input-signup"
-          autoComplete="off"
-          placeholder="Email"
-        />
-        <Input
-          {...register("password")}
-          type="text"
-          name="password"
-          className="input-signup"
-          autoComplete="off"
-          placeholder="Password"
-        />
-        <Input
-          {...register("confirmpassword")}
-          type="text"
-          name="confirmpassword"
-          className="input-signup"
-          autoComplete="off"
-          placeholder="Confirm Password"
-        />
-        <Button className="Login" type="submit">Register</Button><br />
-        <Box className="Box__linkto">
-          <Link className={`linkto `} onClick={() => sendData()}>
-            login
-          </Link>
-        </Box>
-      </form>
+    <Box className="modal-signUp">
+      <Typography variant="h6" mb="28px">
+        Welcome to Shop App
+      </Typography>
+      <SignUpForm initialValue={initialValue} onSubmit={handleSignUpSubmit} />
+      <Box className="Box__linkto">
+        <Link className={`linkto `} onClick={() => sendData()}>
+          login
+        </Link>
+      </Box>
     </Box>
   );
 };

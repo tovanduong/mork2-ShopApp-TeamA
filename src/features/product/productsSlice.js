@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import productApi from '../../api/productApi';
 
 export const getListCategory = createAsyncThunk('product/getListCategory', async (params) => {
-  const response = await productApi.getAllCategories(params);
-  console.log(response);
+  const response = await productApi.getAllCategories();
   return response;
 });
 

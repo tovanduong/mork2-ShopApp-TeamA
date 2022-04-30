@@ -1,46 +1,45 @@
-import { Box, Button, Input, Link, Typography } from "@mui/material";
-import React from "react";
-import { useForm } from "react-hook-form";
+import { Box, Link, Typography } from '@mui/material';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { postForgot } from '../../../api/authApi';
+import ForgotForm from '../component/ForgotForm';
 
 const Forgot = ({ propsClose }) => {
-    const { register, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
-    const handleClick = () => {
-        propsClose(false)
-    }
-    return (
-        <Box padding='50px 50px' textAlign='left'>
-            <Typography variant="h4" mb='7px'>Forgot Password?</Typography>
-            <Typography variant="subtitle1" fontSize='12px' mb='31px'>Please enter your email to recover your password </Typography>
-            <Box textAlign='center'>
+  const handleClick = () => {
+    propsClose(false);
+  };
 
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Input
-                        {...register("email")}
-                        type="text"
-                        name="email"
-                        className="input1"
-                        autoComplete="off"
-                        placeholder="Email"
-                    />
-                    <Input
-                        {...register("code")}
-                        type="text"
-                        name="code"
-                        className="input1"
-                        autoComplete="off"
-                        placeholder="Code"
-                    />
-                    <Button className="Login" type="submit">Recover Password</Button><br />
+  const initialValue = {
+    email: '',
+  };
+  const handleForgotSubmit = (value) => {
+    const { email } = value;
+    console.log(email);
+    postForgot({ email })
+      .then((data) => toast.success('Send Success'))
+      .catch((err) => toast.error(`Send Error: ${err}`));
+  };
 
-                </form>
+  return (
+    <Box className="Modal-Forgot">
+      <Box ml="47px" mr="auto">
+        <Typography variant="h4" mb="7px">
+          Forgot Password?
+        </Typography>
+        <Typography variant="subtitle1" fontSize="12px" mb="31px">
+          Please enter your email to recover your password{' '}
+        </Typography>
+      </Box>
 
-                <Link textAlign='center' className='linkto' onClick={() => handleClick()} >
-                    Login
-                </Link>
-            </Box>
-        </Box>
-    );
+      <ForgotForm initialValue={initialValue} onSubmit={handleForgotSubmit} />
+      <Box textAlign="center">
+        <Link textAlign="center" className="linkto" onClick={() => handleClick()}>
+          Login
+        </Link>
+      </Box>
+    </Box>
+  );
 };
 
 export default Forgot;
