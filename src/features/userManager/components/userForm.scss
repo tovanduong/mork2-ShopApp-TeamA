@@ -1,0 +1,86 @@
+.addEditUserPageWrapper {
+  .titleAndButtonProduct {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .formWrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+  }
+
+  .basicInformation {
+    flex: 2;
+    background: #ffffff;
+    box-shadow: 0.5px 0.5px 12px rgba(0, 0, 0, 0.25);
+    padding-bottom: 2rem;
+  }
+
+  .horizontalLine {
+    width: 100%;
+    margin-top: 12px;
+    border: 1px solid #929395;
+  }
+
+  .formField {
+    margin: 21px 30px auto;
+    display: flex;
+    flex-direction: column;
+
+    .priceAndDiscountField {
+      display: flex;
+      justify-content: space-between;
+      gap: 4rem;
+
+      .adminInputFieldWrapper {
+        flex: 1;
+      }
+    }
+  }
+
+  .otherInformation {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4rem;
+
+    .images,
+    .otherInfo {
+      background: #ffffff;
+      box-shadow: 0.5px 0.5px 12px rgba(0, 0, 0, 0.25);
+
+      h2 {
+        padding-left: 30px;
+        padding-right: 30px;
+        margin: 0;
+      }
+    }
+    .images {
+      flex: 1;
+    }
+
+    .otherInfo {
+      flex: 2;
+    }
+  }
+
+  .btnAddEditAdmin {
+    border-radius: 5px;
+    font-family: 'Work Sans';
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+  }
+
+  .titleProductForm {
+    font-weight: 700;
+    font-size: 22px;
+
+    margin: auto 26px;
+    padding-top: 18px;
+  }
+}

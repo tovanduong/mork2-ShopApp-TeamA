@@ -1,0 +1,72 @@
+.sideBarWrapper {
+  height: 100vh;
+}
+
+.welcomeAdminWrapper {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffd333;
+
+  .nameApp {
+    font-family: 'Red Rose';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 31px;
+    color: #000000;
+  }
+
+  .barge {
+    background: #ffffff;
+    border-radius: 5px;
+
+    span {
+      font-family: 'Arial';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 11px;
+      padding: 4px 5px;
+      color: #000000;
+    }
+  }
+}
+
+.listMenuWrapper {
+  background-color: #3d464d;
+  color: #fff;
+
+  .Mui-selected {
+    background-color: #ffd333 !important;
+  }
+}
+
+.leftAppBarAdminInfo {
+  display: flex;
+}
+
+.avatarAdmin {
+  border-radius: 5px;
+  object-fit: cover;
+  margin-left: 23px;
+}
+
+.adminInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 13px;
+
+  .nameAdmin {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+  }
+
+  .roleInfo {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    color: #929395;
+  }
+}
