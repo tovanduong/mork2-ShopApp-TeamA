@@ -26,15 +26,15 @@ const schema = yup.object().shape({
   contact: yup.string(),
 });
 
-export default function UserForm({ initialValues, onSubmit }) {
-  const { userId } = useParams();
-  const isEdit = Boolean(userId);
+export default function UserForm({ initialValues, isEdit, userId, onSubmit }) {
   const [avatar, setAvatar] = useState(null);
   const [checkBoxValues, setCheckBoxValues] = useState({
     isActive: false,
     isEmailVerified: false,
     isContactVerified: false,
   });
+
+  console.log(initialValues);
 
   const {
     control,
@@ -54,6 +54,7 @@ export default function UserForm({ initialValues, onSubmit }) {
     setCheckBoxValues({ ...checkBoxValues, [checkBoxId]: valueChanged });
   };
 
+  // submit add update user
   const handleFormSubmit = async (formValues) => {
     if (typeof avatar === 'object') {
       const formData = new FormData();
@@ -133,7 +134,7 @@ export default function UserForm({ initialValues, onSubmit }) {
 
           <div className="formField">
             <div style={{ marginBottom: '25px' }}>
-              <AdminInputField name="name" type="string" control={control} label="Name" />
+              <AdminInputField name="username" type="string" control={control} label="Name" />
             </div>
 
             <div style={{ marginBottom: '25px' }}>
