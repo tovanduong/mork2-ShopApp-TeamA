@@ -34,8 +34,6 @@ export default function UserForm({ initialValues, isEdit, userId, onSubmit }) {
     isContactVerified: false,
   });
 
-  console.log(initialValues);
-
   const {
     control,
     handleSubmit,
@@ -56,6 +54,8 @@ export default function UserForm({ initialValues, isEdit, userId, onSubmit }) {
 
   // submit add update user
   const handleFormSubmit = async (formValues) => {
+    console.log('submited: ', formValues);
+
     if (typeof avatar === 'object') {
       const formData = new FormData();
       await formData.append('image', avatar, avatar.name);

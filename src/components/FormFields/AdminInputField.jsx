@@ -46,18 +46,18 @@ export function AdminInputField({ type, name, control, label, variant, size, ...
         onBlur={onBlur}
         inputRef={ref}
         error={invalid}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              edge="end"
-            >
-              {values.showPassword ? <VisibilityOff /> : <Visibility />}
-            </IconButton>
-          </InputAdornment>
-        }
+        // endAdornment={
+        //   <InputAdornment position="end">
+        //     <IconButton
+        //       aria-label="toggle password visibility"
+        //       onClick={handleClickShowPassword}
+        //       onMouseDown={handleMouseDownPassword}
+        //       edge="end"
+        //     >
+        //       {values.showPassword ? <VisibilityOff /> : <Visibility />}
+        //     </IconButton>
+        //   </InputAdornment>
+        // }
         helperText={error ? error.message : undefined}
         inputProps={inputProps}
       />

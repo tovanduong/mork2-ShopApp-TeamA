@@ -31,20 +31,17 @@ export default function AddEditUser() {
   }, [userId]);
 
   const initialValues = {
-    avatar:
-      'https://res.cloudinary.com/devjs/image/upload/v1651467679/uploads_media/1651467678191_xttskq.jpg',
-    contact: null,
-    createdAt: '2022-05-02T05:01:20.608Z',
-    email: 'quangha21@gmail.com',
-    id: 294,
-    isActive: false,
-    isContactVerified: false,
-    isEmailVerified: false,
-    password: '$2a$08$b/e8jMw9b/esIGzVdmHjCeCz4ajY7yZIhBUbRA2XOzj3ZRdkcszXe',
+    username: '',
+    email: '',
+    password: '',
     retypePassword: '',
-    role: 'user',
-    updatedAt: '2022-05-02T05:01:20.608Z',
-    username: 'quangha21',
+    role: '',
+    avatar: '',
+    contact: '',
+    isActive: false,
+    isEmailVerified: false,
+    isContactVerified: false,
+    ...user,
   };
 
   const handleUserFormSubmit = (formValues) => {
