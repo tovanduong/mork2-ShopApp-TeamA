@@ -2,13 +2,13 @@ import { Box } from '@mui/material';
 import { unwrapResult } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { getListCategory } from '../../category/categorySlice';
 import ProductForm from '../components/ProductForm';
-import { getListCategory } from '../productsSlice';
 
 export default function AddEditProduct() {
   const dispatch = useDispatch();
 
-  const [listCategory, setListCategory] = useState();
+  // const [listCategory, setListCategory] = useState();
 
   // get all categories
   useEffect(() => {
@@ -17,9 +17,8 @@ export default function AddEditProduct() {
         const listCategory = await dispatch(getListCategory());
 
         unwrapResult(listCategory);
-        console.log(listCategory);
 
-        // setListCategory(listUser.payload.results);
+        // setListCategory(listCategory.payload.data);
       } catch (error) {
         console.log('failed to fetch product list: ', error);
       }
@@ -44,8 +43,9 @@ export default function AddEditProduct() {
     brand: '',
     stockQuantity: '',
     images: '',
-    category: [],
+    category: '',
     rating: '',
+    imageUrls: '',
   };
 
   const handleProductFormSubmit = (formValues) => {
@@ -56,6 +56,7 @@ export default function AddEditProduct() {
       <ProductForm
         initialValues={initialValues}
         ratingOptions={ratingOptions}
+        // listCategory={listCategory}
         onSubmit={handleProductFormSubmit}
       />
     </Box>

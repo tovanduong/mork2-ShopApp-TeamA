@@ -3,7 +3,7 @@ import React from 'react';
 import { useController } from 'react-hook-form';
 import './adminInputField.scss';
 
-export function AdminInputField({ name, control, label, variant, ...inputProps }) {
+export function AdminInputField({ type, name, control, label, variant, size, ...inputProps }) {
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { invalid, error },
@@ -20,7 +20,8 @@ export function AdminInputField({ name, control, label, variant, ...inputProps }
       <TextField
         className="adminInputField"
         name={name}
-        // style={style}
+        size={size}
+        type={type || 'string'}
         value={value}
         fullWidth={true}
         onChange={onChange}

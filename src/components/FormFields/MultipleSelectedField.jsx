@@ -4,6 +4,7 @@ import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
+import { array } from 'yup';
 
 const Root = styled('div')(
   ({ theme }) => `
@@ -155,7 +156,18 @@ const Listbox = styled('ul')(
 `
 );
 
-export function MultipleSelectedField({ onClickMultipleSelect }) {
+export function MultipleSelectedField({ onClickMultipleSelect, listCategory }) {
+  let objectCategory = [];
+
+  if (listCategory) {
+    function setID(item, index) {
+      let category = { 'title: ': item };
+      return category;
+    }
+
+    objectCategory = { ...listCategory.map(setID) };
+  }
+
   const {
     getRootProps,
     getInputLabelProps,
@@ -169,7 +181,7 @@ export function MultipleSelectedField({ onClickMultipleSelect }) {
     setAnchorEl,
   } = useAutocomplete({
     id: 'categories',
-    defaultValue: [top100Films[1]],
+    defaultValue: [top100Films[0]],
     multiple: true,
     options: top100Films,
     getOptionLabel: (option) => option.title,

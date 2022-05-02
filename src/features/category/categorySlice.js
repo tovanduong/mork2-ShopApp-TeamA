@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import userManager from '../../api/userManager';
+import productApi from '../../api/productApi';
 
-export const postCreateUser = createAsyncThunk('userManager/postCreateUser', async (params) => {
-  const response = await userManager.postCreateUser(params);
+export const getListCategory = createAsyncThunk('category/getListCategory', async (params) => {
+  const response = await productApi.getAllCategories();
   return response;
 });
 
-const userManagerSlice = createSlice({
-  name: 'userManager',
+const categorySlice = createSlice({
+  name: 'category',
   initialState: {
     current: {},
     loading: false,
@@ -16,21 +16,21 @@ const userManagerSlice = createSlice({
   reducers: {},
   extraReducers: {
     // handle get list question
-    [postCreateUser.pending]: (state) => {
+    [getListCategory.pending]: (state) => {
       state.loading = true;
     },
-    [postCreateUser.fulfilled]: (state, action) => {
+    [getListCategory.fulfilled]: (state, action) => {
       state.error = '';
       state.loading = false;
       state.current = action.payload;
     },
-    [postCreateUser.rejected]: (state, action) => {
+    [getListCategory.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },
   },
 });
 
-const { reducer, actions } = userManagerSlice;
+const { reducer, actions } = categorySlice;
 export const {} = actions;
 export default reducer;
