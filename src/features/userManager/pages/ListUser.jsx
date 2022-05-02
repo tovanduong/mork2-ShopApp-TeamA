@@ -1,10 +1,11 @@
-import { Box, Link } from '@mui/material';
+import { Box, Link, Button } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React from 'react';
-
+import { UserTable } from '../../admin/components/dataTable/DataTable';
+import './listUser.scss';
 export default function ListUser() {
   return (
-    <Box mt={4} mb={8}>
+    <Box className="listUserWrapper" mt={4} mb={8}>
       <div className="breadCrumbsWrapper" role="presentation">
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/admin">
@@ -15,8 +16,26 @@ export default function ListUser() {
           </Link>
         </Breadcrumbs>
       </div>
+      <div className="titleAndButtonUser">
+        <h1>User</h1>
+        <Box mt={3}>
+          <Button
+            className="btnAddEditAdmin"
+            type="submit"
+            variant="contained"
+            color="primary"
+            // disabled={isSubmitting}
+            // onClick={handleSubmit(handleFormSubmit)}
+          >
+            {/* {isSubmitting && <CircularProgress color="primary" size={16} />}
+
+            {!isEdit ? 'Add Product' : 'Save'} */}
+            New user
+          </Button>
+        </Box>
+      </div>
       <Box>
-        <h1>List user page</h1>
+        <UserTable />
       </Box>
     </Box>
   );
