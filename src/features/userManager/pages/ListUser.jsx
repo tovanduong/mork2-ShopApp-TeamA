@@ -1,6 +1,7 @@
 import { Box, Link } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React from 'react';
+import { UserTable } from '../../admin/components/dataTable/DataTable';
 
 export default function ListUser() {
   return (
@@ -16,7 +17,7 @@ export default function ListUser() {
         </Breadcrumbs>
       </div>
       <Box>
-        <h1>List user page</h1>
+        <UserTable />
       </Box>
     </Box>
   );
