@@ -581,7 +581,7 @@ const columnsUser = [
             flexDirection: 'row',
           }}
         >
-          <Edit link={'/admin/product/add'} id={params.row.id} />
+          <Edit link={'/admin/user/add'} id={params.row.id} />
           <Delete productId={params.row.id} subject={'user'} />
         </div>
       );
