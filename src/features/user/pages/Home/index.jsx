@@ -7,6 +7,7 @@ import { fetchGetAllProduct } from '../../userSlice';
 import Carousel from './component/carousel/Carousel';
 import './home.scss';
 import Products from '../Products';
+import Header from '../../../../components/common/header/Header';
 
 export default function Home({ handleAdd }) {
   const [open, setOpen] = useState(false);
@@ -41,8 +42,9 @@ export default function Home({ handleAdd }) {
   };
 
   return (
-    <Box pt="240px">
-      <Container>
+    <Box>
+      <Header />
+      <Container className="user-container">
         <Box className="Home__GroupCate">
           <Box width="22%" bgcolor="#CCC"></Box>
           <Box className="Home__GroupCate-carousel">

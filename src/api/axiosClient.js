@@ -24,7 +24,6 @@ axiosClient.interceptors.request.use(async (req) => {
     const expires = Number(new Date(tokenExpries));
     const current = Number(new Date());
     const refreshtoken = AccessToken.refresh.token;
-    console.log(expires - current);
     if (expires && expires <= current) {
       const data = {
         refreshToken: refreshtoken,

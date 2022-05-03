@@ -8,3 +8,10 @@
 .Home__GroupCate-carousel {
   width: 80%;
 }
+
+.user-container {
+  padding-top: 270px;
+  @media (max-width: 1200px) {
+    padding-top: 222px;
+  }
+}

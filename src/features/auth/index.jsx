@@ -4,7 +4,7 @@ import Login from './Sign In/Login';
 import SignUp from './Sign up/SignUp';
 import './auth.scss';
 
-const Auth = () => {
+const Auth = ({ onClose }) => {
   let [user, setUser] = useState('');
   const handleGetAuth = (data) => {
     setUser(data);
@@ -19,12 +19,12 @@ const Auth = () => {
       position="relative"
     >
       <Box width="100%">
-        <Login parentCallback={handleGetAuth} />
+        <Login parentCallback={handleGetAuth} onClose={onClose} />
       </Box>
       <Box width="100%">
-        <SignUp parentCallback={handleGetAuth} />
+        <SignUp parentCallback={handleGetAuth} onClose={onClose} />
       </Box>
-      <Box className={`layout ${user}`}>
+      <Box className={`auth-layout ${user}`}>
         <img src="./image/icon/VectorBag.png" alt="VectorBag" />
         <img src="./image/icon/ShopApp.png" alt="ShopApp" />
       </Box>
