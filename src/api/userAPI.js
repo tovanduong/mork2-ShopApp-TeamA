@@ -8,6 +8,7 @@ import {
   GET_CARD_BY_ID,
   POST_CREATE_ITEM,
   DELETE_ITEM_CART,
+  GET_ALL_CATEGORY,
 } from '../constants/SubUrl';
 import axiosClient from './axiosClient';
 
@@ -117,6 +118,17 @@ export function postItemToCart({ cartId, productId, quantity, price, total }) {
 export function delItem({ id }) {
   return axiosClient
     .delete(DELETE_ITEM_CART + id)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function getCate() {
+  return axiosClient
+    .get(GET_ALL_CATEGORY)
     .then((res) => {
       return res.data;
     })

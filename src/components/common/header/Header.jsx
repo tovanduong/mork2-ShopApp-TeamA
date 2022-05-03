@@ -13,6 +13,7 @@ import './header.scss';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
+import { fetchLogOut } from '../../../features/auth/authSlice';
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -31,7 +32,7 @@ const Header = () => {
   const isLogin = Boolean(localStorage.getItem('access_token'));
   let screenWidth = window.screen.width;
   const dispatch = useDispatch();
-  const HandleClick = (nameModal) => {
+  const HandleClick = () => {
     setMenu(!menu);
   };
 
@@ -45,6 +46,12 @@ const Header = () => {
     console.log(value);
     const { search } = value;
     dispatch(fetchSearchProduct(search));
+  };
+  const { deviceId } = useSelector((state) => state.auth.login);
+  const handleLogOut = () => {
+    const getRefreshToken = JSON.parse(localStorage.getItem('access_token'));
+    dispatch(fetchLogOut({ refreshToken: getRefreshToken?.refresh.token, deviceId: deviceId }));
+    handleCloseMenu();
   };
 
   return (
@@ -145,7 +152,7 @@ const Header = () => {
       >
         <MenuItem>My Profile</MenuItem>
         <MenuItem>Order History</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
     </Box>
   );
