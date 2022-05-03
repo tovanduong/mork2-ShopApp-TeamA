@@ -1,0 +1,10 @@
+.adminPageWrapper {
+  display: flex;
+  background-color: #f5f7fa;
+  // flex-grow: 2;
+}
+
+.adminContentWrapper {
+  margin-top: 4rem;
+  flex-grow: 1;
+}

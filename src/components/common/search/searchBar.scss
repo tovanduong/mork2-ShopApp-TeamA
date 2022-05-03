@@ -1,0 +1,18 @@
+.searchBar-User {
+  display: flex;
+  .MuiFormControl-root .MuiInput-root::before {
+    border-bottom: 0px;
+  }
+}
+
+.searchBar-admin {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1.5px solid #c4c4c4;
+  padding: 0px;
+  margin-top: 10px;
+  .MuiFormControl-root .MuiInput-root::before {
+    border-bottom: 0px;
+  }
+}

@@ -1,0 +1,22 @@
+.labelTextAreaField {
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin-bottom: 11px;
+}
+
+.textAreaInputField {
+  input {
+    height: 112px;
+
+    background: #ffffff;
+    border: 1px solid #929395;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-size: 18px;
+  }
+}
