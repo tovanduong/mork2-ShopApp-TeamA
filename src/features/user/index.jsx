@@ -11,13 +11,12 @@ const Products = React.lazy(() => import('./pages/Products'));
 
 export default function User() {
   const dispatch = useDispatch();
-  const isCart = JSON.parse(localStorage.getItem('cartUser'));
-
   const handleAddProduct = (product) => {
     const isCreatCart = JSON.parse(localStorage.getItem('createCartUser'));
-    const isCart = JSON.parse(localStorage.getItem('cartUser'));
-    console.log(product)
+
+    console.log(product);
     if (isCreatCart) {
+      const isCart = JSON.parse(localStorage.getItem('cartUser'));
       const productExits = isCart?.items.find(
         (item) => item.itemCartInfo.id === product?.itemCartInfo?.id
       );
@@ -63,11 +62,10 @@ export default function User() {
   };
 
   const handleRemoveProduct = (product) => {
-
+    const isCart = JSON.parse(localStorage.getItem('cartUser'));
     const productExits = isCart?.items.find(
       (item) => item.itemCartInfo.id === product.itemCartInfo.id
     );
-
 
     if (productExits) {
       dispatch(
@@ -82,19 +80,14 @@ export default function User() {
 
   return (
     <>
-       <Header />
+      <Header />
       <Routes>
         <Route index element={<Home handleAdd={handleAddProduct} />} />
         <Route path="/info" element={<Info />} />
         <Route path="/products" element={<Products />} />
         <Route
           path="/cart"
-          element={
-            <ShoppingCart
-              handleAdd={handleAddProduct}
-              handleRemove={handleRemoveProduct}
-            />
-          }
+          element={<ShoppingCart handleAdd={handleAddProduct} handleRemove={handleRemoveProduct} />}
         />
       </Routes>
     </>

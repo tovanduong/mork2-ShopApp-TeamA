@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { POST_LOGIN, POST_SIGNUP, POST_FORGOT, POST_SEND_VERIFY_EMAIL, POST_VERIFY_EMAIL } from '../constants/SubUrl/';
+import { POST_LOGIN, POST_SIGNUP, POST_FORGOT, POST_SEND_VERIFY_EMAIL, POST_VERIFY_EMAIL, POST_LOGOUT } from '../constants/SubUrl/';
 import axiosClient from './axiosClient';
 
 export function postLogin({ password, email, deviceId }) {
@@ -64,6 +64,19 @@ export function postVerify({ token, deviceId }) {
     })
         .then(res => {
             toast.success('Verify Success')
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+export function postLogOut({ refreshToken, deviceId }) {
+    return axiosClient.post(POST_LOGOUT, {
+        refreshToken,
+        deviceId,
+    })
+        .then(res => {
             return res.data
         })
         .catch(err => {

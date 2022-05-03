@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { postLogin, postSendVerify, postSignUp, postVerify } from '../../api/authApi';
+import { postLogin, postLogOut, postSendVerify, postSignUp, postVerify } from '../../api/authApi';
 
 const initialState = {
     login: '',
@@ -50,6 +50,14 @@ export const fetchPostVerify = createAsyncThunk(
     }
 );
 
+export const fetchLogOut = createAsyncThunk(
+    "users/postLogout",
+    async (payload) => {
+        const response = await postLogOut(payload)
+        return response
+    }
+);
+
 export const AuthSlice = createSlice({
     name: 'users',
     initialState,
@@ -71,7 +79,15 @@ export const AuthSlice = createSlice({
         [fetchSignUp.fulfilled]: (state, action) => {
             state.status = 'sign up success';
             state.signUp = action.payload;
+        },
+        [fetchLogOut.fulfilled]: (state, action) => {
+            state.status = 'sign up success';
+            localStorage.removeItem('deviceId')
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('user')
+            state.login = ''
         }
+
     },
 })
 

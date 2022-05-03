@@ -7,11 +7,37 @@
 
 .Home__GroupCate-carousel {
   width: 80%;
+  height: 100%;
 }
 
 .user-container {
   padding-top: 270px;
   @media (max-width: 1200px) {
     padding-top: 222px;
+  }
+}
+
+.Home__Cate-list {
+  padding: 0;
+}
+
+.Home__Cate-title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 37px;
+  padding: 24px 10px 28px 22px;
+  display: flex;
+  justify-content: space-between;
+  color: #ffffff;
+}
+
+.Home__Cate-item {
+  padding: 16px 16px 11px 19px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  &:hover {
+    background-color: #b59628;
+    border-radius: 5px;
   }
 }
