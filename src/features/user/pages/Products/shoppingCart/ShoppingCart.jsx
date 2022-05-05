@@ -1,24 +1,24 @@
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { Box, Button, Container } from "@mui/material";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import CouponCodeForm from "../../../../../components/common/couponCode/CouponCodeForm";
-import Cart from "../../../../../components/common/ItemCart/Cart";
-import { fetchDelItem, fetchGetCartById } from "../../../userSlice";
-import "./shoppingCart.scss";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Box, Button, Container } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import CouponCodeForm from '../../../../../components/common/couponCode/CouponCodeForm';
+import Cart from '../../../../../components/common/ItemCart/Cart';
+import { fetchDelItem, fetchGetCartById } from '../../../userSlice';
+import './shoppingCart.scss';
 
 const ShoppingCart = ({ handleAdd, handleRemove }) => {
   const [isdel, setIsDel] = useState(false);
   const { isUpdate } = useSelector((state) => state.user);
   var shipping = 20;
   const initialValue = {
-    coupon: "",
+    coupon: '',
   };
-  const item = JSON.parse(localStorage.getItem("cartUser"));
+  const item = JSON.parse(localStorage.getItem('cartUser'));
   const dispatch = useDispatch();
   const handleSubmit = (value) => {
     console.log(value);
@@ -29,7 +29,7 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
     return total;
   };
 
-  const getId = JSON.parse(localStorage.getItem("createCartUser"));
+  const getId = JSON.parse(localStorage.getItem('createCartUser'));
 
   useEffect(() => {
     dispatch(fetchGetCartById({ id: getId.cart.id }));
@@ -44,18 +44,11 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
       <Box pt="240px">
         <Box className="breadCrum">
           <Stack spacing={2}>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
               <Link className="breadCrum-content" to="/">
                 Home
               </Link>
-              <Typography
-                key="3"
-                color="text.primary"
-                className="breadCrum-content"
-              >
+              <Typography key="3" color="text.primary" className="breadCrum-content">
                 Shopping Cart
               </Typography>
             </Breadcrumbs>
@@ -76,10 +69,7 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
 
         <Box display="flex" width="100%" justifyContent="space-between">
           <Box>
-            <CouponCodeForm
-              onSubmit={handleSubmit}
-              initialValue={initialValue}
-            />
+            <CouponCodeForm onSubmit={handleSubmit} initialValue={initialValue} />
           </Box>
           <Box className="shoppingCart-CardTotal">
             <Typography variant="h5" mb="30px">
@@ -91,9 +81,7 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
             </Box>
             <Box className="shoppingCart-CartItem">
               <Typography variant="subtitle1">Shipping</Typography>
-              <Typography variant="body1">
-                {getSubTotal() === 0 ? 0 : shipping} $
-              </Typography>
+              <Typography variant="body1">{getSubTotal() === 0 ? 0 : shipping} $</Typography>
             </Box>
             <Box className="shoppingCart-CartItem">
               <Typography variant="h6">Total</Typography>

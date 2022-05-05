@@ -2,7 +2,8 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mu
 
 export function RadioCheckBox({ userCheckBox, onRadioCheckBoxChange }) {
   const handleChange = (event) => {
-    onRadioCheckBoxChange(userCheckBox.id, Boolean(event.target.value));
+    // console.log(event.target.value);
+    onRadioCheckBoxChange(userCheckBox.id, JSON.parse(event.target.value));
   };
 
   return (

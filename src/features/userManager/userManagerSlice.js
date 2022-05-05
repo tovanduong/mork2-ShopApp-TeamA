@@ -6,6 +6,14 @@ export const postCreateUser = createAsyncThunk('userManager/postCreateUser', asy
   return response;
 });
 
+export const patchUpdateUser = createAsyncThunk(
+  'userManager/patchUpdateUser',
+  async (id, params) => {
+    const response = await userManager.patchUpdateUser(id, params);
+    return response;
+  }
+);
+
 const userManagerSlice = createSlice({
   name: 'userManager',
   initialState: {
@@ -15,7 +23,7 @@ const userManagerSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    // handle get list question
+    // handle create user
     [postCreateUser.pending]: (state) => {
       state.loading = true;
     },
@@ -25,6 +33,20 @@ const userManagerSlice = createSlice({
       state.current = action.payload;
     },
     [postCreateUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+
+    // handle update user
+    [patchUpdateUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [patchUpdateUser.fulfilled]: (state, action) => {
+      state.error = '';
+      state.loading = false;
+      state.current = action.payload;
+    },
+    [patchUpdateUser.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },

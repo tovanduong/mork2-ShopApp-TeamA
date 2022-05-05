@@ -60,7 +60,7 @@ export const listUserCheckBox = [
   {
     id: 'isActive',
     title: 'Status',
-    defaultValue: false,
+    // defaultValue: false,
     data: [
       { label: 'Active', value: true },
       { label: 'Disabled', value: false },
@@ -69,7 +69,7 @@ export const listUserCheckBox = [
   {
     id: 'isEmailVerified',
     title: 'Verify Email',
-    defaultValue: false,
+    // defaultValue: false,
     data: [
       { label: 'Yes', value: true },
       { label: 'No', value: false },
@@ -78,7 +78,7 @@ export const listUserCheckBox = [
   {
     id: 'isContactVerified',
     title: 'Verify Contact',
-    defaultValue: false,
+    // defaultValue: false,
     data: [
       { label: 'Yes', value: true },
       { label: 'No', value: false },

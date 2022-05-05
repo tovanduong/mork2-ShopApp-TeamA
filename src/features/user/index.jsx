@@ -7,6 +7,7 @@ import { fetchAddItemToCart, fetchCreateCart, fetchUpdateCart } from './userSlic
 const Home = React.lazy(() => import('./pages/Home'));
 const Info = React.lazy(() => import('./pages/Info'));
 const Products = React.lazy(() => import('./pages/Products'));
+const ProductInfo = React.lazy(() => import('./pages/Products/ProductInfo/ProductInfo'));
 
 export default function User() {
   const [cartItems, setCartItem] = useState([]);
@@ -95,6 +96,7 @@ export default function User() {
             />
           }
         />
+        <Route path="/product/:productID" element={<ProductInfo />} />
       </Routes>
     </>
   );

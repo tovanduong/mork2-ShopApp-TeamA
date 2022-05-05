@@ -79,3 +79,38 @@
     padding-top: 18px;
   }
 }
+
+@media (max-width: 1200px) {
+  .addEditProductPageWrapper {
+    .formWrapper {
+      flex-direction: column;
+    }
+
+    .titleProductForm {
+      font-size: 17px;
+    }
+  }
+
+  .titleAndButtonProduct {
+    font-size: 14px;
+  }
+
+  .otherInformation {
+    .MuiFormLabel-root {
+      font-size: 15px !important;
+    }
+
+    span {
+      font-size: 13px;
+    }
+  }
+
+  .priceAndDiscountField {
+    flex-direction: column;
+    gap: 0 !important;
+
+    .labelAdminInputField {
+      margin-top: 15px !important;
+    }
+  }
+}

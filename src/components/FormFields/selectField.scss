@@ -19,3 +19,13 @@
     border-radius: 2px;
   }
 }
+
+@media (max-width: 1200px) {
+  .labelSelectField {
+    font-size: 16px;
+  }
+
+  .MuiMenuItem-root {
+    font-size: 14px !important;
+  }
+}
