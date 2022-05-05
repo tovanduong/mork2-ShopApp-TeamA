@@ -17,7 +17,7 @@ export function RadioInputField({ name, control, options }) {
     control,
   });
 
-  console.log(name);
+  console.log(options);
   return (
     <FormControl component="fieldset">
       <RadioGroup
@@ -27,15 +27,15 @@ export function RadioInputField({ name, control, options }) {
         onChange={onChange}
         onBlur={onBlur}
       >
-        {options.map((options) => {
+        {options.map((options) => (
           <FormControlLabel
             key={options.value}
             className="Checkout-radio"
             value={options.value}
             control={<Radio />}
             label={options.label}
-          />;
-        })}
+          />
+        ))}
       </RadioGroup>
     </FormControl>
   );
