@@ -20,3 +20,15 @@
     font-size: 18px;
   }
 }
+
+@media (max-width: 1200px) {
+  .labelTextAreaField {
+    font-size: 16px;
+  }
+
+  .textAreaInputField {
+    input {
+      font-size: 14px;
+    }
+  }
+}

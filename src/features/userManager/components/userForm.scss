@@ -92,3 +92,29 @@
     padding-top: 18px;
   }
 }
+
+@media (max-width: 1200px) {
+  .addEditUserPageWrapper {
+    .formWrapper {
+      flex-direction: column;
+    }
+
+    .titleProductForm {
+      font-size: 17px;
+    }
+  }
+
+  .titleAndButtonProduct {
+    font-size: 14px;
+  }
+
+  .otherInformation {
+    .MuiFormLabel-root {
+      font-size: 15px !important;
+    }
+
+    span {
+      font-size: 13px;
+    }
+  }
+}

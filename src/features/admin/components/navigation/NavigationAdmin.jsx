@@ -77,8 +77,7 @@ export default function NavigationAdmin(props) {
   const navigate = useNavigate();
   const [adminNavbar, setAdminNavbar] = useState(listAdminNavbar);
 
-  const userInfor = JSON.parse(localStorage.getItem('user'))
-
+  const userInfor = JSON.parse(localStorage.getItem('user'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -274,7 +273,7 @@ export default function NavigationAdmin(props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       ></Box>
     </Box>
   );

@@ -42,6 +42,13 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
   const [imageProduct, setImageProduct] = useState(null);
   const listCategory = useSelector((state) => state.category.current.data);
 
+  // useEffect(() => {
+  //   effect
+  //   return () => {
+  //     cleanup
+  //   };
+  // }, []);
+
   const {
     control,
     handleSubmit,
@@ -52,7 +59,6 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
   });
 
   const handleImportFileChange = (file) => {
-    console.log(file);
     setImageProduct(file);
   };
 

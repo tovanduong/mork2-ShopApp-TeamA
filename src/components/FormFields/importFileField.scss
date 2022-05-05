@@ -32,6 +32,7 @@
 
   .btnTextFieldWrapper {
     display: flex;
+    align-items: center;
 
     .MuiButton-root {
       background: #c4cdd5;
@@ -41,6 +42,8 @@
       letter-spacing: -0.02em;
       color: #000000;
       flex: 3;
+      padding: 6px;
+      margin-top: 10px;
     }
     .nameImageField {
       flex: 5;

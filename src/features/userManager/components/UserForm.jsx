@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Breadcrumbs, Button, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import userManager from '../../../api/userManager';
 import {
@@ -15,7 +15,7 @@ import { listUserCheckBox, roleOption } from '../../../constants/admin';
 import './userForm.scss';
 
 const schema = yup.object().shape({
-  name: yup.string().required('name is required'),
+  username: yup.string().required('name is required'),
   email: yup.string().email().required(),
   password: yup.string().required(),
   retypePassword: yup
@@ -26,14 +26,13 @@ const schema = yup.object().shape({
   contact: yup.string(),
 });
 
-export default function UserForm({ initialValues, onSubmit }) {
-  const { userId } = useParams();
-  const isEdit = Boolean(userId);
+export default function UserForm({ initialValues, isEdit, userId, onSubmit }) {
   const [avatar, setAvatar] = useState(null);
+
   const [checkBoxValues, setCheckBoxValues] = useState({
-    isActive: false,
-    isEmailVerified: false,
-    isContactVerified: false,
+    isActive: initialValues.isActive,
+    isEmailVerified: initialValues.isEmailVerified,
+    isContactVerified: initialValues.isContactVerified,
   });
 
   const {
@@ -46,7 +45,6 @@ export default function UserForm({ initialValues, onSubmit }) {
   });
 
   const handleImportFileChange = (data) => {
-    console.log(data);
     setAvatar(data);
   };
 
@@ -54,11 +52,11 @@ export default function UserForm({ initialValues, onSubmit }) {
     setCheckBoxValues({ ...checkBoxValues, [checkBoxId]: valueChanged });
   };
 
+  // submit add update user
   const handleFormSubmit = async (formValues) => {
-    if (typeof avatar === 'object') {
+    if (avatar.type) {
       const formData = new FormData();
       await formData.append('image', avatar, avatar.name);
-
       // upload image to get url link
       async function fetchUploadImage() {
         try {
@@ -68,31 +66,27 @@ export default function UserForm({ initialValues, onSubmit }) {
           console.log('failed to upload image: ', error.message);
         }
       }
-
       const imageUrl = await fetchUploadImage();
-
       const dataSubmit = {
-        username: formValues.name,
+        username: formValues.username,
         email: formValues.email,
         password: formValues.password,
         avatar: imageUrl || 'null',
         role: formValues.role,
+        // contact: formValues.contact,
         ...checkBoxValues,
       };
       onSubmit(dataSubmit);
-    }
-
-    if (typeof avatar === 'string') {
-      console.log(avatar);
+    } else {
       const dataSubmit = {
-        username: formValues.name,
+        username: formValues.username,
         email: formValues.email,
         password: formValues.password,
         avatar: avatar || 'null',
         role: formValues.role,
+        // contact: formValues.contact,
         ...checkBoxValues,
       };
-
       onSubmit(dataSubmit);
     }
   };
@@ -111,6 +105,8 @@ export default function UserForm({ initialValues, onSubmit }) {
         <h1>{!isEdit ? 'Create User' : `Update User #${userId}`}</h1>
         <Box mt={3}>
           <Button
+            md={{ size: 'small' }}
+            lg={{ size: 'large' }}
             className="btnAddEditAdmin"
             type="submit"
             variant="contained"
@@ -127,13 +123,13 @@ export default function UserForm({ initialValues, onSubmit }) {
 
       <form className="formWrapper">
         <Box className="basicInformation">
-          <h3 className="titleProductForm">Basic information</h3>
+          <h2 className="titleProductForm">Basic information</h2>
 
           <div className="horizontalLine"></div>
 
           <div className="formField">
             <div style={{ marginBottom: '25px' }}>
-              <AdminInputField name="name" type="string" control={control} label="Name" />
+              <AdminInputField name="username" type="string" control={control} label="Name" />
             </div>
 
             <div style={{ marginBottom: '25px' }}>

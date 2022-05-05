@@ -52,3 +52,10 @@
   margin-right: 30px;
   margin-bottom: 30px;
 }
+
+@media (max-width: 1200px) {
+  .breadCrumbsWrapper a,
+  .breadCrumbsWrapper p {
+    font-size: 15px;
+  }
+}

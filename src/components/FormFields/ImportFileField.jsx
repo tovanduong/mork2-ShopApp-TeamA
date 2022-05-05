@@ -14,18 +14,14 @@ export const ImportFileField = ({ onImportFileChange, control, name }) => {
   });
 
   const handleImportImageChange = (event) => {
-    let checkUrl = event.target.value.slice(0, 4);
-
-    if (checkUrl === 'http') {
-      console.log(1);
-      setNameImage(event.target.value);
-      setSelectedImage(null);
-      onImportFileChange(nameImage);
-    } else {
-      console.log(2);
+    if (Boolean(event.target.accept)) {
       setNameImage(event.target.files[0].name);
       setSelectedImage(event.target.files[0]);
       onImportFileChange(event.target.files[0]);
+    } else {
+      setNameImage(event.target.value);
+      setSelectedImage(null);
+      onImportFileChange(nameImage);
     }
   };
 
