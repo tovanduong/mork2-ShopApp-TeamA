@@ -3,9 +3,9 @@ import { Box, Button, Container } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useMatch } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CouponCodeForm from '../../../../../components/common/couponCode/CouponCodeForm';
 import Cart from '../../../../../components/common/ItemCart/Cart';
 import { fetchDelItem, fetchGetCartById, fetchUpdateCart } from '../../../userSlice';
@@ -16,8 +16,8 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
   const getId = JSON.parse(localStorage.getItem('createCartUser'));
   const item = JSON.parse(localStorage.getItem('cartUser'));
   const dispatch = useDispatch();
-  const match = useMatch('/cart');
-  console.log(match);
+  const navigate = useNavigate();
+
   var shipping = 20;
   const initialValue = {
     coupon: '',
@@ -45,6 +45,10 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
         total: item.quantity,
       })
     );
+  };
+
+  const handleCheckOut = () => {
+    navigate(`/cart/${item?.cart.id}`);
   };
 
   return (
@@ -100,7 +104,7 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
               </Typography>
             </Box>
             <Box className="shoppingCart-CartItem">
-              <Button>Proceed to checkout</Button>
+              <Button onClick={handleCheckOut}>Proceed to checkout</Button>
             </Box>
           </Box>
         </Box>

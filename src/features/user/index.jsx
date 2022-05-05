@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../../components/common/header/Header';
+import CheckOut from './pages/Products/checkOut/checkOut';
 import ShoppingCart from './pages/Products/shoppingCart/ShoppingCart';
 import { fetchAddItemToCart, fetchCreateCart, fetchUpdateCart } from './userSlice';
 
@@ -89,6 +90,7 @@ export default function User() {
           path="/cart"
           element={<ShoppingCart handleAdd={handleAddProduct} handleRemove={handleRemoveProduct} />}
         />
+        <Route path="/cart/:cartId" element={<CheckOut />} />
       </Routes>
     </>
   );
