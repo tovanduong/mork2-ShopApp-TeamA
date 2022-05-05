@@ -2,15 +2,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Breadcrumbs, Button, CircularProgress, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import {
   AdminInputField,
+  ImportFileField,
   MultipleSelectedField,
   SelectField,
   TextAreaField,
 } from '../../../components/FormFields';
-import ImportFileField from '../../../components/FormFields/ImportFileField';
 import './productForm.scss';
 
 const schema = yup.object().shape({
@@ -24,19 +25,22 @@ const schema = yup.object().shape({
     .max(100, 'max is 100%')
     .typeError('please enter a valid number'),
   brand: yup.string().required(),
+  // imageUrls: yup.string().required('image is required'),
   stockQuantity: yup
     .number()
     .required()
     .min(1, 'min is 1')
     .typeError('please enter a valid number'),
   rating: yup.number().required().typeError('please select a valid number'),
+  category: yup.string().required(),
 });
 
 export default function ProductForm({ initialValues, onSubmit, ratingOptions }) {
   const { productId } = useParams();
   const isEdit = Boolean(productId);
-  const [listCategory, setListCategory] = useState();
+  const [selectedCategories, setSelectedCategories] = useState();
   const [imageProduct, setImageProduct] = useState(null);
+  const listCategory = useSelector((state) => state.category.current.data);
 
   const {
     control,
@@ -53,11 +57,12 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
   };
 
   const handleClickMultipleSelect = (listCategorySelected) => {
-    setListCategory(listCategorySelected);
+    setSelectedCategories(listCategorySelected);
   };
 
   const handleFormSubmit = (formValues) => {
-    const modifiedValues = { ...formValues, category: listCategory, imageProduct };
+    console.log(formValues);
+    const modifiedValues = { ...formValues, category: selectedCategories, imageProduct };
     onSubmit(modifiedValues);
   };
 
@@ -140,7 +145,11 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
             <h2 className="titleProductForm">Images</h2>
             <div className="horizontalLine"></div>
             <Box mt={2} className="mlr30">
-              <ImportFileField onImportFileChange={handleImportFileChange} />
+              <ImportFileField
+                name="imageUrls"
+                control={control}
+                onImportFileChange={handleImportFileChange}
+              />
             </Box>
           </div>
           <div className="categories">
@@ -148,7 +157,10 @@ export default function ProductForm({ initialValues, onSubmit, ratingOptions }) 
             <div className="horizontalLine"></div>
 
             <Box className="mlr30">
-              <MultipleSelectedField onClickMultipleSelect={handleClickMultipleSelect} />
+              <MultipleSelectedField
+                listCategory={listCategory}
+                onClickMultipleSelect={handleClickMultipleSelect}
+              />
             </Box>
           </div>
           <div className="rating">

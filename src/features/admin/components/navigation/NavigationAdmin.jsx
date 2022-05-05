@@ -77,6 +77,9 @@ export default function NavigationAdmin(props) {
   const navigate = useNavigate();
   const [adminNavbar, setAdminNavbar] = useState(listAdminNavbar);
 
+  const userInfor = JSON.parse(localStorage.getItem('user'))
+
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -206,8 +209,8 @@ export default function NavigationAdmin(props) {
                 alt="avatar_admin"
               />
               <span className="adminInfo">
-                <div className="nameAdmin">Nam Nguyễn</div>
-                <span className="roleInfo"> Admin</span>
+                <div className="nameAdmin">{userInfor ? userInfor.username : 'Admin User'}</div>
+                <span className="roleInfo"> {userInfor ? userInfor.role : 'admin'}</span>
               </span>
             </Box>
             {/* <IconButton

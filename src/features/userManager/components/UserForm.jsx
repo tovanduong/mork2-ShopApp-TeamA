@@ -1,31 +1,40 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Breadcrumbs, Button, CircularProgress, Typography } from '@mui/material';
-import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 import * as yup from 'yup';
+import userManager from '../../../api/userManager';
 import {
   AdminInputField,
-  MultipleSelectedField,
+  ImportFileField,
+  RadioCheckBox,
   SelectField,
-  TextAreaField,
 } from '../../../components/FormFields';
-import ImportFileField from '../../../components/FormFields/ImportFileField';
+import { listUserCheckBox, roleOption } from '../../../constants/admin';
 import './userForm.scss';
 
 const schema = yup.object().shape({
-  // name: yup.string().required(),
-  // price: yup.number().required().min(0, 'min is 0').typeError('please enter a valid number'),
+  name: yup.string().required('name is required'),
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+  retypePassword: yup
+    .string()
+    .required('retype password is requied')
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+  role: yup.string().required(),
+  contact: yup.string(),
 });
-
-const roleOption = [
-  { label: 'Admin', value: 'admin' },
-  { label: 'User', value: 'user' },
-];
 
 export default function UserForm({ initialValues, onSubmit }) {
   const { userId } = useParams();
   const isEdit = Boolean(userId);
+  const [avatar, setAvatar] = useState(null);
+  const [checkBoxValues, setCheckBoxValues] = useState({
+    isActive: false,
+    isEmailVerified: false,
+    isContactVerified: false,
+  });
 
   const {
     control,
@@ -36,8 +45,56 @@ export default function UserForm({ initialValues, onSubmit }) {
     resolver: yupResolver(schema),
   });
 
-  const handleFormSubmit = (formValues) => {
-    onSubmit(formValues);
+  const handleImportFileChange = (data) => {
+    console.log(data);
+    setAvatar(data);
+  };
+
+  const handleRadioCheckBoxChange = (checkBoxId, valueChanged) => {
+    setCheckBoxValues({ ...checkBoxValues, [checkBoxId]: valueChanged });
+  };
+
+  const handleFormSubmit = async (formValues) => {
+    if (typeof avatar === 'object') {
+      const formData = new FormData();
+      await formData.append('image', avatar, avatar.name);
+
+      // upload image to get url link
+      async function fetchUploadImage() {
+        try {
+          const result = await userManager.postUploadImage(formData);
+          return await result.data.imageURL;
+        } catch (error) {
+          console.log('failed to upload image: ', error.message);
+        }
+      }
+
+      const imageUrl = await fetchUploadImage();
+
+      const dataSubmit = {
+        username: formValues.name,
+        email: formValues.email,
+        password: formValues.password,
+        avatar: imageUrl || 'null',
+        role: formValues.role,
+        ...checkBoxValues,
+      };
+      onSubmit(dataSubmit);
+    }
+
+    if (typeof avatar === 'string') {
+      console.log(avatar);
+      const dataSubmit = {
+        username: formValues.name,
+        email: formValues.email,
+        password: formValues.password,
+        avatar: avatar || 'null',
+        role: formValues.role,
+        ...checkBoxValues,
+      };
+
+      onSubmit(dataSubmit);
+    }
   };
 
   return (
@@ -107,7 +164,11 @@ export default function UserForm({ initialValues, onSubmit }) {
             <h2 className="titleProductForm">Avatar</h2>
             <div className="horizontalLine"></div>
             <Box mt={2} className="mlr30">
-              <ImportFileField />
+              <ImportFileField
+                name="avatar"
+                control={control}
+                onImportFileChange={handleImportFileChange}
+              />
             </Box>
           </div>
           <div className="otherInfo">
@@ -115,7 +176,17 @@ export default function UserForm({ initialValues, onSubmit }) {
             <div className="horizontalLine"></div>
 
             <Box className="mlr30">
-              <h3>other info standing here</h3>
+              <Box mt={4}>
+                <AdminInputField name="contact" type="string" control={control} label="Contact" />
+              </Box>
+
+              {listUserCheckBox.map((userCheckBox) => (
+                <RadioCheckBox
+                  key={userCheckBox.id}
+                  userCheckBox={userCheckBox}
+                  onRadioCheckBoxChange={handleRadioCheckBoxChange}
+                />
+              ))}
             </Box>
           </div>
         </Box>

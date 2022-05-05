@@ -1,10 +1,19 @@
+import { GET_ALL_USERS, POST_CREATE_USER, POST_UPLOAD_IMAGE } from '../constants/SubUrl';
 import axiosClient from './axiosClient';
 
 const userManager = {
-  // getAllCategories: (params) => {
-  //   const url = GET_ALL_CATEGORIES;
-  //   return axiosClient.get(url, { params });
-  // },
+  getAllUsers: (params) => {
+    const url = GET_ALL_USERS;
+    return axiosClient.get(url, params);
+  },
+  postCreateUser: (params) => {
+    const url = POST_CREATE_USER;
+    return axiosClient.post(url, params);
+  },
+  postUploadImage: (params) => {
+    const url = POST_UPLOAD_IMAGE;
+    return axiosClient.post(url, params);
+  },
 };
 
 export default userManager;
