@@ -25,14 +25,15 @@ export function getProductId(id) {
         })
 }
 
-export function getAllProduct() {
-    return axiosClient.get(GET_PRODUCT)
-        .then(res => {
-            return res.data
-        })
-        .catch(err => {
-            console.log(err)
-        })
+export function getAllProduct(params) {
+  return axiosClient
+    .get(GET_PRODUCT, { params })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export function getSearchProduct(value) {

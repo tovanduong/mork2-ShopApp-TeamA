@@ -3,6 +3,8 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React from 'react';
 import { UserTable } from '../../admin/components/dataTable/DataTable';
 import './listUser.scss';
+import UserDetailById from './UserDetail';
+
 export default function ListUser() {
   return (
     <Box className="listUserWrapper" mt={4} mb={8}>
