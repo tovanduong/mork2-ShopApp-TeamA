@@ -17,9 +17,8 @@ export function RadioInputField({ name, control, options }) {
     control,
   });
 
-  console.log(options);
   return (
-    <FormControl component="fieldset">
+    <FormControl component="fieldset" sx={{ width: '100%' }}>
       <RadioGroup
         defaultValue="Cash on delivery"
         name={name}
