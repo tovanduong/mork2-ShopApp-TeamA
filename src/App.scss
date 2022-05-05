@@ -53,9 +53,18 @@
   margin-bottom: 30px;
 }
 
-.section-box{
+.section-box {
   padding-top: 270px;
   @media (max-width: 1199px) {
     padding-top: 240px;
   }
+}
+
+.ShoppingCart__name {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 47px;
+  color: #000000;
+
+  margin-bottom: 20px !important;
 }

@@ -13,6 +13,7 @@ export function LabelInputField({ name, style, control, label, variant, disabled
 
   return (
     <TextField
+      minRows={3}
       style={style}
       value={value}
       onChange={onChange}
