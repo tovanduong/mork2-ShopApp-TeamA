@@ -204,8 +204,12 @@ export default function NavigationAdmin(props) {
                 className="avatarAdmin"
                 width="40"
                 height="40"
-                src="https://a1cf74336522e87f135f-2f21ace9a6cf0052456644b80fa06d4f.ssl.cf2.rackcdn.com/images/characters/large/800/Baymax.Big-Hero-6.webp"
-                alt="avatar_admin"
+                src={
+                  userInfor
+                    ? userInfor.avatar
+                    : 'https://www.everblazing.org/wp-content/uploads/2017/06/avatar-372-456324-300x300.png'
+                }
+                // alt="avatar_admin"
               />
               <span className="adminInfo">
                 <div className="nameAdmin">{userInfor ? userInfor.username : 'Admin User'}</div>

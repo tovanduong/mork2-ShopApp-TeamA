@@ -7,7 +7,7 @@ import UserDetailById from './UserDetail';
 
 export default function ListUser() {
   return (
-    <Box className="listUserWrapper" mt={4} mb={8}>
+    <Box className="listUserWrapper" mx={4} mt={4} mb={8}>
       <div className="breadCrumbsWrapper" role="presentation">
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/admin">

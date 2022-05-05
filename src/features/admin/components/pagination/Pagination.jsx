@@ -9,6 +9,7 @@ export function CustomPagination(props) {
 
   return (
     <Pagination
+      style={{ marginTop: '60px', marginLeft: '20px' }}
       color="primary"
       variant="outlined"
       shape="rounded"
