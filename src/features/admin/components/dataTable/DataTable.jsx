@@ -1,17 +1,15 @@
 /** @format */
 
-import * as React from 'react';
-import {
-  DataGrid,
-  gridPageCountSelector,
-  gridPageSelector,
-  useGridApiContext,
-  useGridSelector,
-} from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import { Box, Pagination, PaginationItem, Rating } from '@mui/material';
 import './dataTable.scss';
 import styled from '@emotion/styled';
 import { Delete, Edit } from '../popupConfirm/PopupConfirm';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getListProduct } from '../../adminSlice';
+import { CustomPagination } from '../pagination/Pagination';
 
 const columnsProduct = [
   {
@@ -54,9 +52,10 @@ const columnsProduct = [
           >
             <img
               src={params.row.avatar}
+              alt="product"
               style={{
-                height: 60,
-                width: 60,
+                height: 50,
+                width: 50,
                 objectFit: 'cover',
                 marginRight: '11px',
               }}
@@ -87,7 +86,7 @@ const columnsProduct = [
                   color: ' #929395',
                 }}
               >
-                ID: {params.row.id}
+                ID: {params.row.productId}
               </div>
             </div>
           </Box>
@@ -244,8 +243,8 @@ const columnsProduct = [
             flexDirection: 'row',
           }}
         >
-          <Edit link={'/admin/product/add'} id={params.row.id} />
-          <Delete productId={params.row.id} subject={'product'} />
+          <Edit link={'/admin/product/add'} id={params.row.productId} subject={'product'} />
+          <Delete productId={params.row.productId} subject={'product'} />
         </div>
       );
     },
@@ -581,25 +580,11 @@ const columnsUser = [
             flexDirection: 'row',
           }}
         >
-          <Edit link={'/admin/user/add'} id={params.row.id} />
+          <Edit link={'/admin/user/add'} id={params.row.id} subject={'user'} />
           <Delete productId={params.row.id} subject={'user'} />
         </div>
       );
     },
-  },
-];
-
-const rowsProduct = [
-  {
-    productNumber: 1,
-    id: 164,
-    name: 'Puma 2',
-    avatar: 'https://giayxshop.vn/wp-content/uploads/2019/03/MG_5961-600x600.jpg',
-    brand: 'Puma',
-    category: 'Shoes',
-    countInStock: 15,
-    price: 250,
-    rating: 3,
   },
 ];
 
@@ -618,10 +603,21 @@ const rowsUser = [
     isActive: true,
   },
 ];
-
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   border: 0,
-
+  root: {
+    '& .MuiDataGrid-renderingZone': {
+      maxHeight: 'none !important',
+    },
+    '& .MuiDataGrid-cell': {
+      lineHeight: 'unset !important',
+      maxHeight: 'none !important',
+      whiteSpace: 'normal',
+    },
+    '& .MuiDataGrid-row': {
+      maxHeight: 'none !important',
+    },
+  },
   fontFamily: ['Arial'].join(','),
 
   '& .MuiDataGrid-columnsContainer,.MuiDataGrid-footerContainer': {
@@ -634,54 +630,47 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-function CustomPagination() {
-  const apiRef = useGridApiContext();
-  const page = useGridSelector(apiRef, gridPageSelector);
-  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
-  return (
-    <Pagination
-      color="primary"
-      variant="outlined"
-      shape="rounded"
-      page={page + 1}
-      count={pageCount}
-      renderItem={(props2) => (
-        <PaginationItem
-          {...props2}
-          disableRipple
-          sx={{
-            border: '1px solid #DFE3E8',
-            boxSizing: 'border-box',
-            borderRadius: ' 4px',
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: '700',
-            fontSize: '14px',
-            lineHeight: '20px',
-            /* or 143% */
-
-            textAlign: 'center',
-
-            '&.MuiPaginationItem-root': {
-              background: '#DFE3E8',
-              color: '#212B36',
-            },
-            '&.Mui-selected': {
-              background: '#FFD333',
-              color: '#000000',
-            },
-
-            /* Dark Grey / 400 */
-          }}
-        />
-      )}
-      onChange={(event, value) => apiRef.current.setPage(value - 1)}
-    />
-  );
-}
 export function ProductTable() {
+  const dispatch = useDispatch();
+
+  const current = useSelector((state) => state.admin.current.result);
+  const totalPages = useSelector((state) => state.admin.current.totalPages);
+  const currentPage = useSelector((state) => state.admin.current.currentPage);
+  const [pageCount, setPageCount] = useState(1);
+
+  const handlePageCount = (params) => {
+    setPageCount(params);
+  };
+  //product list
+  useEffect(() => {
+    const fetchGetListProduct = async () => {
+      const params = {
+        page: pageCount,
+      };
+      const response = await getListProduct(params);
+
+      dispatch(response);
+    };
+    fetchGetListProduct();
+  }, [dispatch, pageCount]);
+  //product row
+  let rowsProduct = [];
+  if (current) {
+    rowsProduct = current.map((item, index) => ({
+      // key: item.id,
+      productNumber: index + 1,
+      productId: item.id,
+      name: item.name,
+      avatar: item.images[0].url,
+      brand: item.brand,
+      category: item.category,
+      countInStock: item.countInStock,
+      price: item.price,
+      rating: item.rating,
+    }));
+  }
   return (
-    <div style={{ height: 400, width: 1153 }}>
+    <div style={{ width: '100%' }}>
       <StyledDataGrid
         sx={{
           '.MuiDataGrid-columnHeaders': {
@@ -705,21 +694,43 @@ export function ProductTable() {
           },
         }}
         rows={rowsProduct}
+        getRowId={(row) => row.productId}
         rowsPerPageOptions={[5, 10, 20]}
         columns={columnsProduct}
-        pageSize={5}
+        pageSize={10}
+        autoHeight
         disableColumnMenu
         disableSelectionOnClick
-        components={{
-          Pagination: CustomPagination,
-        }}
+        Pagination="null"
+      />
+      <CustomPagination
+        onPageCount={handlePageCount}
+        totalPages={totalPages}
+        currentPage={currentPage}
       />
     </div>
   );
 }
-export function UserTable() {
+
+export function UserTable(props) {
+  const navigate = useNavigate();
+  const handleCellClick = (params) => {
+    navigate(`/admin/user/userDetail/${params.row.id}`, {
+      state: {
+        userId: params.row.id,
+        avatar: params.row.avatar,
+        username: params.row.username,
+        contact: params.row.contact,
+        email: params.row.email,
+        role: params.row.role,
+        isEmailVerified: params.row.isEmailVerified,
+        isContactVerified: params.row.isContactVerified,
+        isActive: params.row.isActive,
+      },
+    });
+  };
   return (
-    <div style={{ height: 400, width: 1153 }}>
+    <div style={{ width: '100%' }}>
       <StyledDataGrid
         sx={{
           '.MuiDataGrid-columnHeaders': {
@@ -746,12 +757,12 @@ export function UserTable() {
         rowsPerPageOptions={[5, 10, 20]}
         columns={columnsUser}
         pageSize={5}
+        autoHeight
         disableColumnMenu
         disableSelectionOnClick
-        components={{
-          Pagination: CustomPagination,
-        }}
+        onCellClick={handleCellClick}
       />
+      <CustomPagination />
     </div>
   );
 }

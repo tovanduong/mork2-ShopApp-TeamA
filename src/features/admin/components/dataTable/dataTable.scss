@@ -8,18 +8,25 @@
     color: #000000;
 }
 
-.MuiDataGrid-cell {
-    font-family: 'Arial';
-    font-style: 'normal';
-    font-weight: 400;
-    font-size: '20px';
-    line-height: '23px';
-    color: '#000000';
-}
+// .MuiDataGrid-cell {
+//     font-family: 'Arial';
+//     font-style: 'normal';
+//     font-weight: 400;
+//     font-size: '20px';
+//     line-height: '23px';
+//     color: '#000000';
+// }
 
+.MuiDataGrid-row {
+    padding: auto;
+}
+.MuiDataGrid-footerContainer {
+    display: none !important;
+}
 // .MuiDataGrid-sortIcon {
 //     visibility: "visible",
 // }
+
 .MuiDataGrid-sortIcon path {
     fill: black;
     d: path("M0.940065 13.0634H10.2369C11.0729 13.0634 11.4908 14.3036 10.901 15.0266L6.25256 20.7247C5.88538 21.1748 5.29163 21.1748 4.92834 20.7247L0.276003 15.0266C-0.31384 14.3036 0.104128 13.0634 0.940065 13.0634ZM10.901 8.03566L6.25256 2.33758C5.88538 1.88747 5.29163 1.88747 4.92834 2.33758L0.276003 8.03566C-0.31384 8.75869 0.104128 9.99886 0.940065 9.99886H10.2369C11.0729 9.99886 11.4908 8.75869 10.901 8.03566Z") !important

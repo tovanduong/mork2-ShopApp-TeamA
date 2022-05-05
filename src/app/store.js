@@ -3,6 +3,7 @@ import productReducer from '../features/product/productsSlice';
 import userManagerReducer from '../features/userManager/userManagerSlice';
 import AuthReducer from '../features/auth/authSlice';
 import UserReducer from '../features/user/userSlice';
+import AdminReducer from '../features/admin/adminSlice';
 import CategoryReducer from '../features/category/categorySlice';
 
 const rootReducer = {
@@ -10,6 +11,7 @@ const rootReducer = {
   userManager: userManagerReducer,
   auth: AuthReducer,
   user: UserReducer,
+  admin: AdminReducer,
   category: CategoryReducer,
 };
 
