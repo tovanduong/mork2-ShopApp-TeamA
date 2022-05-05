@@ -27,8 +27,8 @@ const ProductInfo = () => {
   const { productID } = useParams();
 
   return (
-    <Container className="productInforWrapper">
-      <Box pt="240px">
+    <Container className="productInforWrapper section-box">
+      <Box>
         <Box className="breadCrum">
           <Stack spacing={2}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">

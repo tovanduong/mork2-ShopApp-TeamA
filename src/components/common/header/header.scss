@@ -41,6 +41,7 @@
 .Header__mainbar--list {
   display: flex;
   align-items: center;
+  justify-content: center;
   @media (max-width: 1199px) {
     padding-left: 0;
     display: flex;

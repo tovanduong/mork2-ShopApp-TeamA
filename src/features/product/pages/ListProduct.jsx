@@ -1,6 +1,7 @@
 import { Box, Link, Button } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React from 'react';
+import SearchBarAdmin from '../../../components/common/search/SearchBarAdminForm';
 import { ProductTable } from '../../admin/components/dataTable/DataTable';
 import './listProduct.scss';
 export default function ListProduct() {
@@ -36,7 +37,9 @@ export default function ListProduct() {
         </Box>
       </div>
       <Box className="tableProductWrapper">
-        <Box>search: phần này của a Dương</Box>
+        <Box mt={0} mx={4} mb={3}>
+          <SearchBarAdmin />
+        </Box>
         <Box>
           <ProductTable className="productTableWrapper" />
         </Box>
