@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import productApi from '../../api/productApi';
+import { adminGetUserById } from '../../api/userManager';
 
-// export const getListCategory = createAsyncThunk('product/getListCategory', async (params) => {
-//   const response = await productApi.getAllCategories(params);
-//   console.log(response);
-//   return response;
-// });
+export const getUserById = createAsyncThunk('users/getUserById', async (userId) => {
+  const response = await adminGetUserById(userId);
+
+  return response;
+});
 
 const userManagerSlice = createSlice({
   name: 'userManager',
@@ -16,19 +16,19 @@ const userManagerSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    // handle get list question
-    // [getListCategory.pending]: (state) => {
-    //   state.loading = true;
-    // },
-    // [getListCategory.fulfilled]: (state, action) => {
-    //   state.error = '';
-    //   state.loading = false;
-    //   state.current = action.payload;
-    // },
-    // [getListCategory.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.error;
-    // },
+    // handle get user by id
+    [getUserById.pending]: (state) => {
+      state.loading = true;
+    },
+    [getUserById.fulfilled]: (state, action) => {
+      state.error = '';
+      state.loading = false;
+      state.current = action.payload;
+    },
+    [getUserById.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
   },
 });
 

@@ -7,6 +7,7 @@ import NavigationAdmin from './components/navigation/NavigationAdmin';
 const DashBoard = React.lazy(() => import('./pages/DashBoard'));
 const Product = React.lazy(() => import('../product'));
 const UserManager = React.lazy(() => import('../userManager'));
+const Orders = React.lazy(() => import('../orders'));
 
 export default function Admin() {
   return (
@@ -18,6 +19,7 @@ export default function Admin() {
             <Route index element={<DashBoard />} />
             <Route path="/product/*" element={<Product />} />
             <Route path="/user/*" element={<UserManager />} />
+            <Route path="/orders/*" element={<Orders />} />
           </Routes>
         </div>
       </div>

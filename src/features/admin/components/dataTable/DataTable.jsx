@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Pagination, PaginationItem, Rating } from '@mui/material';
+import { Box, Rating } from '@mui/material';
 import './dataTable.scss';
 import styled from '@emotion/styled';
 import { Delete, Edit } from '../popupConfirm/PopupConfirm';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListProduct } from '../../adminSlice';
 import { CustomPagination } from '../pagination/Pagination';
+import { getAllOrders } from '../../../orders/orderSlice';
 
 const columnsProduct = [
   {
@@ -587,6 +588,392 @@ const columnsUser = [
     },
   },
 ];
+const columnsOrder = [
+  {
+    field: 'orderNumber',
+    headerName: 'ID',
+    flex: 0.5,
+
+    renderCell: (params) => {
+      return (
+        <strong
+          style={{
+            fontFamily: 'Arial',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '20px',
+            lineHeight: '23px',
+            textAlign: 'center',
+            /* identical to box height */
+
+            color: '#000000',
+          }}
+        >
+          {params.row.userNumber}
+        </strong>
+      );
+    },
+  },
+  {
+    field: 'userId',
+    headerName: 'User Id',
+    flex: 3,
+    // width: '1000px',
+    renderCell: (params) => {
+      if (params.row.role === 'admin') {
+        return (
+          <div>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <img
+                src={params.row.avatar}
+                style={{
+                  height: 60,
+                  width: 60,
+                  objectFit: 'cover',
+                  marginRight: '11px',
+                }}
+              />
+              <div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    fontFamily: 'Arial',
+                    fontStyle: 'normal',
+                    fontWeight: 400,
+                    fontSize: '20px',
+                    lineHeight: '23px',
+                    /* identical to box height */
+
+                    color: '#000000',
+                  }}
+                >
+                  {params.row.username}
+                  <Box
+                    sx={{
+                      background: '#4B9528',
+                      color: ' #FFFFFF',
+                      marginLeft: '26px',
+                      borderRadius: '10px',
+                      minWidth: '65px',
+                      fontFamily: 'Arial',
+                      fontSize: '12px',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Admin
+                  </Box>
+                </div>
+                <div
+                  style={{
+                    fontFamily: 'Arial',
+                    fontStyle: 'normal',
+                    marginTop: '0',
+                    fontSize: '18px',
+                    fontWeight: 400,
+                    lineHeight: '21px',
+                    color: ' #929395',
+                  }}
+                >
+                  {params.row.email}
+                </div>
+              </div>
+            </Box>
+          </div>
+        );
+      } else
+        return (
+          <div>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <img
+                src={params.row.avatar}
+                style={{
+                  height: 60,
+                  width: 60,
+                  objectFit: 'cover',
+                  marginRight: '11px',
+                }}
+              />
+              <div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    fontFamily: 'Arial',
+                    fontStyle: 'normal',
+                    fontWeight: 400,
+                    fontSize: '20px',
+                    lineHeight: '23px',
+                    /* identical to box height */
+
+                    color: '#000000',
+                  }}
+                >
+                  {params.row.username}
+                  <Box
+                    sx={{
+                      background: '#E13A44',
+                      color: ' #FFFFFF',
+                      marginLeft: '26px',
+                      borderRadius: '10px',
+                      minWidth: '65px',
+                      fontFamily: 'Arial',
+                      fontSize: '12px',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Customer
+                  </Box>
+                </div>
+                <div
+                  style={{
+                    fontFamily: 'Arial',
+                    fontStyle: 'normal',
+                    marginTop: '0',
+                    fontSize: '18px',
+                    fontWeight: 400,
+                    lineHeight: '21px',
+                    color: ' #929395',
+                  }}
+                >
+                  {params.row.email}
+                </div>
+              </div>
+            </Box>
+          </div>
+        );
+    },
+  },
+  {
+    field: 'totalPrice',
+    headerName: 'Amount',
+    flex: 3,
+    // width: 136,
+    renderCell: (params) => {
+      return (
+        <div
+          style={{
+            fontFamily: 'Arial',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '20px',
+            lineHeight: '23px',
+            /* identical to box height */
+
+            color: '#000000',
+          }}
+        >
+          {params.row.contact}
+        </div>
+      );
+    },
+  },
+
+  {
+    field: 'address',
+    headerName: 'Address',
+    flex: 4,
+    // width: 136,
+    renderCell: (params) => {
+      return (
+        <div
+          style={{
+            fontFamily: 'Arial',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '20px',
+            lineHeight: '23px',
+            /* identical to box height */
+
+            color: '#000000',
+          }}
+        >
+          {params.row.contact}
+        </div>
+      );
+    },
+  },
+  {
+    field: 'contact',
+    headerName: 'Contact',
+    flex: 4,
+    // width: 136,
+    renderCell: (params) => {
+      return (
+        <div
+          style={{
+            fontFamily: 'Arial',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            fontSize: '20px',
+            lineHeight: '23px',
+            /* identical to box height */
+
+            color: '#000000',
+          }}
+        >
+          {params.row.contact}
+        </div>
+      );
+    },
+  },
+  {
+    field: 'createdAt',
+    headerName: 'Date',
+    flex: 4,
+    // width: 182,
+    renderCell: (params) => {
+      if (params.row.isActive) {
+        return (
+          <div
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '20px',
+              lineHeight: '23px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            Active
+          </div>
+        );
+      } else
+        return (
+          <div
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '20px',
+              lineHeight: '23px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            Disabled
+          </div>
+        );
+    },
+  },
+  {
+    field: 'isPaid',
+    headerName: 'Paid',
+    flex: 4,
+    // width: 157,
+    renderCell: (params) => {
+      if (params.row.isEmailVerified) {
+        return (
+          <p
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '20px',
+              lineHeight: '23px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            Yes
+          </p>
+        );
+      } else
+        return (
+          <p
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '20px',
+              lineHeight: '23px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            No
+          </p>
+        );
+    },
+  },
+  {
+    field: 'status',
+    headerName: 'Status',
+    flex: 3,
+    // width: 134,
+    renderCell: (params) => {
+      if (params.row.isContactVerified) {
+        return (
+          <p
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '20px',
+              lineHeight: '23px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            Yes
+          </p>
+        );
+      } else
+        return (
+          <p
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '20px',
+              lineHeight: '23px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            No
+          </p>
+        );
+    },
+  },
+  {
+    sortable: false,
+    renderCell: (params) => {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <Edit link={'/admin/user/add'} id={params.row.id} subject={'user'} />
+          <Delete productId={params.row.id} subject={'user'} />
+        </div>
+      );
+    },
+  },
+];
 
 const rowsUser = [
   {
@@ -635,7 +1022,7 @@ export function ProductTable() {
 
   const current = useSelector((state) => state.admin.current.result);
   const totalPages = useSelector((state) => state.admin.current.totalPages);
-  const currentPage = useSelector((state) => state.admin.current.currentPage);
+
   const [pageCount, setPageCount] = useState(1);
 
   const handlePageCount = (params) => {
@@ -657,7 +1044,6 @@ export function ProductTable() {
   let rowsProduct = [];
   if (current) {
     rowsProduct = current.map((item, index) => ({
-      // key: item.id,
       productNumber: index + 1,
       productId: item.id,
       name: item.name,
@@ -703,11 +1089,7 @@ export function ProductTable() {
         disableSelectionOnClick
         Pagination="null"
       />
-      <CustomPagination
-        onPageCount={handlePageCount}
-        totalPages={totalPages}
-        currentPage={currentPage}
-      />
+      <CustomPagination onPageCount={handlePageCount} totalPages={totalPages} />
     </div>
   );
 }
@@ -718,14 +1100,6 @@ export function UserTable(props) {
     navigate(`/admin/user/userDetail/${params.row.id}`, {
       state: {
         userId: params.row.id,
-        avatar: params.row.avatar,
-        username: params.row.username,
-        contact: params.row.contact,
-        email: params.row.email,
-        role: params.row.role,
-        isEmailVerified: params.row.isEmailVerified,
-        isContactVerified: params.row.isContactVerified,
-        isActive: params.row.isActive,
       },
     });
   };
@@ -763,6 +1137,63 @@ export function UserTable(props) {
         onCellClick={handleCellClick}
       />
       <CustomPagination />
+    </div>
+  );
+}
+
+export function OrderTable() {
+  const dispatch = useDispatch();
+  const [pageCount, setPageCount] = useState(1);
+  useEffect(() => {
+    const fetchOrdersByAdmin = async () => {
+      const params = {
+        page: pageCount,
+      };
+      const response = getAllOrders(params);
+      dispatch(response);
+    };
+    fetchOrdersByAdmin();
+  }, [dispatch, pageCount]);
+
+  const rowsOrder = [];
+  return (
+    <div style={{ width: '100%' }}>
+      <StyledDataGrid
+        sx={{
+          '.MuiDataGrid-columnHeaders': {
+            borderTop: '2px solid #929395',
+            borderBottom: 'none',
+          },
+          '.MuiDataGrid-columnSeparator': {
+            display: 'none',
+          },
+          '&.MuiDataGrid-root': {
+            border: 'none',
+          },
+          '&.MuiDataGrid-root .MuiDataGrid-cell:focus': {
+            outline: 'none',
+          },
+
+          '.MuiDataGrid-cell': {
+            borderTop: '1px solid #929395',
+            borderBottom: 'none',
+            backgroundColor: 'transparent',
+          },
+        }}
+        rows={rowsOrder}
+        getRowId={(row) => row.productId}
+        rowsPerPageOptions={[5, 10, 20]}
+        columns={columnsOrder}
+        pageSize={10}
+        autoHeight
+        disableColumnMenu
+        disableSelectionOnClick
+        Pagination="null"
+      />
+      <CustomPagination
+      // onPageCount={handlePageCount}
+      // totalPages={totalPages}
+      />
     </div>
   );
 }

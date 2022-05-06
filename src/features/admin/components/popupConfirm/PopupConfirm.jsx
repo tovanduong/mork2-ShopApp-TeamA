@@ -19,6 +19,7 @@ export function Delete(props) {
   };
 
   const handleClose = () => {
+    console.log(productId);
     setOpen(false);
   };
   return (
@@ -150,11 +151,12 @@ export function Delete(props) {
 }
 
 export function Edit(props) {
-  const { id } = props;
+  const { id, subject } = props;
+  //subject = user or product
   const navigate = useNavigate();
   const onClickEdit = (e) => {
     e.preventDefault();
-    navigate(`/admin/user/${id}`);
+    navigate(`/admin/${subject}/${id}`);
   };
 
   return (
