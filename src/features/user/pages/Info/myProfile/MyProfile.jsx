@@ -7,6 +7,8 @@ import './myProfile.scss';
 import Backdrop from '@mui/material/Backdrop';
 import EditAccountForm from './EditAccountForm';
 import { fetchEditContact, fetchEditEmail } from '../../../userSlice';
+import { useLocation, useParams } from 'react-router-dom';
+import { idID } from '@mui/material/locale';
 
 const MyProfile = () => {
   const [recentOrder, setRecentOrder] = useState([]);
@@ -39,6 +41,7 @@ const MyProfile = () => {
       handleClose();
     }
   };
+
   return (
     <Box>
       <Box className="myInfo">

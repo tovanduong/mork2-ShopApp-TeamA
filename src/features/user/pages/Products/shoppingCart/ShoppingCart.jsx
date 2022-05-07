@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import CouponCodeForm from '../../../../../components/common/couponCode/CouponCodeForm';
 import Cart from '../../../../../components/common/ItemCart/Cart';
-import { fetchDelItem, fetchGetCartById, fetchUpdateCart } from '../../../userSlice';
+import { countRemove, fetchDelItem, fetchGetCartById, fetchUpdateCart } from '../../../userSlice';
 import './shoppingCart.scss';
 
 const ShoppingCart = ({ handleAdd, handleRemove }) => {
@@ -45,6 +45,7 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
         total: item.quantity,
       })
     );
+    dispatch(countRemove());
   };
 
   const handleCheckOut = () => {

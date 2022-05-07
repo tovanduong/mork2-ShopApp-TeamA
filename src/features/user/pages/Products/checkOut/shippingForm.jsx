@@ -88,7 +88,7 @@ const ShippingForm = ({ getCart, onSubmit, initialValue }) => {
             />
           </Box>
           <Box>
-            <Button className="CheckOut-Btn" type="submit" onClick={() => handleEnable()}>
+            <Button className="CheckOut-Btn" onClick={() => handleEnable()}>
               {enable ? 'Edit Address' : 'Confirm'}
             </Button>
           </Box>
