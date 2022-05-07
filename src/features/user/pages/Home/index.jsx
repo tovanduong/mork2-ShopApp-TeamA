@@ -12,6 +12,7 @@ import VerifyEmail from './component/VerifyEmail';
 import './home.scss';
 import Bag from '../../../../assets/images/icon/VectorBag.png';
 import Logo from '../../../../assets/images/icon/ShopApp.png';
+import Benefit from '../../components/Benefit';
 
 export default function Home({ handleAdd }) {
   const [open, setOpen] = useState(false);
@@ -76,6 +77,9 @@ export default function Home({ handleAdd }) {
           <Box className="Home__GroupCate-carousel">
             {product?.result && <Carousel propsProduct={product} rateProps={handleRate} />}
           </Box>
+        </Box>
+        <Box my={2}>
+          <Benefit />
         </Box>
         <Products handleAdd={handleAdd} />
         <Modal
