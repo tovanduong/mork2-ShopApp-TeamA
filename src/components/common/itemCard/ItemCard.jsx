@@ -1,7 +1,8 @@
-import { Box, Link } from "@mui/material";
-import React from "react";
-import Rate from "../rate/Rate";
-import "./ItemCard.scss";
+import { Box, Link } from '@mui/material';
+import React from 'react';
+import Rate from '../rate/Rate';
+import './ItemCard.scss';
+import AddCart from '../../../assets/images/icon/AddCart.png';
 
 const ItemCard = ({ name, id, rating, images, price, handleAdd }) => {
   return (
@@ -22,7 +23,7 @@ const ItemCard = ({ name, id, rating, images, price, handleAdd }) => {
       <Box className="ItemCard-PriceCard">
         <Box className="ItemCard-price"> $ {price}</Box>
         <Box className="ItemCard-cart" onClick={() => handleAdd()}>
-          <img src="./image/icon/Addcart.png" alt="cart" />
+          <img src={AddCart} alt="cart" />
         </Box>
       </Box>
       <Box className="ItemCard-Available">

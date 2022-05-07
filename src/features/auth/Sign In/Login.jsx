@@ -4,10 +4,11 @@ import DeviceDetector from 'device-detector-js';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchLogin, fetchSendVerifyEmail } from '../authSlice';
+import Logo from '../../../assets/images/icon/ShopApp.png';
+import Bag from '../../../assets/images/icon/VectorBag.png';
+import { fetchLogin } from '../authSlice';
 import LoginForm from '../component/LoginForm';
 import Forgot from './Forgot';
-
 const Login = ({ parentCallback, onClose }) => {
   const [device, setDevice] = useState('');
   const [open, setOpen] = useState(false);
@@ -16,6 +17,9 @@ const Login = ({ parentCallback, onClose }) => {
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth.login);
+
+  const loading = useSelector((state) => state.auth.loading);
+
   const sendData = () => {
     parentCallback('Actived');
   };
@@ -52,9 +56,10 @@ const Login = ({ parentCallback, onClose }) => {
     const deviceId = `${device}-${email}`;
     dispatch(fetchLogin({ ...value, deviceId: deviceId }));
     localStorage.setItem('deviceId', deviceId);
-    setTimeout(() => {
+
+    if (!loading) {
       onClose();
-    }, 3000);
+    }
   };
 
   return (
@@ -74,6 +79,7 @@ const Login = ({ parentCallback, onClose }) => {
           Create An Account
         </Link>
       </Box>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -84,8 +90,8 @@ const Login = ({ parentCallback, onClose }) => {
           <CloseIcon className="close-modal" onClick={handleClose} />
           <Forgot propsClose={childClose} />
           <Box className="auth-layout">
-            <img src="./image/icon/VectorBag.png" alt="VectorBag" />
-            <img src="./image/icon/ShopApp.png" alt="ShopApp" />
+            <img src={Bag} alt="VectorBag" />
+            <img src={Logo} alt="ShopApp" />
           </Box>
         </Box>
       </Modal>

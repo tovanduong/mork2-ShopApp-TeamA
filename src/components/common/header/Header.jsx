@@ -5,7 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Auth from '../../../features/auth/index';
 import { fetchSearchProduct } from '../../../features/user/userSlice';
 import SearchBarUserForm from '../search/SearchBarUserForm';
@@ -14,9 +14,12 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import { fetchLogOut } from '../../../features/auth/authSlice';
-
+import ShopApp from '../../../assets/images/ShopApp.png';
+import Cart from '../../../assets/images/icon/Cart.png';
+import UserIcon from '../../../assets/images/icon/MaskUser.png';
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
   const handleHoverMenu = (event) => {
@@ -29,6 +32,7 @@ const Header = () => {
   const handleClose = () => setOpen(false);
   const [menu, setMenu] = useState(false);
   const { login } = useSelector((state) => state.auth);
+  const user = JSON.parse(localStorage.getItem('user'));
   const isLogin = Boolean(localStorage.getItem('access_token'));
   let screenWidth = window.screen.width;
   const dispatch = useDispatch();
@@ -52,6 +56,7 @@ const Header = () => {
     const getRefreshToken = JSON.parse(localStorage.getItem('access_token'));
     dispatch(fetchLogOut({ refreshToken: getRefreshToken?.refresh.token, deviceId: deviceId }));
     handleCloseMenu();
+    navigate('/');
   };
 
   return (
@@ -84,7 +89,7 @@ const Header = () => {
         <Box className="Header__mainbar">
           <Box component="ul" className="Header__mainbar--list">
             <Box className="Header__mainbar--item">
-              <img src="./image/ShopApp.png" alt="" />
+              <img src={ShopApp} alt="" />
             </Box>
             <Box className="Header__mainbar--item header__mainbar--search">
               <Box className="Header__mainbar--item header__mainbar--search">
@@ -96,7 +101,7 @@ const Header = () => {
             </Box>
             <Box className="Header__mainbar--item" onClick={!isLogin ? handleOpen : handlePopup}>
               <Link to={isLogin ? '/cart' : '/'}>
-                <img src="./image/icon/Cart.png" alt="" />
+                <img src={Cart} alt="Cart" />
               </Link>
             </Box>
             <Box
@@ -109,9 +114,21 @@ const Header = () => {
               onMouseOver={isLogin ? handleHoverMenu : null}
             >
               {isLogin ? (
-                login.user?.avatar || <AccountCircleSharpIcon sx={{ width: 50, height: 50 }} />
+                (
+                  <img
+                    src={user.avatar}
+                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                    alt="avatar"
+                  />
+                ) || (
+                  <img
+                    src="https://i1-vnexpress.vnecdn.net/2021/03/02/103650164-731814290963011-1374-5806-7233-1614677857.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=9yXpYDxZfyUhN1j1WGnnNg"
+                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                    alt="avatar"
+                  />
+                )
               ) : (
-                <img src="./image/icon/MaskUser.png" alt="" />
+                <img src={UserIcon} alt="user" />
               )}
             </Box>
             <Box className="Header__menu" onClick={HandleClick}>
@@ -150,8 +167,24 @@ const Header = () => {
         onClose={handleCloseMenu}
         TransitionComponent={Fade}
       >
-        <MenuItem>My Profile</MenuItem>
-        <MenuItem>Order History</MenuItem>
+        <MenuItem>
+          <Link
+            to="/myAccount"
+            style={{ textDecoration: 'none', color: '#000' }}
+            onClick={handleCloseMenu}
+          >
+            My Profile
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link
+            to="/myAccount/orderHistory/"
+            style={{ textDecoration: 'none', color: '#000' }}
+            onClick={handleCloseMenu}
+          >
+            Order History
+          </Link>
+        </MenuItem>
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
     </Box>
