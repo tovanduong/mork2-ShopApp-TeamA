@@ -1,20 +1,44 @@
-import { Box, Breadcrumbs, Container, Grid, Stack, Typography } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Box, Breadcrumbs, Container, Grid, Stack, Typography } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import ItemCartCheckOut from './itemCartCheckOut';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { fetchOrder } from '../../../userSlice';
 import './checkOut.scss';
+import ItemCartCheckOut from './itemCartCheckOut';
 import ShippingForm from './shippingForm';
 const CheckOut = () => {
   const getCart = JSON.parse(localStorage.getItem('cartUser'));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const initialValue = {
     address: '',
     contact: '',
     email: '',
     paymentMethod: '',
   };
+
   const handleSubmitCheckOut = (value) => {
-    console.log(value);
+    const total = getCart?.items?.reduce((price, item) => price + item.total, 0);
+    const itemArr = getCart?.items?.map((item) => {
+      return {
+        productId: item.itemCartInfo.id,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.total,
+      };
+    });
+    const { address, paymentMethod, contact } = value;
+    const orderCreate = {
+      address: address,
+      paymentMethod: paymentMethod,
+      contact: contact,
+      totalPrice: total,
+      userId: getCart?.cart.userId,
+    };
+
+    dispatch(fetchOrder({ orderCreate, itemArr }));
+    navigate('/');
   };
   return (
     <Container>

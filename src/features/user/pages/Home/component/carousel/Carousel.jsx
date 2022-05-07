@@ -1,10 +1,11 @@
-import { Box } from "@mui/material";
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper";
-import "./carousel.scss";
+import { Box } from '@mui/material';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Autoplay, Pagination } from 'swiper';
+import './carousel.scss';
+import CarouselImage from '../../../../../../assets/images/carousel.jpg';
 
 const Carousel = ({ propsProduct, rateProps }) => {
   const { result } = propsProduct;
@@ -29,7 +30,7 @@ const Carousel = ({ propsProduct, rateProps }) => {
             return (
               <SwiperSlide key={item.id}>
                 <Box className="Product-Slider">
-                  <img src="./image/carousel.jpg" alt="product" />
+                  <img src={CarouselImage} alt="product" />
                 </Box>
               </SwiperSlide>
             );
@@ -37,13 +38,13 @@ const Carousel = ({ propsProduct, rateProps }) => {
       </Swiper>
       <Box className="list-carousel">
         <Box className="carousel-item">
-          <img src="./image/carousel.jpg" alt="" />
+          <img src={CarouselImage} alt="" />
         </Box>
         <Box className="carousel-item">
-          <img src="./image/carousel.jpg" alt="" />
+          <img src={CarouselImage} alt="" />
         </Box>
         <Box className="carousel-item">
-          <img src="./image/carousel.jpg" alt="" />
+          <img src={CarouselImage} alt="" />
         </Box>
       </Box>
     </Box>

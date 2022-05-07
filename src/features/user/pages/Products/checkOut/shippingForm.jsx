@@ -93,6 +93,7 @@ const ShippingForm = ({ getCart, onSubmit, initialValue }) => {
             </Button>
           </Box>
         </Box>
+
         <Box className="Checkout">
           <Typography variant="h4" mb="10px">
             Check Out
@@ -114,6 +115,7 @@ const ShippingForm = ({ getCart, onSubmit, initialValue }) => {
               {getSubTotal() === 0 || getSubTotal() === undefined ? 0 : getSubTotal() + 20}$
             </Typography>
           </Box>
+
           <Box className="Checkout__radio-container">
             <Box>
               <RadioInputField
