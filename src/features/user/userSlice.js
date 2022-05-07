@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { delItem, getAllProduct, getCartById, getProductId, getSearchProduct, patchUpdateCart, postCreateCart, postItemToCart, postVerify } from '../../api/userAPI';
+import { delItem, getAllProduct, getCartById, getCate, getProductId, getSearchProduct, patchUpdateCart, postCreateCart, postItemToCart, postVerify } from '../../api/userAPI';
 
 const initialState = {
     status: '',
@@ -10,7 +10,8 @@ const initialState = {
     cart: {},
     updateCart: {},
     isUpdate: false,
-    isDel: false
+    isDel: false,
+    category: []
 }
 
 
@@ -88,6 +89,14 @@ export const fetchDelItem = createAsyncThunk(
     }
 );
 
+export const fetchGetAllCategory = createAsyncThunk(
+    "users/getCate",
+    async (payload) => {
+        const response = await getCate(payload)
+        return response
+    }
+);
+
 export const UserSlice = createSlice({
     name: 'users',
     initialState,
@@ -131,7 +140,12 @@ export const UserSlice = createSlice({
         [fetchDelItem.fulfilled]: (state, action) => {
             state.status = 'success';
             state.isDel = true
+        },
+        [fetchGetAllCategory.fulfilled]: (state, action) => {
+            state.status = 'success';
+            state.category = action.payload
         }
+
     },
 })
 

@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
-import { Button, TextField } from '@mui/material';
-import React, { useState } from 'react';
-import './importFileField.scss';
+import { Button } from '@mui/material';
+import { useState } from 'react';
 import uploadFile from '../../assets/images/uploadFile.svg';
+import { AdminInputField } from './AdminInputField';
+import './importFileField.scss';
 
-const ImportFileField = ({ onImportFileChange }) => {
+export const ImportFileField = ({ onImportFileChange, control, name }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameImage, setNameImage] = useState('');
 
@@ -13,9 +14,15 @@ const ImportFileField = ({ onImportFileChange }) => {
   });
 
   const handleImportImageChange = (event) => {
-    setNameImage(event.target.files[0].name);
-    setSelectedImage(event.target.files[0]);
-    onImportFileChange(event.target.files[0]);
+    if (Boolean(event.target.accept)) {
+      setNameImage(event.target.files[0].name);
+      setSelectedImage(event.target.files[0]);
+      onImportFileChange(event.target.files[0]);
+    } else {
+      setNameImage(event.target.value);
+      setSelectedImage(null);
+      onImportFileChange(nameImage);
+    }
   };
 
   return (
@@ -33,7 +40,7 @@ const ImportFileField = ({ onImportFileChange }) => {
             width="100"
             height="100"
             className="imageImportFile"
-            src={uploadFile}
+            src={nameImage || uploadFile}
           />
         )}
       </div>
@@ -51,17 +58,18 @@ const ImportFileField = ({ onImportFileChange }) => {
           <Button variant="contained" component="span" size="small">
             Chọn tệp
           </Button>
-          <TextField
-            size="small"
+
+          <AdminInputField
             className="nameImageField"
-            id="standard-basic"
+            size="small"
+            name={name}
+            onChange={(e) => handleImportImageChange(e)}
+            type="string"
             value={nameImage}
-            variant="outlined"
+            control={control}
           />
         </div>
       </label>
     </div>
   );
 };
-
-export default ImportFileField;

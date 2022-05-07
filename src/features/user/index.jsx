@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import Header from '../../components/common/header/Header';
+import CheckOut from './pages/Products/checkOut/checkOut';
 import ShoppingCart from './pages/Products/shoppingCart/ShoppingCart';
 import { fetchAddItemToCart, fetchCreateCart, fetchUpdateCart } from './userSlice';
 
@@ -9,15 +11,13 @@ const Info = React.lazy(() => import('./pages/Info'));
 const Products = React.lazy(() => import('./pages/Products'));
 
 export default function User() {
-  const [cartItems, setCartItem] = useState([]);
   const dispatch = useDispatch();
-  const isCart = JSON.parse(localStorage.getItem('cartUser'));
-
   const handleAddProduct = (product) => {
     const isCreatCart = JSON.parse(localStorage.getItem('createCartUser'));
-    const isCart = JSON.parse(localStorage.getItem('cartUser'));
 
+    console.log(product);
     if (isCreatCart) {
+      const isCart = JSON.parse(localStorage.getItem('cartUser'));
       const productExits = isCart?.items.find(
         (item) => item.itemCartInfo.id === product?.itemCartInfo?.id
       );
@@ -63,7 +63,7 @@ export default function User() {
   };
 
   const handleRemoveProduct = (product) => {
-    console.log(product);
+    const isCart = JSON.parse(localStorage.getItem('cartUser'));
     const productExits = isCart?.items.find(
       (item) => item.itemCartInfo.id === product.itemCartInfo.id
     );
@@ -81,20 +81,16 @@ export default function User() {
 
   return (
     <>
+      <Header />
       <Routes>
         <Route index element={<Home handleAdd={handleAddProduct} />} />
         <Route path="/info" element={<Info />} />
         <Route path="/products" element={<Products />} />
         <Route
           path="/cart"
-          element={
-            <ShoppingCart
-              cartItems={cartItems}
-              handleAdd={handleAddProduct}
-              handleRemove={handleRemoveProduct}
-            />
-          }
+          element={<ShoppingCart handleAdd={handleAddProduct} handleRemove={handleRemoveProduct} />}
         />
+        <Route path="/cart/:cartId" element={<CheckOut />} />
       </Routes>
     </>
   );

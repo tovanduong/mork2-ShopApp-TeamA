@@ -64,6 +64,14 @@
     .otherInfo {
       flex: 2;
     }
+
+    .MuiFormControl-root {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
   }
 
   .btnAddEditAdmin {
@@ -82,5 +90,31 @@
 
     margin: auto 26px;
     padding-top: 18px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .addEditUserPageWrapper {
+    .formWrapper {
+      flex-direction: column;
+    }
+
+    .titleProductForm {
+      font-size: 17px;
+    }
+  }
+
+  .titleAndButtonProduct {
+    font-size: 14px;
+  }
+
+  .otherInformation {
+    .MuiFormLabel-root {
+      font-size: 15px !important;
+    }
+
+    span {
+      font-size: 13px;
+    }
   }
 }

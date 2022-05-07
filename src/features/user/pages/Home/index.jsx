@@ -1,12 +1,15 @@
-import { Box, Container, Modal } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ListIcon from '@mui/icons-material/List';
+import { Box, Container, List, ListItem, ListItemButton, Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import VerifyEmail from './component/VerifyEmail';
 import { useDispatch, useSelector } from 'react-redux';
+import Header from '../../../../components/common/header/Header';
 import { fetchSendVerifyEmail } from '../../../auth/authSlice';
-import { fetchGetAllProduct } from '../../userSlice';
-import Carousel from './component/carousel/Carousel';
-import './home.scss';
+import { fetchGetAllCategory, fetchGetAllProduct } from '../../userSlice';
 import Products from '../Products';
+import Carousel from './component/carousel/Carousel';
+import VerifyEmail from './component/VerifyEmail';
+import './home.scss';
 
 export default function Home({ handleAdd }) {
   const [open, setOpen] = useState(false);
@@ -23,6 +26,7 @@ export default function Home({ handleAdd }) {
 
   useEffect(() => {
     dispatch(fetchGetAllProduct());
+    dispatch(fetchGetAllCategory());
   }, []);
 
   const handleRate = () => {
@@ -40,11 +44,33 @@ export default function Home({ handleAdd }) {
     return printCarousel;
   };
 
+  const { category } = useSelector((state) => state.user);
+
   return (
-    <Box pt="240px">
-      <Container>
+    <Box>
+      <Header />
+      <Container className="user-container">
         <Box className="Home__GroupCate">
-          <Box width="22%" bgcolor="#CCC"></Box>
+          <Box width="20%" bgcolor="#3D464D">
+            <List className="Home__Cate-list">
+              <ListItem disablePadding className="Home__Cate-title">
+                <ListIcon />
+                Categories
+              </ListItem>
+              {category &&
+                category.map((cate, index) => {
+                  return (
+                    <ListItem disablePadding key={index}>
+                      <ListItemButton className="Home__Cate-item">
+                        {cate}
+                        <ArrowForwardIosIcon sx={{ color: '#FFF' }} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
+            </List>
+          </Box>
+
           <Box className="Home__GroupCate-carousel">
             {product?.result && <Carousel propsProduct={product} rateProps={handleRate} />}
           </Box>

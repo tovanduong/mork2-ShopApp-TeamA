@@ -1,7 +1,13 @@
 .listUserWrapper {
-    margin-right: 32px;
+    margin: 32px;
     .titleAndButtonUser {
         display: flex;
         justify-content: space-between;
+    }
+    .tableUserWrapper {
+        padding-top: 35px;
+        padding-bottom: 35px;
+        background-color: #fff;
+        box-shadow: 0.5px 0.5px 12px rgba(0, 0, 0, 0.25);
     }
 }

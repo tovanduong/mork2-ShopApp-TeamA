@@ -1,31 +1,39 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Breadcrumbs, Button, CircularProgress, Typography } from '@mui/material';
-import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as yup from 'yup';
+import userManager from '../../../api/userManager';
 import {
   AdminInputField,
-  MultipleSelectedField,
+  ImportFileField,
+  RadioCheckBox,
   SelectField,
-  TextAreaField,
 } from '../../../components/FormFields';
-import ImportFileField from '../../../components/FormFields/ImportFileField';
+import { listUserCheckBox, roleOption } from '../../../constants/admin';
 import './userForm.scss';
 
 const schema = yup.object().shape({
-  // name: yup.string().required(),
-  // price: yup.number().required().min(0, 'min is 0').typeError('please enter a valid number'),
+  username: yup.string().required('name is required'),
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+  retypePassword: yup
+    .string()
+    .required('retype password is requied')
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
+  role: yup.string().required(),
+  contact: yup.string(),
 });
 
-const roleOption = [
-  { label: 'Admin', value: 'admin' },
-  { label: 'User', value: 'user' },
-];
+export default function UserForm({ initialValues, isEdit, userId, onSubmit }) {
+  const [avatar, setAvatar] = useState(null);
 
-export default function UserForm({ initialValues, onSubmit }) {
-  const { userId } = useParams();
-  const isEdit = Boolean(userId);
+  const [checkBoxValues, setCheckBoxValues] = useState({
+    isActive: initialValues.isActive,
+    isEmailVerified: initialValues.isEmailVerified,
+    isContactVerified: initialValues.isContactVerified,
+  });
 
   const {
     control,
@@ -36,8 +44,51 @@ export default function UserForm({ initialValues, onSubmit }) {
     resolver: yupResolver(schema),
   });
 
-  const handleFormSubmit = (formValues) => {
-    onSubmit(formValues);
+  const handleImportFileChange = (data) => {
+    setAvatar(data);
+  };
+
+  const handleRadioCheckBoxChange = (checkBoxId, valueChanged) => {
+    setCheckBoxValues({ ...checkBoxValues, [checkBoxId]: valueChanged });
+  };
+
+  // submit add update user
+  const handleFormSubmit = async (formValues) => {
+    if (avatar.type) {
+      const formData = new FormData();
+      await formData.append('image', avatar, avatar.name);
+      // upload image to get url link
+      async function fetchUploadImage() {
+        try {
+          const result = await userManager.postUploadImage(formData);
+          return await result.data.imageURL;
+        } catch (error) {
+          console.log('failed to upload image: ', error.message);
+        }
+      }
+      const imageUrl = await fetchUploadImage();
+      const dataSubmit = {
+        username: formValues.username,
+        email: formValues.email,
+        password: formValues.password,
+        avatar: imageUrl || 'null',
+        role: formValues.role,
+        // contact: formValues.contact,
+        ...checkBoxValues,
+      };
+      onSubmit(dataSubmit);
+    } else {
+      const dataSubmit = {
+        username: formValues.username,
+        email: formValues.email,
+        password: formValues.password,
+        avatar: avatar || 'null',
+        role: formValues.role,
+        // contact: formValues.contact,
+        ...checkBoxValues,
+      };
+      onSubmit(dataSubmit);
+    }
   };
 
   return (
@@ -54,6 +105,8 @@ export default function UserForm({ initialValues, onSubmit }) {
         <h1>{!isEdit ? 'Create User' : `Update User #${userId}`}</h1>
         <Box mt={3}>
           <Button
+            md={{ size: 'small' }}
+            lg={{ size: 'large' }}
             className="btnAddEditAdmin"
             type="submit"
             variant="contained"
@@ -70,13 +123,13 @@ export default function UserForm({ initialValues, onSubmit }) {
 
       <form className="formWrapper">
         <Box className="basicInformation">
-          <h3 className="titleProductForm">Basic information</h3>
+          <h2 className="titleProductForm">Basic information</h2>
 
           <div className="horizontalLine"></div>
 
           <div className="formField">
             <div style={{ marginBottom: '25px' }}>
-              <AdminInputField name="name" type="string" control={control} label="Name" />
+              <AdminInputField name="username" type="string" control={control} label="Name" />
             </div>
 
             <div style={{ marginBottom: '25px' }}>
@@ -107,7 +160,11 @@ export default function UserForm({ initialValues, onSubmit }) {
             <h2 className="titleProductForm">Avatar</h2>
             <div className="horizontalLine"></div>
             <Box mt={2} className="mlr30">
-              <ImportFileField />
+              <ImportFileField
+                name="avatar"
+                control={control}
+                onImportFileChange={handleImportFileChange}
+              />
             </Box>
           </div>
           <div className="otherInfo">
@@ -115,7 +172,17 @@ export default function UserForm({ initialValues, onSubmit }) {
             <div className="horizontalLine"></div>
 
             <Box className="mlr30">
-              <h3>other info standing here</h3>
+              <Box mt={4}>
+                <AdminInputField name="contact" type="string" control={control} label="Contact" />
+              </Box>
+
+              {listUserCheckBox.map((userCheckBox) => (
+                <RadioCheckBox
+                  key={userCheckBox.id}
+                  userCheckBox={userCheckBox}
+                  onRadioCheckBoxChange={handleRadioCheckBoxChange}
+                />
+              ))}
             </Box>
           </div>
         </Box>

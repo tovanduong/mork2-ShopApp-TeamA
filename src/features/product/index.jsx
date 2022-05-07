@@ -10,7 +10,7 @@ export default function Product() {
       <Routes>
         <Route index element={<ListProduct />} />
         <Route path="add" element={<AddEditProduct />} />
-        <Route path="edit" element={<AddEditProduct />} />
+        <Route path="/:productId" element={<AddEditProduct />} />
       </Routes>
     </>
   );

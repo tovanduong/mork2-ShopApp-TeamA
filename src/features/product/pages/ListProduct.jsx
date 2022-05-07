@@ -1,7 +1,7 @@
 import { Box, Link, Button } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React from 'react';
-import { ProductTable } from '../../admin/components/dataTable/DataTable';
+import { ProductTable } from '../components/ProductTable';
 import './listProduct.scss';
 export default function ListProduct() {
   return (
@@ -24,6 +24,7 @@ export default function ListProduct() {
             type="submit"
             variant="contained"
             color="primary"
+            style={{ textTransform: 'capitalize' }}
             // disabled={isSubmitting}
             // onClick={handleSubmit(handleFormSubmit)}
           >
@@ -34,8 +35,11 @@ export default function ListProduct() {
           </Button>
         </Box>
       </div>
-      <Box>
-        <ProductTable />
+      <Box className="tableProductWrapper">
+        <Box>search: phần này của a Dương</Box>
+        <Box>
+          <ProductTable className="productTableWrapper" />
+        </Box>
       </Box>
     </Box>
   );

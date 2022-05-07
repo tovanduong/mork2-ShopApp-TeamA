@@ -10,14 +10,12 @@ export default function UserDetailById() {
   const { userId } = useParams();
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userManager.current);
-  // console.log(userDetail);
-  // const [userData, setUserData] = useState({});
   //get user by id api
   useEffect(() => {
     dispatch(getUserById(userId));
   }, []);
   return (
-    <div>
+    <div className="userDetailWrapper">
       <div className="breadCrumbsWrapper" role="presentation">
         <Breadcrumbs aria-label="breadcrumb">
           <Link to="/admin">Dashboard</Link>
@@ -25,7 +23,7 @@ export default function UserDetailById() {
           <Typography> User Detail #{userDetail.id}</Typography>
         </Breadcrumbs>
       </div>
-      <Box className="userDetailWrapper">
+      <Box>
         <Box>
           <h1>User Detail #{userDetail.id}</h1>
           <p>UserID: {userDetail.id}</p>

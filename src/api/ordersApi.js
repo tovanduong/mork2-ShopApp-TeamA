@@ -5,7 +5,7 @@ export function getOrdersByAdmin(params) {
   return axiosClient
     .get(GET_ORDERS_BY_ADMIN, { params })
     .then((res) => {
-      return res.data;
+      return res.data.orders;
     })
     .catch((err) => {
       console.log(err);

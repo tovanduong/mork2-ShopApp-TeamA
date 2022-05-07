@@ -1,0 +1,213 @@
+.productInforWrapper {
+  margin-bottom: 4rem;
+
+  .productInfo {
+    display: flex;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+
+    .productImage {
+      display: flex;
+      flex-direction: column;
+      flex: 4;
+
+      .productImageLarge {
+        margin-bottom: 20px;
+      }
+
+      .productImageSmall {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .productSelection {
+      flex: 6;
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+
+      .titleProduct {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 47px;
+
+        align-items: center;
+        letter-spacing: -0.32px;
+
+        color: #000000;
+      }
+
+      .rated {
+        display: flex;
+        padding: 11px 17px;
+        align-items: center;
+        margin-bottom: 10px;
+        color: #565353;
+
+        span {
+          font-family: 'Roboto';
+          font-weight: 700;
+          line-height: 19px;
+        }
+
+        .breakContent {
+          margin: auto 15px;
+        }
+      }
+
+      .productDescription {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #000000;
+        margin-bottom: 20px;
+      }
+
+      .breakLine {
+        width: 100%;
+        height: 0px;
+        border: 1px solid #737070;
+        margin-bottom: 20px;
+      }
+
+      .productOtherDetails {
+        display: flex;
+        width: 80%;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        span {
+          color: green;
+        }
+      }
+
+      .productPrice {
+        display: flex;
+        justify-content: space-between;
+        width: 40%;
+
+        .price {
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 32px;
+          line-height: 38px;
+          color: #000000;
+        }
+
+        .saleOfPrice {
+          background: #ffd333;
+          border: 1px solid rgba(186, 186, 186, 0.4);
+          box-sizing: border-box;
+          border-radius: 5px;
+          padding: 7px;
+
+          font-family: 'Roboto';
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          text-align: center;
+          color: #c90404;
+          margin-bottom: 20px;
+        }
+
+        .productSetColor {
+          h3 {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 19px;
+            color: #5a5a5a;
+            margin-bottom: 16px;
+          }
+          .colors {
+            margin-bottom: 16px;
+          }
+        }
+
+        .productQuanlity {
+          h3 {
+            font-family: 'Roboto';
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 19px;
+            color: #5a5a5a;
+          }
+        }
+      }
+    }
+  }
+
+  .productDetails {
+    .tabListWrapper {
+      .MuiTabs-flexContainer {
+        justify-content: center;
+      }
+
+      .MuiTabs-indicator {
+        background-color: #ffd333;
+      }
+
+      .tabs {
+        font-family: 'Roboto';
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 23px;
+        text-transform: capitalize;
+        color: #000000;
+      }
+    }
+
+    .MuiTabPanel-root {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    .contentTab {
+      min-height: 300px;
+    }
+  }
+
+  .relatedProducts {
+    .titleRelateProducts {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      h2 {
+        font-family: 'Arial';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        color: #000000;
+      }
+
+      .horizontalLine {
+        flex: 2 2;
+        height: 0px;
+        left: 222px;
+        border: 1px solid #5a5a5a;
+      }
+      .arrow {
+        // flex: 1;
+        background: #c4c4c4;
+        border-radius: 5px;
+        padding: 5px;
+      }
+    }
+
+    .listRelatedProduct {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

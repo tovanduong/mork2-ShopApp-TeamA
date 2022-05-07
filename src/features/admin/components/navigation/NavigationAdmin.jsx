@@ -77,6 +77,8 @@ export default function NavigationAdmin(props) {
   const navigate = useNavigate();
   const [adminNavbar, setAdminNavbar] = useState(listAdminNavbar);
 
+  const userInfor = JSON.parse(localStorage.getItem('user'));
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -202,12 +204,16 @@ export default function NavigationAdmin(props) {
                 className="avatarAdmin"
                 width="40"
                 height="40"
-                src="https://a1cf74336522e87f135f-2f21ace9a6cf0052456644b80fa06d4f.ssl.cf2.rackcdn.com/images/characters/large/800/Baymax.Big-Hero-6.webp"
-                alt="avatar_admin"
+                src={
+                  userInfor
+                    ? userInfor.avatar
+                    : 'https://www.everblazing.org/wp-content/uploads/2017/06/avatar-372-456324-300x300.png'
+                }
+                // alt="avatar_admin"
               />
               <span className="adminInfo">
-                <div className="nameAdmin">Nam Nguyễn</div>
-                <span className="roleInfo"> Admin</span>
+                <div className="nameAdmin">{userInfor ? userInfor.username : 'Admin User'}</div>
+                <span className="roleInfo"> {userInfor ? userInfor.role : 'admin'}</span>
               </span>
             </Box>
             {/* <IconButton
@@ -271,7 +277,7 @@ export default function NavigationAdmin(props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       ></Box>
     </Box>
   );

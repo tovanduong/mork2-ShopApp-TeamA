@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Link, Button } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { OrderTable } from '../../admin/components/dataTable/DataTable';
+import { OrderTable } from '../components/OrdersTable';
+import './listOrder.scss';
 export default function ListOrder() {
   return (
     <Box className="listOrderWrapper">
@@ -18,7 +19,7 @@ export default function ListOrder() {
       <div className="titleOrder">
         <h1>Order</h1>
       </div>
-      <Box>
+      <Box className="tableOrdersWrapper">
         <OrderTable />
       </Box>
     </Box>

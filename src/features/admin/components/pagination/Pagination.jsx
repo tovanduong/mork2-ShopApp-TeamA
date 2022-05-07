@@ -14,6 +14,7 @@ export function CustomPagination(props) {
   return (
     <Pagination
       className="sidePagination"
+      style={{ marginTop: '60px', marginLeft: '20px' }}
       color="primary"
       variant="outlined"
       shape="rounded"

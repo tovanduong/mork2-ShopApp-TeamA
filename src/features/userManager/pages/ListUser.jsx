@@ -1,13 +1,12 @@
 import { Box, Link, Button } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React from 'react';
-import { UserTable } from '../../admin/components/dataTable/DataTable';
+import { UserTable } from '../components/UserTable';
 import './listUser.scss';
-import UserDetailById from './UserDetail';
 
 export default function ListUser() {
   return (
-    <Box className="listUserWrapper" mt={4} mb={8}>
+    <Box className="listUserWrapper" mx={4} mt={4} mb={8}>
       <div className="breadCrumbsWrapper" role="presentation">
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/admin">
@@ -36,7 +35,7 @@ export default function ListUser() {
           </Button>
         </Box>
       </div>
-      <Box>
+      <Box className="tableUserWrapper">
         <UserTable />
       </Box>
     </Box>
