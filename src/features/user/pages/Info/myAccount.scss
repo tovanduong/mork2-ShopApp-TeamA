@@ -1,0 +1,70 @@
+.myAccount-navigation {
+  background: #fffefe;
+  border: 1px solid rgba(90, 90, 90, 0.4);
+  /* box-shadow */
+  height: calc(100% - 30px);
+  box-shadow: 0.5px 0.5px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 29px 0 0 0px;
+  .Mui-selected a {
+    color: #ffd333 !important;
+  }
+  .Mui-selected {
+    background-color: #fffefe;
+  }
+}
+
+.myAccount-routes {
+  background: #fffefe;
+  border: 1px solid rgba(90, 90, 90, 0.4);
+  border-radius: 5px;
+  min-height: 100%;
+}
+
+.myAccount-navigation-title {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 33px;
+  padding-left: 30px;
+  margin-bottom: 30px;
+  /* identical to box height */
+  display: block;
+  color: #000000;
+}
+.myAccount-navigation-item {
+  padding-left: 30px;
+  width: 100%;
+  &:last-child {
+    font-weight: 500;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    line-height: 28px;
+
+    color: #868484;
+  }
+}
+
+.myAccount-link {
+  font-weight: 500;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  line-height: 28px;
+  height: 100%;
+  color: #868484 !important;
+}
+
+.myAccount-Edid-Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #fffefe;
+  border: 1px solid gray;
+  box-shadow: 24px;
+  padding: 32px;
+}

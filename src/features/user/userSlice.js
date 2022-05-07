@@ -1,5 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { delItem, getAllProduct, getCartById, getCate, getProductId, getSearchProduct, patchUpdateCart, postCreateCart, postItemToCart, postVerify } from '../../api/userAPI';
+import {
+    delItem,
+    getAllProduct,
+    getCartById,
+    getCate,
+    getOrder,
+    getProductId,
+    getSearchProduct,
+    patchContact,
+    patchEmail,
+    patchUpdateCart,
+    postCreateCart,
+    postItemToCart,
+    postOrder,
+    postVerify
+} from '../../api/userAPI';
 
 const initialState = {
     status: '',
@@ -11,7 +26,15 @@ const initialState = {
     updateCart: {},
     isUpdate: false,
     isDel: false,
-    category: []
+    category: [],
+    order: [],
+    myOrder: [],
+    isEdit: false,
+    filter: {
+        size: 4,
+        currentPage: 1,
+        totalPages: 6
+    }
 }
 
 
@@ -97,11 +120,47 @@ export const fetchGetAllCategory = createAsyncThunk(
     }
 );
 
+export const fetchOrder = createAsyncThunk(
+    "users/postCheckOut",
+    async (payload) => {
+        const response = await postOrder(payload)
+        return response
+    }
+);
+
+export const fetchGetOrder = createAsyncThunk(
+    "users/getRecentOrder",
+    async (payload) => {
+        const response = await getOrder(payload)
+        return response
+    }
+);
+
+export const fetchEditContact = createAsyncThunk(
+    "users/patchContact",
+    async (payload) => {
+        const response = await patchContact(payload)
+        localStorage.setItem('user', JSON.stringify(response))
+        return response
+    }
+);
+
+export const fetchEditEmail = createAsyncThunk(
+    "users/patchEmail",
+    async (payload) => {
+        const response = await patchEmail(payload)
+        localStorage.setItem('user', JSON.stringify(response))
+        return response
+    }
+);
+
 export const UserSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-
+        setFilter(state, action) {
+            state.filter = action.payload
+        }
     },
 
     extraReducers: {
@@ -144,12 +203,31 @@ export const UserSlice = createSlice({
         [fetchGetAllCategory.fulfilled]: (state, action) => {
             state.status = 'success';
             state.category = action.payload
+        },
+        [fetchOrder.fulfilled]: (state, action) => {
+            state.status = 'order success';
+            state.order = action.payload
+            localStorage.removeItem('createCartUser')
+            localStorage.removeItem('cartUser')
+        },
+        [fetchGetOrder.fulfilled]: (state, action) => {
+            state.status = 'success';
+            state.myOrder = action.payload
+        },
+        [fetchEditContact.pending]: (state, action) => {
+            state.isEdit = false;
+        },
+        [fetchEditContact.fulfilled]: (state, action) => {
+            state.isEdit = true;
+
+        },
+        [fetchEditEmail.fulfilled]: (state, action) => {
         }
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { productCart } = UserSlice.actions
+export const { setFilter } = UserSlice.actions
 
 export default UserSlice.reducer
