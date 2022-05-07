@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../../components/common/header/Header';
@@ -84,7 +84,7 @@ export default function User() {
       <Header />
       <Routes>
         <Route index element={<Home handleAdd={handleAddProduct} />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/myAccount/*" element={<Info />} />
         <Route path="/products" element={<Products />} />
         <Route
           path="/cart"
