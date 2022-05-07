@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../../components/common/header/Header';
 import CheckOut from './pages/Products/checkOut/checkOut';
-import ProductInfo from './pages/Products/ProductInfo/ProductInfo';
 import ShoppingCart from './pages/Products/shoppingCart/ShoppingCart';
 import { fetchAddItemToCart, fetchCreateCart, fetchUpdateCart } from './userSlice';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Info = React.lazy(() => import('./pages/Info'));
 const Products = React.lazy(() => import('./pages/Products'));
+const ProductInfo = React.lazy(() => import('./pages/Products/ProductInfo/ProductInfo'));
 
 export default function User() {
   const dispatch = useDispatch();
