@@ -218,6 +218,7 @@ export const UserSlice = createSlice({
         [fetchOrder.fulfilled]: (state, action) => {
             state.status = 'order success';
             state.order = action.payload
+            state.count = 0
             localStorage.removeItem('createCartUser')
             localStorage.removeItem('cartUser')
         },

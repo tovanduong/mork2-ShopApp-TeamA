@@ -17,7 +17,7 @@ const Login = ({ parentCallback, onClose }) => {
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth.login);
-
+  const userLocalstorage = localStorage.getItem('user');
   const loading = useSelector((state) => state.auth.loading);
 
   const sendData = () => {
@@ -40,6 +40,7 @@ const Login = ({ parentCallback, onClose }) => {
   }, [user]);
 
   useEffect(() => {
+    console.log(user);
     // localStorage.setItem('datauser', JSON.stringify(user))
     if (user && Object.values(user).length !== 0) {
       if (user.role === 'user') {
@@ -57,8 +58,10 @@ const Login = ({ parentCallback, onClose }) => {
     dispatch(fetchLogin({ ...value, deviceId: deviceId }));
     localStorage.setItem('deviceId', deviceId);
 
-    if (!loading) {
-      onClose();
+    if (!loading && userLocalstorage) {
+      setTimeout(() => {
+        onClose();
+      }, 1000);
     }
   };
 
