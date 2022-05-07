@@ -22,7 +22,9 @@ const initialState = {
     loading: false,
     product: [],
     search: [],
+    searchProduct: '',
     cart: {},
+    count: 0,
     updateCart: {},
     isUpdate: false,
     isDel: false,
@@ -158,8 +160,17 @@ export const UserSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
+        searchProduct(state, action) {
+            state.searchProduct = action.payload
+        },
         setFilter(state, action) {
             state.filter = action.payload
+        },
+        countIncrease(state) {
+            state.count = state.count + 1
+        },
+        countRemove(state) {
+            state.count = state.count - 1
         }
     },
 
@@ -222,12 +233,13 @@ export const UserSlice = createSlice({
 
         },
         [fetchEditEmail.fulfilled]: (state, action) => {
+            state.isEdit = true;
         }
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setFilter } = UserSlice.actions
+export const { setFilter, searchProduct, countIncrease, countRemove } = UserSlice.actions
 
 export default UserSlice.reducer

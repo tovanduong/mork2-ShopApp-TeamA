@@ -10,7 +10,6 @@ const OrderHistory = () => {
   const dispatch = useDispatch();
   const filter = useSelector((state) => state.user.filter);
   const myOder = useSelector((state) => state.user.myOrder);
-  console.log(myOder.orders);
   useEffect(() => {
     dispatch(fetchGetOrder(filter));
   }, [filter]);

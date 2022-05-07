@@ -11,17 +11,17 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { fetchLogOut } from '../../../auth/authSlice';
 import './myAccount.scss';
 import MyProfile from './myProfile/MyProfile';
 import OrderHistory from './orderHistory/OrderHistory';
 
 export default function Info() {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const location = useLocation();
+  const [selectedIndex, setSelectedIndex] = React.useState(location.pathname);
 
   const handleListItemClick = (event, index) => {
-    console.log('first');
     setSelectedIndex(index);
   };
 
@@ -66,8 +66,8 @@ export default function Info() {
               </Typography>
               <ListItemButton
                 className="myAccount-navigation-item"
-                selected={selectedIndex === 0}
-                onClick={(event) => handleListItemClick(event, 0)}
+                selected={selectedIndex === '/myAccount'}
+                onClick={(event) => handleListItemClick(event, '/myAccount')}
               >
                 <Link
                   className="myAccount-link"
@@ -79,8 +79,8 @@ export default function Info() {
               </ListItemButton>
               <ListItemButton
                 className="myAccount-navigation-item"
-                selected={selectedIndex === 1}
-                onClick={(event) => handleListItemClick(event, 1)}
+                selected={selectedIndex === '/myAccount/orderHistory/'}
+                onClick={(event) => handleListItemClick(event, '/myAccount/orderHistory/')}
               >
                 <Link
                   className="myAccount-link"
