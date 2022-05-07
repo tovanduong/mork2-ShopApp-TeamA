@@ -38,12 +38,12 @@ export const listAdminNavbar = [
     isOpen: true,
     subItem: [
       { id: 10, title: 'Change Info', link: '/admin/settings' },
-      { id: 11, title: 'Logout', link: '/admin/settings' },
+      { id: 11, title: 'Logout', link: '#' },
     ],
   },
 ];
 
-const ratingOptions = [
+export const ratingOptions = [
   { label: '1', value: 1 },
   { label: '2', value: 2 },
   { label: '3', value: 3 },
@@ -84,4 +84,16 @@ export const listUserCheckBox = [
       { label: 'No', value: false },
     ],
   },
+];
+
+export const categories = [
+  //   0(pin):"hhg"
+  // 1(pin):"Ao khoac"
+  // 2(pin):"Hand Bag"
+  // 3(pin):"Clothing"
+  // 4(pin):"Jewels"
+  // 5(pin):"Hat"
+  // 6(pin):"Glasses"
+  // 7(pin):"Wallet"
+  // 8(pin):"Shoes"
 ];

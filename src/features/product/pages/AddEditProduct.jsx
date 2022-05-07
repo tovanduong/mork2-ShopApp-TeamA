@@ -1,12 +1,17 @@
 import { Box } from '@mui/material';
 import { unwrapResult } from '@reduxjs/toolkit';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { ratingOptions } from '../../../constants/admin';
+import { getListCategory } from '../../category/categorySlice';
 import ProductForm from '../components/ProductForm';
-import { getListCategory } from '../productsSlice';
+// import { getListCategory } from '../productsSlice';
 
 export default function AddEditProduct() {
   const dispatch = useDispatch();
+  const { productId } = useParams();
+  const isEdit = Boolean(productId);
 
   const [listCategory, setListCategory] = useState();
 
@@ -28,14 +33,6 @@ export default function AddEditProduct() {
     fetchListCategory();
   }, [dispatch]);
 
-  const ratingOptions = [
-    { label: '1', value: 1 },
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-    { label: '5', value: 5 },
-  ];
-
   const initialValues = {
     name: '',
     description: '',
@@ -56,6 +53,9 @@ export default function AddEditProduct() {
       <ProductForm
         initialValues={initialValues}
         ratingOptions={ratingOptions}
+        productId={productId}
+        isEdit={isEdit}
+        // listCategory={listCategory}
         onSubmit={handleProductFormSubmit}
       />
     </Box>

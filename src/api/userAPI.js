@@ -63,7 +63,6 @@ export function getSearchProduct(value) {
     });
 }
 
-
 export function postCreateCart({ cart, itemArr }) {
   return axiosClient
     .post(POST_CREATE_CART, {

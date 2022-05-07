@@ -22,9 +22,12 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import menuIcon from '../../../../assets/images/menu.svg';
 import { listAdminNavbar } from '../../../../constants/admin';
+import { fetchLogOut } from '../../../auth/authSlice';
+import PopupLogoutConfirm from '../popupConfirm/PopupLogoutConfirm';
 import './navigationAdmin.scss';
 
 const drawerWidth = 224;
@@ -72,10 +75,10 @@ export default function NavigationAdmin(props) {
   const { window } = props;
   const idAdminNavbar = localStorage.getItem('idAdminNavbar');
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [open, setOpen] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(idAdminNavbar || 1);
   const navigate = useNavigate();
   const [adminNavbar, setAdminNavbar] = useState(listAdminNavbar);
+  const dispatch = useDispatch();
 
   const userInfor = JSON.parse(localStorage.getItem('user'));
 
@@ -83,11 +86,32 @@ export default function NavigationAdmin(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const [openPopupLogout, setOpenPopupLogout] = useState(false);
+
+  const handleClickOpenPopupLogout = () => {
+    setOpenPopupLogout(true);
+  };
+
+  const handleClosePopupLogout = () => {
+    setOpenPopupLogout(false);
+  };
+
+  const handleConfirmLogout = () => {
+    navigate('/');
+    const deviceId = localStorage.getItem('deviceId');
+    const getRefreshToken = JSON.parse(localStorage.getItem('access_token'));
+    dispatch(fetchLogOut({ refreshToken: getRefreshToken?.refresh.token, deviceId: deviceId }));
+  };
+
   const handleClickItem = (item, subItem) => {
     if (!subItem) {
-      setSelectedIndex(item.id);
-      navigate(item.link);
-      localStorage.setItem('idAdminNavbar', item.id);
+      if (item.title === 'Logout') {
+        setOpenPopupLogout(true);
+      } else {
+        setSelectedIndex(item.id);
+        navigate(item.link);
+        localStorage.setItem('idAdminNavbar', item.id);
+      }
     } else {
       // let temp = !item.isOpen
       // console.log(!item.isOpen);
@@ -165,6 +189,12 @@ export default function NavigationAdmin(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+      <PopupLogoutConfirm
+        openPopupLogout={openPopupLogout}
+        handleClickOpenPopupLogout={handleClickOpenPopupLogout}
+        handleClosePopupLogout={handleClosePopupLogout}
+        onConfirmLogout={handleConfirmLogout}
+      />
       <AppBar
         style={{ boxShadow: 'none' }}
         color="common"

@@ -1,0 +1,87 @@
+.myInfo {
+  display: flex;
+  align-items: flex-start;
+  padding: 30px;
+  background: rgba(182, 182, 182, 0.4);
+}
+
+.myInfo-img {
+  width: 128px;
+  height: 128px;
+
+  img {
+    object-fit: cover;
+    border: 1px solid #9b9191;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+  }
+  margin-right: 35px;
+}
+
+.myInfo-name {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+  /* identical to box height */
+  margin-bottom: 5px;
+  color: #000000;
+}
+.myInfo-id {
+  font-size: 20px;
+  line-height: 23px;
+  margin-bottom: 10px;
+  color: #000000;
+}
+.myInfo-email {
+  font-size: 20px;
+  line-height: 23px;
+  margin-bottom: 10px;
+  color: #000000;
+}
+.myInfo-phone {
+  font-size: 20px;
+  line-height: 23px;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.myInfo-btn {
+  background-color: #ffd333;
+  border-radius: 5px;
+
+  padding: 10px 39px;
+  color: #000000;
+  &:hover {
+    background-color: #ffd333;
+  }
+}
+
+.myInfo-order {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 33px;
+
+  color: #000000;
+  padding: 19px 30px;
+}
+
+.myInfo-orderTitle-container {
+  background: #c4c4c4;
+  border-radius: 5px;
+  padding: 13px 0;
+}
+
+.myInfo-order-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myAccount-Form-Edit {
+  display: flex;
+  flex-direction: column;
+}
+
+.myAccount-Form-Input {
+}

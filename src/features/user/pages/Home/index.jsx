@@ -10,13 +10,16 @@ import Products from '../Products';
 import Carousel from './component/carousel/Carousel';
 import VerifyEmail from './component/VerifyEmail';
 import './home.scss';
+import Bag from '../../../../assets/images/icon/VectorBag.png';
+import Logo from '../../../../assets/images/icon/ShopApp.png';
+import Benefit from '../../components/Benefit';
 
 export default function Home({ handleAdd }) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const { user, deviceId } = useSelector((state) => state.auth.login);
   const { product } = useSelector((state) => state.user);
-
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     if (user && user.isEmailVerified === false) {
       dispatch(fetchSendVerifyEmail({ deviceId: deviceId }));
@@ -75,17 +78,21 @@ export default function Home({ handleAdd }) {
             {product?.result && <Carousel propsProduct={product} rateProps={handleRate} />}
           </Box>
         </Box>
+        <Box my={2}>
+          <Benefit />
+        </Box>
         <Products handleAdd={handleAdd} />
         <Modal
           open={open}
+          onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box className="modal-box-auth">
-            <VerifyEmail />
+            <VerifyEmail onClose={handleClose} />
             <Box className="auth-layout">
-              <img src="./image/icon/VectorBag.png" alt="VectorBag" />
-              <img src="./image/icon/ShopApp.png" alt="ShopApp" />
+              <img src={Bag} alt="VectorBag" />
+              <img src={Logo} alt="ShopApp" />
             </Box>
           </Box>
         </Modal>

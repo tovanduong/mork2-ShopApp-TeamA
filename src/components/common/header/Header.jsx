@@ -1,34 +1,47 @@
-import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import CloseIcon from '@mui/icons-material/Close';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Auth from '../../../features/auth/index';
-import { fetchSearchProduct } from '../../../features/user/userSlice';
+import { fetchSearchProduct, searchProduct } from '../../../features/user/userSlice';
 import SearchBarUserForm from '../search/SearchBarUserForm';
 import './header.scss';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import { fetchLogOut } from '../../../features/auth/authSlice';
+import ShopApp from '../../../assets/images/ShopApp.png';
+import Cart from '../../../assets/images/icon/Cart.png';
+import UserIcon from '../../../assets/images/icon/MaskUser.png';
+import CartPopup from '../cartPopup/CartPopup';
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorPopUp, setAnchorPopUp] = useState(null);
   const openMenu = Boolean(anchorEl);
+  const openMenu2 = Boolean(anchorPopUp);
   const handleHoverMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleHoverPopUp = (event) => {
+    setAnchorPopUp(event.currentTarget);
+  };
   const handleCloseMenu = () => {
     setAnchorEl(null);
+  };
+  const handleClosePopUp = () => {
+    setAnchorPopUp(null);
   };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [menu, setMenu] = useState(false);
   const { login } = useSelector((state) => state.auth);
+  const user = JSON.parse(localStorage.getItem('user'));
   const isLogin = Boolean(localStorage.getItem('access_token'));
   let screenWidth = window.screen.width;
   const dispatch = useDispatch();
@@ -46,14 +59,19 @@ const Header = () => {
     console.log(value);
     const { search } = value;
     dispatch(fetchSearchProduct(search));
+    dispatch(searchProduct(value));
+    navigate('/search');
   };
+
   const { deviceId } = useSelector((state) => state.auth.login);
   const handleLogOut = () => {
     const getRefreshToken = JSON.parse(localStorage.getItem('access_token'));
     dispatch(fetchLogOut({ refreshToken: getRefreshToken?.refresh.token, deviceId: deviceId }));
     handleCloseMenu();
+    navigate('/');
   };
-
+  const count = useSelector((state) => state.user.count);
+  console.log(count);
   return (
     <Box>
       <Box className="Header">
@@ -84,7 +102,9 @@ const Header = () => {
         <Box className="Header__mainbar">
           <Box component="ul" className="Header__mainbar--list">
             <Box className="Header__mainbar--item">
-              <img src="./image/ShopApp.png" alt="" />
+              <Link to="/">
+                <img src={ShopApp} alt="" />
+              </Link>
             </Box>
             <Box className="Header__mainbar--item header__mainbar--search">
               <Box className="Header__mainbar--item header__mainbar--search">
@@ -94,10 +114,19 @@ const Header = () => {
               <span className="split" />
               <SearchBarUserForm onSubmit={handleSubmit} />
             </Box>
-            <Box className="Header__mainbar--item" onClick={!isLogin ? handleOpen : handlePopup}>
-              <Link to={isLogin ? '/cart' : '/'}>
-                <img src="./image/icon/Cart.png" alt="" />
-              </Link>
+            <Box
+              className="Header__mainbar--item"
+              position="relative"
+              onClick={!isLogin ? handleOpen : handlePopup}
+              onMouseOver={isLogin ? handleHoverPopUp : null}
+            >
+              <img src={Cart} alt="Cart" />
+
+              {count === 0 ? (
+                <span></span>
+              ) : (
+                <span className="Header__mainbar--countProduct">{count}</span>
+              )}
             </Box>
             <Box
               className="Header__mainbar--item"
@@ -109,9 +138,22 @@ const Header = () => {
               onMouseOver={isLogin ? handleHoverMenu : null}
             >
               {isLogin ? (
-                login.user?.avatar || <AccountCircleSharpIcon sx={{ width: 50, height: 50 }} />
+                (
+                  <img
+                    src={user.avatar}
+                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                    alt="avatar"
+                    onMouseOver={isLogin ? handleHoverMenu : null}
+                  />
+                ) || (
+                  <img
+                    src="https://i1-vnexpress.vnecdn.net/2021/03/02/103650164-731814290963011-1374-5806-7233-1614677857.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=9yXpYDxZfyUhN1j1WGnnNg"
+                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                    alt="avatar"
+                  />
+                )
               ) : (
-                <img src="./image/icon/MaskUser.png" alt="" />
+                <img src={UserIcon} alt="user" />
               )}
             </Box>
             <Box className="Header__menu" onClick={HandleClick}>
@@ -141,19 +183,46 @@ const Header = () => {
         </Box>
       </Box>
       <Menu
-        id="fade-menu"
-        MenuListProps={{
-          'aria-labelledby': 'fade-button',
-        }}
         anchorEl={anchorEl}
         open={openMenu}
         onClose={handleCloseMenu}
         TransitionComponent={Fade}
       >
-        <MenuItem>My Profile</MenuItem>
-        <MenuItem>Order History</MenuItem>
+        <MenuItem>
+          <NavLink
+            to="/myAccount"
+            className="nav-link"
+            style={{ textDecoration: 'none', color: '#000' }}
+            onClick={handleCloseMenu}
+          >
+            My Profile
+          </NavLink>
+        </MenuItem>
+        <MenuItem>
+          <NavLink
+            to="/myAccount/orderHistory/"
+            className="nav-link"
+            style={{ textDecoration: 'none', color: '#000' }}
+            onClick={handleCloseMenu}
+          >
+            Order History
+          </NavLink>
+        </MenuItem>
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>
       </Menu>
+      <Box>
+        <Menu
+          anchorEl={anchorPopUp}
+          open={openMenu2}
+          onClose={handleClosePopUp}
+          TransitionComponent={Fade}
+          className="CartPopup"
+        >
+          <MenuItem>
+            <CartPopup />
+          </MenuItem>
+        </Menu>
+      </Box>
     </Box>
   );
 };

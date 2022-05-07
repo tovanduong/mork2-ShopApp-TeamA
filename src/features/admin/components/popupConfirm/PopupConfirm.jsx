@@ -62,9 +62,9 @@ export function Delete(props) {
               fontFamily: 'Arial',
               fontStyle: 'normal',
               fontWeight: 400,
-
-              /* identical to box height */
-
+              fontSize: '18px',
+              lineHeight: '18px',
+              marginTop: '18px',
               color: ' #000000',
             }}
           >
@@ -88,6 +88,8 @@ export function Delete(props) {
               fontWeight: 400,
 
               color: '#000000',
+              marginRight: '10px',
+              textTransform: 'capitalize',
             }}
           >
             Cancel
@@ -102,6 +104,7 @@ export function Delete(props) {
               fontWeight: 400,
 
               color: '#FFFFFF',
+              textTransform: 'capitalize',
             }}
           >
             Delete

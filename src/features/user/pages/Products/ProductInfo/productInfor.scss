@@ -15,12 +15,24 @@
 
       .productImageLarge {
         margin-bottom: 20px;
+
+        img {
+          width: 500px;
+          height: 500px;
+          object-fit: cover;
+        }
       }
 
       .productImageSmall {
         margin-bottom: 20px;
         display: flex;
         justify-content: space-between;
+
+        img {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+        }
       }
     }
 
@@ -36,7 +48,7 @@
         font-weight: 700;
         font-size: 40px;
         line-height: 47px;
-
+        text-transform: capitalize;
         align-items: center;
         letter-spacing: -0.32px;
 
@@ -84,8 +96,12 @@
         justify-content: space-between;
         margin-bottom: 20px;
 
-        span {
+        .inStock {
           color: green;
+        }
+
+        .soldOut {
+          color: red;
         }
       }
 
