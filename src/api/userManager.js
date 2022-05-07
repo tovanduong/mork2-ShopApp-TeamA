@@ -8,10 +8,17 @@ import {
 import axiosClient from './axiosClient';
 
 const userManager = {
-  getAllUsers: (params) => {
-    const url = GET_ALL_USERS;
-    return axiosClient.get(url, params);
+  getAllUsers(params) {
+    return axiosClient
+      .get(GET_ALL_USERS, { params })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
+
   postCreateUser: (params) => {
     const url = POST_CREATE_USER;
     return axiosClient.post(url, params);
@@ -27,6 +34,16 @@ const userManager = {
   getUserById: (id, params) => {
     const url = `${GET_USER_BY_ID}/${id}`;
     return axiosClient.get(url, params);
+  },
+  adminGetUserById(userId) {
+    return axiosClient
+      .get(`${GET_USER_BY_ID}/${userId}`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 

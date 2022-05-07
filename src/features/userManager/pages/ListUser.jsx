@@ -1,11 +1,17 @@
-import { Box, Link, Button } from '@mui/material';
+import { Box, Button, Link } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React from 'react';
-import { UserTable } from '../../admin/components/dataTable/DataTable';
+import { UserTable } from '../components/UserTable';
+import { useNavigate } from 'react-router-dom';
 import './listUser.scss';
-import UserDetailById from './UserDetail';
 
 export default function ListUser() {
+  const navigate = useNavigate();
+
+  const handleChangeDirectory = () => {
+    navigate('/admin/user/add');
+  };
+
   return (
     <Box className="listUserWrapper" mx={4} mt={4} mb={8}>
       <div className="breadCrumbsWrapper" role="presentation">
@@ -26,8 +32,19 @@ export default function ListUser() {
             type="submit"
             variant="contained"
             color="primary"
+            style={{
+              textTransform: 'capitalize',
+              fontFamily: 'Work Sans',
+              fonStyle: 'normal',
+              fontWeight: 600,
+              fontSize: '20px',
+              lineheight: '23px',
+              letterSpacing: '-0.02em',
+              color: '#000000',
+            }}
+            // href="/admin/user/add"
             // disabled={isSubmitting}
-            // onClick={handleSubmit(handleFormSubmit)}
+            onClick={handleChangeDirectory}
           >
             {/* {isSubmitting && <CircularProgress color="primary" size={16} />}
 
@@ -36,7 +53,7 @@ export default function ListUser() {
           </Button>
         </Box>
       </div>
-      <Box>
+      <Box className="tableUserWrapper">
         <UserTable />
       </Box>
     </Box>

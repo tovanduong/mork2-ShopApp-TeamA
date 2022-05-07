@@ -4,6 +4,7 @@ import userManagerReducer from '../features/userManager/userManagerSlice';
 import AuthReducer from '../features/auth/authSlice';
 import UserReducer from '../features/user/userSlice';
 import AdminReducer from '../features/admin/adminSlice';
+import OrdersReducer from '../features/orders/orderSlice';
 import CategoryReducer from '../features/category/categorySlice';
 
 const rootReducer = {
@@ -12,6 +13,7 @@ const rootReducer = {
   auth: AuthReducer,
   user: UserReducer,
   admin: AdminReducer,
+  orders: OrdersReducer,
   category: CategoryReducer,
 };
 

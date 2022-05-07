@@ -1,14 +1,19 @@
 import { Pagination, PaginationItem } from '@mui/material';
+import { useState } from 'react';
 import './pagination.scss';
 export function CustomPagination(props) {
-  const { onPageCount, totalPages, currentPage } = props;
+  const { onPageCount, totalPages } = props;
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePagination = (event, value) => {
     onPageCount(value);
+    setCurrentPage(value);
   };
 
   return (
     <Pagination
+      className="sidePagination"
       style={{ marginTop: '60px', marginLeft: '20px' }}
       color="primary"
       variant="outlined"

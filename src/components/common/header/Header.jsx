@@ -102,7 +102,9 @@ const Header = () => {
         <Box className="Header__mainbar">
           <Box component="ul" className="Header__mainbar--list">
             <Box className="Header__mainbar--item">
-              <img src={ShopApp} alt="" />
+              <Link to="/">
+                <img src={ShopApp} alt="" />
+              </Link>
             </Box>
             <Box className="Header__mainbar--item header__mainbar--search">
               <Box className="Header__mainbar--item header__mainbar--search">

@@ -1,4 +1,5 @@
 import { Box, Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
 import Rate from '../rate/Rate';
 import './ItemCard.scss';
@@ -8,10 +9,16 @@ const ItemCard = ({ name, id, rating, images, price, handleAdd }) => {
   return (
     <Box className="ItemCard">
       <Box className="ItemCard-Image">
-        <img src={images[0].url} alt={name} />
+        <RouterLink to={`product/${id}`}>
+          <img src={images[0].url} alt={name} />
+        </RouterLink>
       </Box>
       <Box className="ItemCard-Descriptions">
-        <Box className="ItemCard--Descriptions-name">{name}</Box>
+        <Box className="ItemCard--Descriptions-name">
+          <RouterLink style={{ textDecoration: 'none', color: '#000' }} to={`product/${id}`}>
+            {name}
+          </RouterLink>
+        </Box>
         <Box className="ItemCard--Descriptions-id">ID: {id}</Box>
         <Box className="ItemCard--Descriptions-group">
           <Box className="ItemCard-rate">
@@ -27,7 +34,9 @@ const ItemCard = ({ name, id, rating, images, price, handleAdd }) => {
         </Box>
       </Box>
       <Box className="ItemCard-Available">
-        <Link className="ItemCard-btn">Available</Link>
+        <Link style={{ textDecoration: 'none' }} className="ItemCard-btn">
+          Available
+        </Link>
       </Box>
     </Box>
   );

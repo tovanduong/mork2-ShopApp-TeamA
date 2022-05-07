@@ -1,11 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import productApi from '../../api/productApi';
 import { getAllProduct } from '../../api/userAPI';
 
 export const getListProduct = createAsyncThunk('product/getListProduct', async (params) => {
   const response = await getAllProduct(params);
   return response;
 });
-
+export const deleteProductById = createAsyncThunk('product/getListProduct', async (params) => {
+  const response = await productApi.deleteProductById(params);
+  return response;
+});
 const productListSlice = createSlice({
   name: 'productList',
   initialState: {
@@ -15,7 +19,6 @@ const productListSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    // handle get list question
     [getListProduct.pending]: (state) => {
       state.loading = true;
     },
@@ -25,6 +28,18 @@ const productListSlice = createSlice({
       state.current = action.payload;
     },
     [getListProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [deleteProductById.pending]: (state) => {
+      state.loading = true;
+    },
+    [deleteProductById.fulfilled]: (state, action) => {
+      state.error = '';
+      state.loading = false;
+      state.current = action.payload;
+    },
+    [deleteProductById.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error;
     },

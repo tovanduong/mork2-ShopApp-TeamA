@@ -12,7 +12,7 @@ export default function UserManager() {
         <Route path="add" element={<AddEditUser />} />
         <Route>
           <Route path="/:userId" element={<AddEditUser />} />
-          <Route path="userDetail/:userId" element={<UserDetailById />} />
+          <Route path="/userDetail/:userId" element={<UserDetailById />} />
         </Route>
       </Routes>
     </>
