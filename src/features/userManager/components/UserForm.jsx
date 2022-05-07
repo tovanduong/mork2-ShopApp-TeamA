@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Breadcrumbs, Button, CircularProgress, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
@@ -14,21 +14,37 @@ import {
 import { listUserCheckBox, roleOption } from '../../../constants/admin';
 import './userForm.scss';
 
-const schema = yup.object().shape({
-  username: yup.string().required('name is required'),
-  email: yup.string().email().required(),
-  password: yup.string().required(),
-  retypePassword: yup
-    .string()
-    .required('retype password is requied')
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
-  role: yup.string().required(),
-  contact: yup.string(),
-});
+export default function UserForm({ isEdit, userId, onSubmit }) {
+  let schema;
 
-export default function UserForm({ initialValues, isEdit, userId, onSubmit }) {
-  const [avatar, setAvatar] = useState(null);
+  if (!isEdit) {
+    schema = yup.object().shape({
+      username: yup.string().required('name is required'),
+      email: yup.string().email().required(),
+      password: yup.string().required(),
+      retypePassword: yup
+        .string()
+        .required('retype password is requied')
+        .oneOf([yup.ref('password'), ''], 'Passwords must match'),
+      role: yup.string().required(),
+      contact: yup.string(),
+    });
+  } else {
+    schema = yup.object().shape({});
+  }
 
+  const [avatar, setAvatar] = useState('');
+  const [initialValues, setInitialValues] = useState({
+    username: '',
+    email: '',
+    password: '',
+    retypePassword: '',
+    role: '',
+    contact: '',
+    isActive: false,
+    isEmailVerified: false,
+    isContactVerified: false,
+  });
   const [checkBoxValues, setCheckBoxValues] = useState({
     isActive: initialValues.isActive,
     isEmailVerified: initialValues.isEmailVerified,
@@ -38,11 +54,41 @@ export default function UserForm({ initialValues, isEdit, userId, onSubmit }) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm({
     defaultValues: initialValues,
     resolver: yupResolver(schema),
   });
+
+  // get user infor by id
+  // useEffect(() => {
+  //   if (!userId) return;
+
+  //   // IIFE
+  //   (async () => {
+  //     try {
+  //       const result = await userManager.getUserById(userId);
+
+  //       console.log('user fetched: ', result.data);
+  //       setInitialValues({
+  //         username: result.data.username,
+  //         email: result.data.email,
+  //         password: '',
+  //         retypePassword: '',
+  //         role: result.data.role,
+  //         avatar: result.data.avatar || '',
+  //         contact: result.data.contact || '',
+  //         isActive: result.data.isActive,
+  //         isEmailVerified: result.data.isEmailVerified,
+  //         isContactVerified: result.data.isContactVerified,
+  //       });
+  //       reset(result.data);
+  //     } catch (error) {
+  //       console.log('failed to fetch student details: ', error);
+  //     }
+  //   })();
+  // }, [userId, reset]);
 
   const handleImportFileChange = (data) => {
     setAvatar(data);

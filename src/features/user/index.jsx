@@ -17,6 +17,7 @@ import {
 const Home = React.lazy(() => import('./pages/Home'));
 const Info = React.lazy(() => import('./pages/Info'));
 const Products = React.lazy(() => import('./pages/Products'));
+const ProductInfo = React.lazy(() => import('./pages/Products/ProductInfo/ProductInfo'));
 
 export default function User() {
   const dispatch = useDispatch();
@@ -101,6 +102,7 @@ export default function User() {
           path="/cart"
           element={<ShoppingCart handleAdd={handleAddProduct} handleRemove={handleRemoveProduct} />}
         />
+        <Route path="/product/:productID" element={<ProductInfo />} />
         <Route path="/cart/:cartId" element={<CheckOut />} />
       </Routes>
     </>

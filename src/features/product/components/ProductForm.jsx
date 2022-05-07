@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Breadcrumbs, Button, CircularProgress, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -35,19 +35,10 @@ const schema = yup.object().shape({
   category: yup.string().required(),
 });
 
-export default function ProductForm({ initialValues, onSubmit, ratingOptions }) {
-  const { productId } = useParams();
-  const isEdit = Boolean(productId);
+export default function ProductForm({ initialValues, onSubmit, ratingOptions, productId, isEdit }) {
   const [selectedCategories, setSelectedCategories] = useState();
   const [imageProduct, setImageProduct] = useState(null);
   const listCategory = useSelector((state) => state.category.current.data);
-
-  // useEffect(() => {
-  //   effect
-  //   return () => {
-  //     cleanup
-  //   };
-  // }, []);
 
   const {
     control,

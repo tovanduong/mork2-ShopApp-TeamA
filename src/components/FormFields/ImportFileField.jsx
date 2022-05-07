@@ -21,7 +21,7 @@ export const ImportFileField = ({ onImportFileChange, control, name }) => {
     } else {
       setNameImage(event.target.value);
       setSelectedImage(null);
-      onImportFileChange(nameImage);
+      onImportFileChange(event.target.value);
     }
   };
 
