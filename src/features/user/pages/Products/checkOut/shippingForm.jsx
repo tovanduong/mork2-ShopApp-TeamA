@@ -9,7 +9,11 @@ import './shippingForm.scss';
 import { RadioInputField } from '../../../../../components/FormFields/RadioInputField';
 
 const SignupSchema = yup.object().shape({
-  contact: yup.string().required('please input contact'),
+  contact: yup
+    .string()
+    .required('please input contact')
+    .min(10, 'Phone is 10 number')
+    .max(10, 'Phone is 10 number'),
   address: yup.string().required('Please input address'),
   email: yup.string().required('Please input email').email('email invalid'),
 });
