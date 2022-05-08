@@ -44,8 +44,6 @@ export default function AddEditUser() {
 
   return (
     <Box mt={4} mb={8}>
-      <Button onClick={(e) => navigate('/admin/user/294')}>Test update user</Button>
-
       <UserForm
         // initialValues={initialValues}
         isEdit={isEdit}

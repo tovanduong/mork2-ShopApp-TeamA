@@ -13,6 +13,7 @@ import {
   GET_ORDER,
   PATCH_CONTACT,
   PATCH_EMAIL,
+  GET_LIST_PRODUCT_BY_CATEGORY,
 } from '../constants/SubUrl';
 import axiosClient from './axiosClient';
 
@@ -195,4 +196,8 @@ export function patchEmail(email) {
       toast.error('Update Fail');
       console.log(err);
     });
+}
+
+export function getListProductByCategory(category) {
+  return axiosClient.get(`${GET_LIST_PRODUCT_BY_CATEGORY}?category=${category}&size=4`);
 }

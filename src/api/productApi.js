@@ -2,7 +2,7 @@ import { DELETE_PRODUCT_BY_ID, GET_ALL_CATEGORIES, GET_PRODUCT_BY_ID } from '../
 import axiosClient from './axiosClient';
 
 const productApi = {
-  kgetAllCategories: (params) => {
+  getAllCategories: (params) => {
     const url = GET_ALL_CATEGORIES;
     return axiosClient.get(url, { params });
   },

@@ -2,7 +2,6 @@ import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Box, Breadcrumbs, Button, Container, Rating, Stack, Typography } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
 import Tab from '@mui/material/Tab';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -17,11 +16,24 @@ import shoe_small_4 from '../../../../../assets/images/shoe_small-4.png';
 import shoe_small_5 from '../../../../../assets/images/shoe_small-5.png';
 import './productInfor.scss';
 
+import Grid from '@mui/material/Grid';
+import { useDispatch } from 'react-redux';
+import ItemCard from '../../../../../components/common/itemCard/ItemCard';
+import Description from '../../../components/Description';
+import Reviews from '../../../components/Reviews';
+import Specification from '../../../components/Specification';
+import { fetchGetListProductByCategory } from '../../../userSlice';
+
 const shoes_small = [shoe_small_1, shoe_small_2, shoe_small_3, shoe_small_4, shoe_small_5];
 
 const ProductInfo = () => {
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState('description');
   const [productInfo, setProductInfo] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [listProductByCategory, setListProductByCategory] = useState(null);
+  const [reviews, setReviews] = useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -37,13 +49,31 @@ const ProductInfo = () => {
     (async () => {
       try {
         const result = await productApi.getProductById(productID);
+
         console.log(result.data);
+        setCategory(result.data.product.category);
+        setReviews(result.data.reviews);
         setProductInfo(result.data.product);
       } catch (error) {
         console.log('failed to fetch product details: ', error);
       }
     })();
   }, [productID]);
+
+  // get list product by category
+  useEffect(() => {
+    if (category) {
+      // IIFE
+      (async () => {
+        try {
+          const listProduct = await dispatch(fetchGetListProductByCategory(category));
+          setListProductByCategory(listProduct.payload.result);
+        } catch (error) {
+          console.log('failed to fetch product details: ', error);
+        }
+      })();
+    }
+  }, [category]);
 
   return (
     <Container className="productInforWrapper section-box">
@@ -59,7 +89,7 @@ const ProductInfo = () => {
                   <Link className="breadCrum-content" to="/">
                     Home
                   </Link>
-                  <Link className="breadCrum-content" to="/shoes">
+                  <Link className="breadCrum-content" to={`/${productInfo.category}`}>
                     {productInfo.category}
                   </Link>
 
@@ -91,7 +121,7 @@ const ProductInfo = () => {
               <Box className="rated">
                 <Rating
                   name="simple-controlled"
-                  value={productInfo.rating}
+                  value={+productInfo.rating}
                   readOnly
                   // onChange={(event, newValue) => {
                   // setValue(newValue);
@@ -120,13 +150,12 @@ const ProductInfo = () => {
                 <span className="price">${productInfo.price}</span>
                 <span className="saleOfPrice">50% Off</span>
               </Box>
-              <Box className="productSetColor">
+              {/* <Box className="productSetColor">
                 <h3 className="setColor-title">Select Color:</h3>
                 <div className="colors" style={{ color: 'red' }}>
-                  {' '}
                   four colors
                 </div>
-              </Box>
+              </Box> */}
               <Box className="productQuanlity">
                 <h3>Quantity:</h3>
                 <div
@@ -144,7 +173,7 @@ const ProductInfo = () => {
                 <span className="productStars">
                   <Rating
                     name="simple-controlled"
-                    value={productInfo.rating}
+                    value={+productInfo.rating}
                     // size="large"
                     // onChange={(event, newValue) => {
                     // setValue(newValue);
@@ -170,20 +199,14 @@ const ProductInfo = () => {
                 </Box>
                 <Box className="contentTab">
                   <TabPanel value="description">
-                    <Box sx={{ width: '100%' }}>
-                      <Skeleton />
-                      <Skeleton animation="wave" />
-                      <Skeleton animation={false} />
-                    </Box>
+                    <Description description={productInfo.description} />
                   </TabPanel>
                   <TabPanel value="specification">
-                    <Box sx={{ width: '100%' }}>
-                      <Skeleton />
-                      <Skeleton animation="wave" />
-                      <Skeleton animation={false} />
-                    </Box>
+                    <Specification />
                   </TabPanel>
-                  <TabPanel value="reviews">phần này của Hiếu làm</TabPanel>
+                  <TabPanel value="reviews">
+                    <Reviews reviewsData={reviews.result} />
+                  </TabPanel>
                 </Box>
               </TabContext>
             </Box>
@@ -197,10 +220,23 @@ const ProductInfo = () => {
               <img alt="arrow" className="arrow arrowLeft" src={arrow_right} />
             </div>
             <Box className="listRelatedProduct">
-              <Skeleton variant="rectangular" width={210} height={210} />
-              <Skeleton variant="rectangular" width={210} height={210} />
-              <Skeleton variant="rectangular" width={210} height={210} />
-              <Skeleton variant="rectangular" width={210} height={210} />
+              <Grid
+                container
+                spacing={{ xs: 1, md: 2, xl: '10px' }}
+                columns={{ xs: 12, sm: 12, md: 12, xl: 12 }}
+              >
+                {listProductByCategory &&
+                  listProductByCategory.map((item) => {
+                    return (
+                      <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+                        <ItemCard
+                          {...item}
+                          //  handleAdd={() => handleAdd(item)}
+                        />
+                      </Grid>
+                    );
+                  })}
+              </Grid>
             </Box>
           </Box>
         </Box>

@@ -1,0 +1,99 @@
+.reviewWrapper {
+  margin-top: 25px;
+  margin-right: 50px;
+  margin-right: 50px;
+  .titleReview {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 33px;
+    color: #000000;
+    margin-bottom: 35px;
+  }
+
+  .reviwewContentWrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .avatarPersonReview {
+      flex: 1;
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 30px;
+    }
+
+    .reviewInfo {
+      flex: 100;
+
+      .reviewConent {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+        margin-top: 0;
+        color: #000000;
+      }
+
+      .reviewDate {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 14px;
+        color: #5a5a5a;
+      }
+    }
+  }
+
+  h3 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 6px;
+  }
+
+  .horizontalLine {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #d8d8d8;
+  }
+
+  .myInfo-order-pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    .MuiPagination-ul li .MuiPaginationItem-root {
+      background-color: #e5e5e5;
+    }
+    .MuiPagination-ul li .Mui-selected {
+      background-color: #ffd333;
+    }
+    .MuiPagination-ul li {
+      &:first-child {
+        button span {
+          background-color: #919eab !important;
+        }
+      }
+      &:last-child {
+        button span {
+          background-color: #919eab !important;
+        }
+      }
+    }
+    .MuiPagination-ul li .MuiPaginationItem-root {
+      svg {
+        z-index: 1;
+        color: #ffd333;
+      }
+    }
+  }
+}
