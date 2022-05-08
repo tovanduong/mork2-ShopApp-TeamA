@@ -23,7 +23,11 @@ const CartPopup = () => {
   return (
     <Box>
       {item?.items.map((item) => {
-        return <ItemCartPopup {...item} />;
+        return (
+          <Box key={item.id}>
+            <ItemCartPopup {...item} item={item} />
+          </Box>
+        );
       })}
       <Box className="CartPopup-container">
         <Box className="CartPopup-item">

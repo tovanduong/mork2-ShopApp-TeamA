@@ -167,10 +167,14 @@ export const UserSlice = createSlice({
             state.filter = action.payload
         },
         countIncrease(state) {
+            state.status = 'success'
             state.count = state.count + 1
+            localStorage.setItem('count', state.count)
         },
-        countRemove(state) {
+        countRemove(state, action) {
+            state.status = 'success'
             state.count = state.count - 1
+            localStorage.setItem('count', state.count)
         }
     },
 
@@ -221,6 +225,7 @@ export const UserSlice = createSlice({
             state.count = 0
             localStorage.removeItem('createCartUser')
             localStorage.removeItem('cartUser')
+            localStorage.removeItem('count')
         },
         [fetchGetOrder.fulfilled]: (state, action) => {
             state.status = 'success';

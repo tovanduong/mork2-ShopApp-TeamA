@@ -3,14 +3,15 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../../components/common/header/Header';
 import CheckOut from './pages/Products/checkOut/checkOut';
+import ProductByCategory from './pages/Products/productList/ProductByCategory';
 import SearchProduct from './pages/Products/searchProduct/SearchProduct';
 import ShoppingCart from './pages/Products/shoppingCart/ShoppingCart';
 import {
   countIncrease,
-  countProduct,
   countRemove,
   fetchAddItemToCart,
   fetchCreateCart,
+  fetchDelItem,
   fetchUpdateCart,
 } from './userSlice';
 
@@ -21,18 +22,22 @@ const ProductInfo = React.lazy(() => import('./pages/Products/ProductInfo/Produc
 
 export default function User() {
   const dispatch = useDispatch();
+
   const handleAddProduct = (product) => {
     const isCreatCart = JSON.parse(localStorage.getItem('createCartUser'));
+    const user = localStorage.getItem('user');
 
-    console.log(product);
-    if (isCreatCart) {
+    if (isCreatCart && user) {
       const isCart = JSON.parse(localStorage.getItem('cartUser'));
+      console.log(product);
+      console.log(isCreatCart);
+      console.log(isCart);
       const productExits = isCart?.items.find(
         (item) => item.itemCartInfo.id === product?.itemCartInfo?.id
       );
-
+      console.log(productExits);
       const moreProduct = isCreatCart?.items.find((item) => item.itemCartInfo.id === product.id);
-
+      console.log(moreProduct);
       dispatch(countIncrease());
       if (productExits) {
         dispatch(
@@ -45,31 +50,42 @@ export default function User() {
 
         return;
       }
-      if (!moreProduct) {
+      if (moreProduct) {
         console.log('nothing: ', isCreatCart.cart.id);
+        console.log(moreProduct);
         dispatch(
-          fetchAddItemToCart({
-            cartId: isCreatCart.cart.id,
-            productId: product.id,
-            quantity: 1,
-            price: product.price,
-            total: product.price,
+          fetchUpdateCart({
+            id: moreProduct.id,
+            quantity: moreProduct.quantity + 1,
+            total: (moreProduct.quantity + 1) * product.price,
           })
         );
+        return;
       }
-    } else {
-      const user = JSON.parse(localStorage.getItem('user'));
-      const cart = { totalPrice: product.price, userId: user.id };
-      const itemArr = [
-        {
+      dispatch(
+        fetchAddItemToCart({
+          cartId: isCreatCart.cart.id,
           productId: product.id,
           quantity: 1,
           price: product.price,
           total: product.price,
-        },
-      ];
-      dispatch(fetchCreateCart({ cart, itemArr }));
-      dispatch(countIncrease());
+        })
+      );
+    } else {
+      if (user) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const cart = { totalPrice: product.price, userId: user?.id };
+        const itemArr = [
+          {
+            productId: product.id,
+            quantity: 1,
+            price: product.price,
+            total: product.price,
+          },
+        ];
+        dispatch(fetchCreateCart({ cart, itemArr }));
+        dispatch(countIncrease());
+      }
     }
   };
 
@@ -90,6 +106,23 @@ export default function User() {
     }
   };
 
+  const handleClose = (item) => {
+    const isCart = JSON.parse(localStorage.getItem('cartUser'));
+    dispatch(fetchDelItem({ id: item.id }));
+    dispatch(countRemove());
+    if (isCart.items.length === 0) {
+      localStorage.removeItem('createCartUser');
+    }
+    dispatch(
+      fetchUpdateCart({
+        id: item.id,
+        quantity: item.quantity,
+        total: item.quantity,
+      })
+    );
+    console.log(item.quantity);
+  };
+
   return (
     <>
       <Header />
@@ -100,10 +133,17 @@ export default function User() {
         <Route path="/search/" element={<SearchProduct handleAdd={handleAddProduct} />} />
         <Route
           path="/cart"
-          element={<ShoppingCart handleAdd={handleAddProduct} handleRemove={handleRemoveProduct} />}
+          element={
+            <ShoppingCart
+              handleAdd={handleAddProduct}
+              handleRemove={handleRemoveProduct}
+              handleClose={handleClose}
+            />
+          }
         />
         <Route path="/product/:productID" element={<ProductInfo />} />
         <Route path="/cart/:cartId" element={<CheckOut />} />
+        <Route path="/:item" element={<ProductByCategory handleAdd={handleAddProduct} />} />
       </Routes>
     </>
   );

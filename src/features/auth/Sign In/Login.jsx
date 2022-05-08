@@ -40,7 +40,6 @@ const Login = ({ parentCallback, onClose }) => {
   }, [user]);
 
   useEffect(() => {
-    console.log(user);
     // localStorage.setItem('datauser', JSON.stringify(user))
     if (user && Object.values(user).length !== 0) {
       if (user.role === 'user') {
@@ -58,7 +57,7 @@ const Login = ({ parentCallback, onClose }) => {
     dispatch(fetchLogin({ ...value, deviceId: deviceId }));
     localStorage.setItem('deviceId', deviceId);
 
-    if (!loading && userLocalstorage) {
+    if (!loading) {
       setTimeout(() => {
         onClose();
       }, 1000);
