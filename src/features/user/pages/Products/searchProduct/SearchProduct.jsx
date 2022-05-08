@@ -15,7 +15,7 @@ const SearchProduct = ({ handleAdd }) => {
   const [listProductByCategory, setListProductByCategory] = useState(null);
   const dispatch = useDispatch();
 
-  let category = search.products.result[0].category;
+  let category = search.products?.result[0]?.category;
 
   // get list product by category
   useEffect(() => {
@@ -81,7 +81,7 @@ const SearchProduct = ({ handleAdd }) => {
           <img alt="arrow" className="arrow arrowLeft" src={arrow_left} />
           <img alt="arrow" className="arrow arrowLeft" src={arrow_right} />
         </div>
-        <Box className="listRelatedProduct">
+        <Box className="listRelatedProduct" mb={3}>
           <Grid
             container
             spacing={{ xs: 1, md: 2, xl: '10px' }}

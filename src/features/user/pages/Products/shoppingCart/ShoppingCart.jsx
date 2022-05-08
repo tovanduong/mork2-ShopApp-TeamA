@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import CouponCodeForm from '../../../../../components/common/couponCode/CouponCodeForm';
 import Cart from '../../../../../components/common/ItemCart/Cart';
-import { countRemove, fetchDelItem, fetchGetCartById, fetchUpdateCart } from '../../../userSlice';
+import { fetchGetCartById } from '../../../userSlice';
 import './shoppingCart.scss';
 
 const ShoppingCart = ({ handleAdd, handleRemove, handleClose }) => {
