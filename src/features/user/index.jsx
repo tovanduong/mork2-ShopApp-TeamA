@@ -91,6 +91,7 @@ export default function User() {
 
   const handleRemoveProduct = (product) => {
     const isCart = JSON.parse(localStorage.getItem('cartUser'));
+    console.log(product);
     const productExits = isCart?.items.find(
       (item) => item.itemCartInfo.id === product.itemCartInfo.id
     );
@@ -141,7 +142,10 @@ export default function User() {
             />
           }
         />
-        <Route path="/product/:productID" element={<ProductInfo />} />
+        <Route
+          path="/product/:productID"
+          element={<ProductInfo handleAdd={handleAddProduct} handleRemove={handleRemoveProduct} />}
+        />
         <Route path="/cart/:cartId" element={<CheckOut />} />
         <Route path="/:item" element={<ProductByCategory handleAdd={handleAddProduct} />} />
       </Routes>

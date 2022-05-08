@@ -15,7 +15,7 @@ const SearchProduct = ({ handleAdd }) => {
   const [listProductByCategory, setListProductByCategory] = useState(null);
   const dispatch = useDispatch();
 
-  let category = search.products.result[0].category;
+  let category = search.products?.result[0]?.category;
 
   // get list product by category
   useEffect(() => {
