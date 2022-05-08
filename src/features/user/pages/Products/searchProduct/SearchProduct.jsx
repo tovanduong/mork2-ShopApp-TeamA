@@ -81,7 +81,7 @@ const SearchProduct = ({ handleAdd }) => {
           <img alt="arrow" className="arrow arrowLeft" src={arrow_left} />
           <img alt="arrow" className="arrow arrowLeft" src={arrow_right} />
         </div>
-        <Box className="listRelatedProduct">
+        <Box className="listRelatedProduct" mb={3}>
           <Grid
             container
             spacing={{ xs: 1, md: 2, xl: '10px' }}
