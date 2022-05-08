@@ -1,17 +1,39 @@
-import { Box, Breadcrumbs, Container, Grid, Stack, Typography } from '@mui/material';
-import React from 'react';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Box, Breadcrumbs, Container, Grid, Stack, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import ItemCard from '../../../../../components/common/itemCard/ItemCard';
+import arrow_left from '../../../../../assets/images/arrow_left.svg';
+import arrow_right from '../../../../../assets/images/arrow_right.svg';
+import './searchProduct.scss';
+import { useEffect, useState } from 'react';
+import { fetchGetListProductByCategory } from '../../../userSlice';
 
 const SearchProduct = ({ handleAdd }) => {
   const searchProduct = useSelector((state) => state.user.searchProduct);
   const search = useSelector((state) => state.user.search);
-  console.log(search?.products?.result);
+  const [listProductByCategory, setListProductByCategory] = useState(null);
+  const dispatch = useDispatch();
+
+  let category = search.products.result[0].category;
+
+  // get list product by category
+  useEffect(() => {
+    if (category) {
+      // IIFE
+      (async () => {
+        try {
+          const listProduct = await dispatch(fetchGetListProductByCategory(category));
+          setListProductByCategory(listProduct.payload.result);
+        } catch (error) {
+          console.log('failed to fetch product details: ', error);
+        }
+      })();
+    }
+  }, [category]);
 
   return (
-    <Container>
+    <Container className="searchProductWrapper">
       <Box className="section-box">
         <Box className="breadCrum">
           <Stack spacing={2}>
@@ -26,7 +48,7 @@ const SearchProduct = ({ handleAdd }) => {
           </Stack>
         </Box>
         <Box>
-          <Typography variant="h4">
+          <Typography variant="h5">
             Have {search?.products?.result.length} result search for key-word:{' '}
             {searchProduct.search}
           </Typography>
@@ -50,6 +72,34 @@ const SearchProduct = ({ handleAdd }) => {
               );
             })}
         </Grid>
+      </Box>
+
+      <Box className="relatedProducts">
+        <div className="titleRelateProducts">
+          <h2>Related Products</h2>
+          <span className="horizontalLine"></span>
+          <img alt="arrow" className="arrow arrowLeft" src={arrow_left} />
+          <img alt="arrow" className="arrow arrowLeft" src={arrow_right} />
+        </div>
+        <Box className="listRelatedProduct">
+          <Grid
+            container
+            spacing={{ xs: 1, md: 2, xl: '10px' }}
+            columns={{ xs: 12, sm: 12, md: 12, xl: 12 }}
+          >
+            {listProductByCategory &&
+              listProductByCategory.map((item) => {
+                return (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+                    <ItemCard
+                      {...item}
+                      //  handleAdd={() => handleAdd(item)}
+                    />
+                  </Grid>
+                );
+              })}
+          </Grid>
+        </Box>
       </Box>
     </Container>
   );

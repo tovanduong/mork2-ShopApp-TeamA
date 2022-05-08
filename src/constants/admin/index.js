@@ -29,7 +29,7 @@ export const listAdminNavbar = [
       { id: 7, title: 'Add User', link: '/admin/user/add' },
     ],
   },
-  { id: 8, title: 'Orders', icon: ordersIcon, link: '/admin/orders' },
+  { id: 8, title: 'Orders', icon: ordersIcon, link: '/admin/order' },
   {
     id: 9,
     title: 'Settings',

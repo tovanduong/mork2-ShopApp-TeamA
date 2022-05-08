@@ -1,0 +1,18 @@
+.orderDetailWrapper {
+  margin: 32px;
+
+  .titleOrderDetail {
+    // display: flex;
+    // justify-content: space-between;
+
+    .orderID {
+      font-family: 'Work Sans';
+      font-style: normal;
+      letter-spacing: -0.02em;
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: #929395;
+    }
+  }
+}

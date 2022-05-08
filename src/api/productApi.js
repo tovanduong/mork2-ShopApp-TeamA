@@ -7,7 +7,7 @@ import {
 import axiosClient from './axiosClient';
 
 const productApi = {
-  kgetAllCategories: (params) => {
+  getAllCategories: (params) => {
     const url = GET_ALL_CATEGORIES;
     return axiosClient.get(url, { params });
   },

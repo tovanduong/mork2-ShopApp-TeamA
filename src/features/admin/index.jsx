@@ -19,7 +19,7 @@ export default function Admin() {
             <Route index element={<DashBoard />} />
             <Route path="/product/*" element={<Product />} />
             <Route path="/user/*" element={<UserManager />} />
-            <Route path="/orders/*" element={<Orders />} />
+            <Route path="/order/*" element={<Orders />} />
           </Routes>
         </div>
       </div>
