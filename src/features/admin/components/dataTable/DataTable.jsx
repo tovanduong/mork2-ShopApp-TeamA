@@ -9,6 +9,9 @@ import styled from '@emotion/styled';
 export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   border: 0,
   root: {
+    '.GridColumnHeaderMenu': {
+      display: 'none',
+    },
     '& .MuiDataGrid-renderingZone': {
       maxHeight: 'none !important',
     },

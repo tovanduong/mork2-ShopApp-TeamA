@@ -9,7 +9,7 @@ import deleteButton from '../../../assets/images/delete_button.svg';
 
 export function ProductTable() {
   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
+
   const current = useSelector((state) => state.admin.current.result);
   const totalPages = useSelector((state) => state.admin.current.totalPages);
 
@@ -61,6 +61,7 @@ export function ProductTable() {
   let rowsProduct = [];
   if (current) {
     rowsProduct = current.map((item, index) => ({
+      key: item.id,
       productNumber: index + 1,
       productId: item.id,
       name: item.name,
