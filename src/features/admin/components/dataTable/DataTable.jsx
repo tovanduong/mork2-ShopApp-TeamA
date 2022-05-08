@@ -51,5 +51,6 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
     backgroundColor: 'transparent',
     paddingTop: '30px',
     paddingBottom: '30px',
+    textAlign: 'center',
   },
 }));

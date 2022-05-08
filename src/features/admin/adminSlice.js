@@ -6,8 +6,9 @@ export const getListProduct = createAsyncThunk('product/getListProduct', async (
   const response = await getAllProduct(params);
   return response;
 });
-export const deleteProductById = createAsyncThunk('product/getListProduct', async (params) => {
+export const deleteProductById = createAsyncThunk('product/deleteProductById', async (params) => {
   const response = await productApi.deleteProductById(params);
+  console.log(response);
   return response;
 });
 const productListSlice = createSlice({

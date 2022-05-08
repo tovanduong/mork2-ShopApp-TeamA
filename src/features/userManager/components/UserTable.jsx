@@ -52,8 +52,8 @@ const columnsUser = [
               <img
                 src={params.row.avatar}
                 style={{
-                  height: 60,
-                  width: 60,
+                  height: 40,
+                  width: 40,
                   objectFit: 'cover',
                   marginRight: '11px',
                 }}
@@ -120,8 +120,8 @@ const columnsUser = [
               <img
                 src={params.row.avatar}
                 style={{
-                  height: 60,
-                  width: 60,
+                  height: 40,
+                  width: 40,
                   objectFit: 'cover',
                   marginRight: '11px',
                 }}
@@ -180,25 +180,43 @@ const columnsUser = [
   {
     field: 'contact',
     headerName: 'Contact',
-    flex: 4,
+    flex: 3,
     // width: 136,
     renderCell: (params) => {
-      return (
-        <div
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            /* identical to box height */
+      if (params.row.contact) {
+        return (
+          <div
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              /* identical to box height */
 
-            color: '#000000',
-          }}
-        >
-          {params.row.contact}
-        </div>
-      );
+              color: '#000000',
+            }}
+          >
+            {params.row.contact}
+          </div>
+        );
+      } else
+        return (
+          <p
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            N/A
+          </p>
+        );
     },
   },
   {
@@ -384,6 +402,7 @@ export function UserTable(props) {
       email: item.email,
       userId: item.id,
       isActive: item.isActive,
+      contact: item.contact,
       isContactVerified: item.isContactVerified,
       isEmailVerified: item.isEmailVerified,
       role: item.role,
@@ -391,7 +410,7 @@ export function UserTable(props) {
     }));
   }
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', overflow: 'hidden' }}>
       <StyledDataGrid
         rows={rowsUser}
         getRowId={(row) => row.userId}
