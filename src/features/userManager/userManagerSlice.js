@@ -20,6 +20,8 @@ export const postCreateUser = createAsyncThunk('userManager/postCreateUser', asy
 export const patchUpdateUser = createAsyncThunk(
   'userManager/patchUpdateUser',
   async (id, params) => {
+    console.log(id);
+    console.log(params);
     const response = await userManager.patchUpdateUser(id, params);
     return response;
   }
