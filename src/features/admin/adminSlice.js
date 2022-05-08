@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import productApi from '../../api/productApi';
-import { getAllProduct } from '../../api/userAPI';
 
 export const getListProduct = createAsyncThunk('product/getListProduct', async (params) => {
-  const response = await getAllProduct(params);
-  return response;
+  const response = await productApi.getAllProductbyAdmin(params);
+  return response.data;
 });
-export const deleteProductById = createAsyncThunk('product/getListProduct', async (params) => {
+export const deleteProductById = createAsyncThunk('product/deleteProductById', async (params) => {
   const response = await productApi.deleteProductById(params);
+
   return response;
 });
 const productListSlice = createSlice({

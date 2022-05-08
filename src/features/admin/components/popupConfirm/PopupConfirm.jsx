@@ -10,24 +10,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import editButton from '../../../../assets/images/edit_button.svg';
-import deleteButton from '../../../../assets/images/delete_button.svg';
 
 export function Delete(props) {
-  const { id, subject, handleDelete } = props;
-  const [open, setOpen] = useState(false);
+  const { id, open, subject, handleDelete, handleClickOpen, handleClose } = props;
+  // const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <div className="popupConfirm-wrapper">
-      <IconButton className="delete-button" onClick={handleClickOpen}>
-        <img src={deleteButton} />
-      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -79,7 +75,7 @@ export function Delete(props) {
           }}
         >
           <Button
-            onClick={handleClose}
+            // onClick={handleClose}
             sx={{
               background: '#C4C4C4',
               borderRadius: '5px',
