@@ -16,7 +16,7 @@ export default function UserDetailById() {
   }, []);
   return (
     <div className="userDetailWrapper">
-      <div className="breadCrumbsWrapper" role="presentation">
+      <div className="breadCrumsWrapper" role="presentation">
         <Breadcrumbs aria-label="breadcrumb">
           <Link to="/admin">Dashboard</Link>
           <Link to="/admin/user">User</Link>
@@ -37,7 +37,6 @@ export default function UserDetailById() {
                 width: '238px',
                 height: '238px',
                 objectFit: 'cover',
-                margin: '0 auto',
               }}
               src={userDetail.avatar}
             />
@@ -47,74 +46,86 @@ export default function UserDetailById() {
           </Box>
 
           <Box className="userAttribute">
-            <Box className="attributeWrapper">
-              Role:
-              {userDetail.role === 'admin' ? (
-                <Box
-                  className="attributeBox"
-                  sx={{
-                    background: '#4B9528',
-                    minWidth: '50px',
-                    maxHeight: '20px',
-                    textAlign: 'center',
-                  }}
-                >
-                  Admin
-                </Box>
-              ) : (
-                <Box
-                  className="attributeBox"
-                  sx={{
-                    background: '#E13A44',
-                  }}
-                >
-                  Customer
-                </Box>
-              )}
-            </Box>
-            <Box className="attributeWrapper">
-              Status:
-              {userDetail.isActive ? (
-                <Box
-                  className="attributeBox"
-                  sx={{
-                    // flex: '0.5rem',
-                    background: '#4B9528',
-                    minWidth: '50px',
-                    maxHeight: '20px',
-                    textAlign: 'center',
-                  }}
-                >
-                  Active
-                </Box>
-              ) : (
-                <Box
-                  className="attributeBox"
-                  sx={{
-                    background: '#E13A44',
-                  }}
-                >
-                  Disabled
-                </Box>
-              )}
-            </Box>
+            <div>
+              <Box className="attributeWrapper">
+                Role:
+                {userDetail.role === 'admin' ? (
+                  <Box
+                    className="attributeBox"
+                    sx={{
+                      background: '#4B9528',
+                      minWidth: '50px',
+                      maxHeight: '20px',
+                      textAlign: 'center',
+                      marginLeft: '90px',
+                    }}
+                  >
+                    Admin
+                  </Box>
+                ) : (
+                  <Box
+                    className="attributeBox"
+                    sx={{
+                      background: '#E13A44',
+                      minWidth: '70px',
+                      maxHeight: '20px',
+                      textAlign: 'center',
+                      marginLeft: '70px',
+                    }}
+                  >
+                    Customer
+                  </Box>
+                )}
+              </Box>
+              <Box className="attributeWrapper">
+                Status:
+                {userDetail.isActive ? (
+                  <Box
+                    className="attributeBox"
+                    sx={{
+                      // flex: '0.5rem',
+                      background: '#4B9528',
+                      minWidth: '60px',
+                      maxHeight: '20px',
+                      textAlign: 'center',
+                      marginLeft: '70px',
+                    }}
+                  >
+                    Active
+                  </Box>
+                ) : (
+                  <Box
+                    className="attributeBox"
+                    sx={{
+                      background: '#E13A44',
+                      minWidth: '70px',
+                      maxHeight: '20px',
+                      textAlign: 'center',
+                      marginLeft: '60px',
+                    }}
+                  >
+                    Disabled
+                  </Box>
+                )}
+              </Box>
 
-            <Box className="attributeWrapper">
-              Verify Email:
-              {userDetail.isEmailVerified ? (
-                <CheckCircleIcon sx={{ color: '#387B18' }} />
-              ) : (
-                <DangerousIcon sx={{ color: '#E13A44' }} />
-              )}
-            </Box>
-            <Box className="attributeWrapper">
-              Verify Contact:
-              {userDetail.isContactVerified ? (
-                <CheckCircleIcon sx={{ color: '#387B18' }} />
-              ) : (
-                <DangerousIcon sx={{ color: '#E13A44' }} />
-              )}
-            </Box>
+              <Box className="attributeWrapper">
+                Verify Email:
+                {userDetail.isEmailVerified ? (
+                  <CheckCircleIcon sx={{ color: '#387B18', marginLeft: '65px' }} />
+                ) : (
+                  <DangerousIcon sx={{ color: '#E13A44', marginLeft: '65px' }} />
+                )}
+              </Box>
+              <Box className="attributeWrapper">
+                Verify Contact:
+                {userDetail.isContactVerified ? (
+                  <CheckCircleIcon sx={{ color: '#387B18', marginLeft: '50px' }} />
+                ) : (
+                  <DangerousIcon sx={{ color: '#E13A44', marginLeft: '50px' }} />
+                )}
+              </Box>
+            </div>
           </Box>
         </Box>
       </Box>
