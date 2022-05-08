@@ -11,7 +11,7 @@ import Cart from '../../../../../components/common/ItemCart/Cart';
 import { countRemove, fetchDelItem, fetchGetCartById, fetchUpdateCart } from '../../../userSlice';
 import './shoppingCart.scss';
 
-const ShoppingCart = ({ handleAdd, handleRemove }) => {
+const ShoppingCart = ({ handleAdd, handleRemove, handleClose }) => {
   const { isUpdate } = useSelector((state) => state.user);
   const getId = JSON.parse(localStorage.getItem('createCartUser'));
   const item = JSON.parse(localStorage.getItem('cartUser'));
@@ -35,18 +35,6 @@ const ShoppingCart = ({ handleAdd, handleRemove }) => {
   useEffect(() => {
     if (getId) dispatch(fetchGetCartById({ id: getId?.cart.id }));
   }, [isUpdate]);
-
-  const handleClose = (item) => {
-    dispatch(fetchDelItem({ id: item.id }));
-    dispatch(
-      fetchUpdateCart({
-        id: item.id,
-        quantity: item.quantity,
-        total: item.quantity,
-      })
-    );
-    dispatch(countRemove());
-  };
 
   const handleCheckOut = () => {
     navigate(`/cart/${item?.cart.id}`);

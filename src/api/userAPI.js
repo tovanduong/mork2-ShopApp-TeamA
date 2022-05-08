@@ -53,6 +53,17 @@ export function getAllProduct() {
     });
 }
 
+export function getProductByCategory({ item, size }) {
+  return axiosClient
+    .get(size ? `${GET_PRODUCT}?category=${item}&size=${size}` : `${GET_PRODUCT}?category=${item}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 export function getSearchProduct(value) {
   return axiosClient
     .get(GET_SEARCH_PRODUCT + value)

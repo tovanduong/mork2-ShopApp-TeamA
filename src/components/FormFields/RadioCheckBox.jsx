@@ -14,7 +14,6 @@ export function RadioCheckBox({ userCheckBox, onRadioCheckBoxChange }) {
           style={{
             color: '#000',
             fontFamily: 'Work Sans',
-            fontWeight: '500',
             fontSize: '18px',
           }}
         >
@@ -23,7 +22,7 @@ export function RadioCheckBox({ userCheckBox, onRadioCheckBoxChange }) {
         <RadioGroup
           row
           onChange={handleChange}
-          defaultValue={userCheckBox.defaultValue}
+          // defaultValue={false}
           size="small"
           aria-labelledby={userCheckBox.id}
           name="row-radio-buttons-group"

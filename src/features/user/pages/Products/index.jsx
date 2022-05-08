@@ -1,30 +1,30 @@
-import { Grid } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Box } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ItemCard from '../../../../components/common/itemCard/ItemCard';
+import { getCate } from '../../../../api/userAPI';
 import { fetchGetAllProduct } from '../../userSlice';
+import ProductList from './productList/ProductList';
 
 export default function Products({ handleAdd }) {
+  const [cate, setCate] = useState([]);
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(fetchGetAllProduct());
+    getCate().then((data) => setCate(data));
   }, []);
-
+  const [item1, item2, item3] = cate;
+  let list = [item1, item2, item3];
   return (
-    <Grid
-      container
-      spacing={{ xs: 1, md: 2, xl: '10px' }}
-      columns={{ xs: 12, sm: 12, md: 12, xl: 12 }}
-    >
-      {product?.result &&
-        product?.result.map((item) => {
+    <Box mb={3}>
+      {list &&
+        list.map((item, index) => {
           return (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
-              <ItemCard {...item} handleAdd={() => handleAdd(item)} />
-            </Grid>
+            <Box key={index}>
+              <ProductList handleAdd={handleAdd} product={product} item={item} />
+            </Box>
           );
         })}
-    </Grid>
+    </Box>
   );
 }

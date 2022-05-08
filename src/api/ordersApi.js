@@ -1,4 +1,4 @@
-import { GET_ORDERS_BY_ADMIN } from '../constants/SubUrl/orders';
+import { GET_ORDERS_BY_ADMIN, GET_ORDER_BY_ID } from '../constants/SubUrl/orders';
 import axiosClient from './axiosClient';
 
 export function getOrdersByAdmin(params) {
@@ -10,4 +10,8 @@ export function getOrdersByAdmin(params) {
     .catch((err) => {
       console.log(err);
     });
+}
+
+export function getOrderByID(id) {
+  return axiosClient.get(`${GET_ORDER_BY_ID}/${id}`);
 }

@@ -17,7 +17,7 @@ const Login = ({ parentCallback, onClose }) => {
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth.login);
-
+  const userLocalstorage = localStorage.getItem('user');
   const loading = useSelector((state) => state.auth.loading);
 
   const sendData = () => {
@@ -58,7 +58,9 @@ const Login = ({ parentCallback, onClose }) => {
     localStorage.setItem('deviceId', deviceId);
 
     if (!loading) {
-      onClose();
+      setTimeout(() => {
+        onClose();
+      }, 1000);
     }
   };
 

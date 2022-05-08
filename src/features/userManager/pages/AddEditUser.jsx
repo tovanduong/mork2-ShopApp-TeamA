@@ -1,5 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -11,10 +12,11 @@ export default function AddEditUser() {
   const navigate = useNavigate();
   const { userId } = useParams();
 
+  const [dataUpdate, setDataUpdate] = useState(null);
+
   const isEdit = Boolean(userId);
 
   const handleUserFormSubmit = (formValues) => {
-    console.log(formValues);
     const fetchAddEditUser = async () => {
       if (!isEdit) {
         try {
@@ -28,14 +30,29 @@ export default function AddEditUser() {
           toast.error(`Create User Error`);
         }
       } else {
-        try {
-          const result = await dispatch(patchUpdateUser(userId, formValues));
-          unwrapResult(result);
-          toast.success('Update User Success');
-          navigate('/admin/user');
-        } catch (error) {
-          toast.error(`Update User Error`);
+        console.log(formValues);
+        for (const [key, value] of Object.entries(formValues)) {
+          if (value) {
+            // let itemData = key : ${value}`;
+            let dataKey = key;
+            let dataValue = value;
+            console.log(dataKey);
+            console.log(dataValue);
+
+            setDataUpdate({ ...dataUpdate, name: 'test name' });
+            console.log(dataUpdate);
+          }
         }
+        console.log(dataUpdate);
+
+        // try {
+        //   const result = await dispatch(patchUpdateUser(userId, formValues));
+        //   unwrapResult(result);
+        //   toast.success('Update User Success');
+        //   navigate('/admin/user');
+        // } catch (error) {
+        //   toast.error(`Update User Error`);
+        // }
       }
     };
 

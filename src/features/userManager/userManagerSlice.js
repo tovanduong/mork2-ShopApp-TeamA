@@ -4,7 +4,6 @@ import userManager from '../../api/userManager';
 
 export const getUserById = createAsyncThunk('users/getUserById', async (userId) => {
   const response = await userManager.adminGetUserById(userId);
-
   return response;
 });
 
@@ -21,10 +20,16 @@ export const postCreateUser = createAsyncThunk('userManager/postCreateUser', asy
 export const patchUpdateUser = createAsyncThunk(
   'userManager/patchUpdateUser',
   async (id, params) => {
+    console.log(id);
+    console.log(params);
     const response = await userManager.patchUpdateUser(id, params);
     return response;
   }
 );
+export const deleteUserById = createAsyncThunk('userManager/deleteUserById', async (params) => {
+  const response = await userManager.deleteUserById(params);
+  return response;
+});
 
 const userManagerSlice = createSlice({
   name: 'userManager',
@@ -95,6 +100,24 @@ const userManagerSlice = createSlice({
     },
 
     [patchUpdateUser.rejected]: (state, action) => {
+      state.loading = false;
+
+      state.error = action.error;
+    },
+    //delete user by id
+    [deleteUserById.pending]: (state) => {
+      state.loading = true;
+    },
+
+    [deleteUserById.fulfilled]: (state, action) => {
+      state.error = '';
+
+      state.loading = false;
+
+      state.current = action.payload;
+    },
+
+    [deleteUserById.rejected]: (state, action) => {
       state.loading = false;
 
       state.error = action.error;

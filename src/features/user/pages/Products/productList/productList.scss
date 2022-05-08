@@ -1,0 +1,32 @@
+.category-title {
+  margin: 28px 0 12px 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.category-name {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 25px;
+  padding-left: 28px;
+  color: #000000;
+}
+
+.category-showmore {
+  a {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    padding: 8px 15px;
+    color: #000000;
+    background: #ffffff;
+    border: 1px solid #f0e36a;
+    border-radius: 56px;
+    text-decoration: none;
+    transition: all 0.25s ease-in-out;
+    &:hover {
+      background-color: #f0e36a;
+    }
+  }
+}

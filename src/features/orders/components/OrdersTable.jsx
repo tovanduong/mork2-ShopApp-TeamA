@@ -1,260 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { StyledDataGrid } from '../../admin/components/dataTable/DataTable';
 import { Delete, Edit } from '../../admin/components/popupConfirm/PopupConfirm';
 import { CustomPagination } from '../../admin/components/pagination/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllOrders } from '../orderSlice';
-
-const columnsOrder = [
-  {
-    field: 'orderNumber',
-    headerName: 'ID',
-    flex: 0.5,
-
-    renderCell: (params) => {
-      return (
-        <strong
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            textAlign: 'center',
-            /* identical to box height */
-
-            color: '#000000',
-          }}
-        >
-          {params.row.orderNumber}
-        </strong>
-      );
-    },
-  },
-  {
-    field: 'userId',
-    headerName: 'User Id',
-    flex: 3,
-    // width: '1000px',
-    renderCell: (params) => {
-      return (
-        <strong
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            textAlign: 'center',
-            /* identical to box height */
-
-            color: '#000000',
-          }}
-        >
-          {params.row.userId}
-        </strong>
-      );
-    },
-  },
-  {
-    field: 'totalPrice',
-    headerName: 'Amount',
-    flex: 3,
-    // width: 136,
-    renderCell: (params) => {
-      return (
-        <div
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            /* identical to box height */
-
-            color: '#000000',
-          }}
-        >
-          ${params.row.totalPrice}
-        </div>
-      );
-    },
-  },
-
-  {
-    field: 'address',
-    headerName: 'Address',
-    flex: 7,
-    // width: 136,
-    renderCell: (params) => {
-      return (
-        <div
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            /* identical to box height */
-
-            color: '#000000',
-          }}
-        >
-          {params.row.address}
-        </div>
-      );
-    },
-  },
-  {
-    field: 'contact',
-    headerName: 'Contact',
-    flex: 4,
-    // width: 136,
-    renderCell: (params) => {
-      return (
-        <div
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            /* identical to box height */
-
-            color: '#000000',
-          }}
-        >
-          {params.row.contact}
-        </div>
-      );
-    },
-  },
-  {
-    field: 'createdAt',
-    headerName: 'Date',
-    flex: 7,
-    // width: 182,
-    renderCell: (params) => {
-      return (
-        <div
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            /* identical to box height */
-
-            color: '#000000',
-          }}
-        >
-          {params.row.createdAt}
-        </div>
-      );
-    },
-  },
-  {
-    field: 'isPaid',
-    headerName: 'Paid',
-    flex: 2,
-    // width: 157,
-    renderCell: (params) => {
-      if (params.row.isPaid) {
-        return (
-          <Box
-            sx={{
-              fontFamily: 'Arial',
-              fontStyle: 'normal',
-              textAlign: 'center',
-              fontWeight: 400,
-              background: '#FFD333',
-              borderRadius: '20px',
-              minWidth: '40px',
-              /* identical to box height */
-
-              color: '#000000',
-            }}
-          >
-            Yes
-          </Box>
-        );
-      } else
-        return (
-          <Box
-            sx={{
-              fontFamily: 'Arial',
-              fontStyle: 'normal',
-              textAlign: 'center',
-              fontWeight: 400,
-              background: '#366AB8',
-              borderRadius: '20px',
-              minWidth: '40px',
-              /* identical to box height */
-
-              color: '#000000',
-            }}
-          >
-            No
-          </Box>
-        );
-    },
-  },
-  {
-    field: 'status',
-    headerName: 'Status',
-    flex: 3,
-    // width: 134,
-    renderCell: (params) => {
-      return (
-        <p
-          style={{
-            fontFamily: 'Arial',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '18px',
-            /* identical to box height */
-
-            color: '#000000',
-          }}
-        >
-          {params.row.status}
-        </p>
-      );
-    },
-  },
-  {
-    sortable: false,
-    renderCell: (params) => {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-          }}
-        >
-          <Edit id={params.row.orderId} subject={'order'} />
-          <Delete id={params.row.orderId} subject={'order'} />
-        </div>
-      );
-    },
-  },
-];
+import deleteButton from '../../../assets/images/delete_button.svg';
 
 export function OrderTable() {
   const dispatch = useDispatch();
 
   const current = useSelector((state) => state.orders.current.result);
   const totalPages = useSelector((state) => state.orders.current.totalPages);
-
+  const [isDataChange, setIsDataChange] = useState(false);
+  const [open, setOpen] = useState(false);
   const [pageCount, setPageCount] = useState(1);
-  console.log(current);
+  const [rowOrderId, setRowOrderId] = useState();
+
+  const handleClickOpen = (params) => {
+    setOpen(true);
+    setRowOrderId(params);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handlePageCount = (params) => {
     setPageCount(params);
   };
 
-  //product list
+  //order list
   useEffect(() => {
     const fetchAllOrders = async () => {
       const params = {
@@ -265,7 +41,7 @@ export function OrderTable() {
       dispatch(response);
     };
     fetchAllOrders();
-  }, [dispatch, pageCount]);
+  }, [dispatch, isDataChange, pageCount]);
   //order row
 
   let rowsOrders = [];
@@ -285,8 +61,248 @@ export function OrderTable() {
       updatedAt: item.updatedAt,
     }));
   }
+  const columnsOrder = [
+    {
+      field: 'orderNumber',
+      headerName: 'ID',
+      flex: 0.5,
+
+      renderCell: (params) => {
+        return (
+          <strong
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              textAlign: 'center',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            {params.row.orderNumber}
+          </strong>
+        );
+      },
+    },
+    {
+      field: 'userId',
+      headerName: 'User Id',
+      flex: 3,
+      // width: '1000px',
+      renderCell: (params) => {
+        return (
+          <strong
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              textAlign: 'center',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            {params.row.userId}
+          </strong>
+        );
+      },
+    },
+    {
+      field: 'totalPrice',
+      headerName: 'Amount',
+      flex: 3,
+      // width: 136,
+      renderCell: (params) => {
+        return (
+          <div
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            ${params.row.totalPrice}
+          </div>
+        );
+      },
+    },
+
+    {
+      field: 'address',
+      headerName: 'Address',
+      flex: 7,
+      // width: 136,
+      renderCell: (params) => {
+        return (
+          <div
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            {params.row.address}
+          </div>
+        );
+      },
+    },
+    {
+      field: 'contact',
+      headerName: 'Contact',
+      flex: 4,
+      // width: 136,
+      renderCell: (params) => {
+        return (
+          <div
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            {params.row.contact}
+          </div>
+        );
+      },
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Date',
+      flex: 7,
+      // width: 182,
+      renderCell: (params) => {
+        return (
+          <div
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            {params.row.createdAt}
+          </div>
+        );
+      },
+    },
+    {
+      field: 'isPaid',
+      headerName: 'Paid',
+      flex: 2,
+      // width: 157,
+      renderCell: (params) => {
+        if (params.row.isPaid) {
+          return (
+            <Box
+              sx={{
+                fontFamily: 'Arial',
+                fontStyle: 'normal',
+                textAlign: 'center',
+                fontWeight: 400,
+                background: '#FFD333',
+                borderRadius: '20px',
+                minWidth: '40px',
+                /* identical to box height */
+
+                color: '#000000',
+              }}
+            >
+              Yes
+            </Box>
+          );
+        } else
+          return (
+            <Box
+              sx={{
+                fontFamily: 'Arial',
+                fontStyle: 'normal',
+                textAlign: 'center',
+                fontWeight: 400,
+                background: '#366AB8',
+                borderRadius: '20px',
+                minWidth: '40px',
+                /* identical to box height */
+
+                color: '#000000',
+              }}
+            >
+              No
+            </Box>
+          );
+      },
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 3,
+      // width: 134,
+      renderCell: (params) => {
+        return (
+          <p
+            style={{
+              fontFamily: 'Arial',
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '18px',
+              lineHeight: '18px',
+              /* identical to box height */
+
+              color: '#000000',
+            }}
+          >
+            {params.row.status}
+          </p>
+        );
+      },
+    },
+    {
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <Edit id={params.row.orderId} subject={'order'} />
+            <IconButton
+              className="delete-button"
+              onClick={(e) => handleClickOpen(params.row.orderId)}
+            >
+              <img src={deleteButton} />
+            </IconButton>
+          </div>
+        );
+      },
+    },
+  ];
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', overflow: 'hidden' }}>
       <StyledDataGrid
         rows={rowsOrders}
         getRowId={(row) => row.orderId}
@@ -299,6 +315,14 @@ export function OrderTable() {
         Pagination="null"
       />
       <CustomPagination onPageCount={handlePageCount} totalPages={totalPages} />
+      <Delete
+        id={rowOrderId}
+        open={open}
+        subject={'order'}
+        // handleDelete={handleDelete}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+      />
     </div>
   );
 }

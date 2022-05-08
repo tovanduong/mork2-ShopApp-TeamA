@@ -15,7 +15,7 @@ const CheckOut = () => {
     address: '',
     contact: '',
     email: '',
-    paymentMethod: '',
+    paymentMethod: 'Cash on delivery',
   };
 
   const handleSubmitCheckOut = (value) => {

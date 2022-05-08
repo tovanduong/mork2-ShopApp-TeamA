@@ -9,13 +9,13 @@ const ItemCard = ({ name, id, rating, images, price, handleAdd }) => {
   return (
     <Box className="ItemCard">
       <Box className="ItemCard-Image">
-        <RouterLink to={`product/${id}`}>
+        <RouterLink to={`/product/${id}`}>
           <img src={images[0].url} alt={name} />
         </RouterLink>
       </Box>
       <Box className="ItemCard-Descriptions">
         <Box className="ItemCard--Descriptions-name">
-          <RouterLink style={{ textDecoration: 'none', color: '#000' }} to={`product/${id}`}>
+          <RouterLink style={{ textDecoration: 'none', color: '#000' }} to={`/product/${id}`}>
             {name}
           </RouterLink>
         </Box>

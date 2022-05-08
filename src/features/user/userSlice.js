@@ -4,6 +4,7 @@ import {
   getAllProduct,
   getCartById,
   getCate,
+  getListProductByCategory,
   getOrder,
   getProductId,
   getSearchProduct,
@@ -14,7 +15,6 @@ import {
   postItemToCart,
   postOrder,
   postVerify,
-  getListProductByCategory,
 } from '../../api/userAPI';
 
 const initialState = {
@@ -134,10 +134,14 @@ export const UserSlice = createSlice({
       state.filter = action.payload;
     },
     countIncrease(state) {
+      state.status = 'success';
       state.count = state.count + 1;
+      localStorage.setItem('count', state.count);
     },
-    countRemove(state) {
+    countRemove(state, action) {
+      state.status = 'success';
       state.count = state.count - 1;
+      localStorage.setItem('count', state.count);
     },
   },
 
@@ -185,8 +189,10 @@ export const UserSlice = createSlice({
     [fetchOrder.fulfilled]: (state, action) => {
       state.status = 'order success';
       state.order = action.payload;
+      state.count = 0;
       localStorage.removeItem('createCartUser');
       localStorage.removeItem('cartUser');
+      localStorage.removeItem('count');
     },
     [fetchGetOrder.fulfilled]: (state, action) => {
       state.status = 'success';
@@ -201,7 +207,6 @@ export const UserSlice = createSlice({
     [fetchEditEmail.fulfilled]: (state, action) => {
       state.isEdit = true;
     },
-
     // fetch get list product by id
     [fetchGetListProductByCategory.pending]: (state, action) => {
       state.loading = true;

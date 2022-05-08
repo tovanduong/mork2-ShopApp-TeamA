@@ -2,7 +2,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Modal, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Auth from '../../../features/auth/index';
@@ -70,8 +70,12 @@ const Header = () => {
     handleCloseMenu();
     navigate('/');
   };
+  const countP = localStorage.getItem('count');
   const count = useSelector((state) => state.user.count);
-  console.log(count);
+  // const [countProduct, setCountProduct] = useState(0);
+  // useEffect(() => {
+  //   setCountProduct(count);
+  // }, [count]);
   return (
     <Box>
       <Box className="Header">
@@ -122,10 +126,10 @@ const Header = () => {
             >
               <img src={Cart} alt="Cart" />
 
-              {count === 0 ? (
+              {countP === null || countP === '0' ? (
                 <span></span>
               ) : (
-                <span className="Header__mainbar--countProduct">{count}</span>
+                <span className="Header__mainbar--countProduct">{count || countP}</span>
               )}
             </Box>
             <Box

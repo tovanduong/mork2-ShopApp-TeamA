@@ -13,6 +13,7 @@ import './home.scss';
 import Bag from '../../../../assets/images/icon/VectorBag.png';
 import Logo from '../../../../assets/images/icon/ShopApp.png';
 import Benefit from '../../components/Benefit';
+import { Link } from 'react-router-dom';
 
 export default function Home({ handleAdd }) {
   const [open, setOpen] = useState(false);
@@ -61,11 +62,13 @@ export default function Home({ handleAdd }) {
                 Categories
               </ListItem>
               {category &&
-                category.map((cate, index) => {
+                category.map((item, index) => {
                   return (
                     <ListItem disablePadding key={index}>
                       <ListItemButton className="Home__Cate-item">
-                        {cate}
+                        <Link className="Home__Cate-link" to={`/${item}`}>
+                          {item}
+                        </Link>
                         <ArrowForwardIosIcon sx={{ color: '#FFF' }} />
                       </ListItemButton>
                     </ListItem>

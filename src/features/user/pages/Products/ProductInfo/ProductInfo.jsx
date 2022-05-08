@@ -17,7 +17,7 @@ import shoe_small_5 from '../../../../../assets/images/shoe_small-5.png';
 import './productInfor.scss';
 
 import Grid from '@mui/material/Grid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ItemCard from '../../../../../components/common/itemCard/ItemCard';
 import Description from '../../../components/Description';
 import Reviews from '../../../components/Reviews';
@@ -26,9 +26,10 @@ import { fetchGetListProductByCategory } from '../../../userSlice';
 
 const shoes_small = [shoe_small_1, shoe_small_2, shoe_small_3, shoe_small_4, shoe_small_5];
 
-const ProductInfo = () => {
+const ProductInfo = ({ handleAdd, handleRemove }) => {
   const dispatch = useDispatch();
-
+  const countP = localStorage.getItem('count');
+  const count = useSelector((state) => state.user.count);
   const [value, setValue] = useState('description');
   const [productInfo, setProductInfo] = useState(null);
   const [category, setCategory] = useState(null);
@@ -162,8 +163,32 @@ const ProductInfo = () => {
                   className="chooseQuanlity"
                   style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                 >
-                  <div style={{ marginRight: '20px' }}>choose quanlity</div>
-                  <Button variant="contained" size="large" startIcon={<AddShoppingCartIcon />}>
+                  <div style={{ marginRight: '20px' }}>
+                    <Box className="CartItem-detail">
+                      <Button
+                        // disabled={total === 0 ? true : false}
+                        onClick={() => handleRemove(productInfo)}
+                        className="CartItem-detailquanity-btn"
+                      >
+                        -
+                      </Button>
+                      <Typography>
+                        {countP === null || countP === '0' ? 0 : count || countP}
+                      </Typography>
+                      <Button
+                        onClick={() => handleAdd(productInfo)}
+                        className="CartItem-detailquanity-btn"
+                      >
+                        +
+                      </Button>
+                    </Box>
+                  </div>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={() => handleAdd(productInfo)}
+                    startIcon={<AddShoppingCartIcon />}
+                  >
                     Add to cart
                   </Button>
                 </div>
@@ -229,10 +254,7 @@ const ProductInfo = () => {
                   listProductByCategory.map((item) => {
                     return (
                       <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
-                        <ItemCard
-                          {...item}
-                          //  handleAdd={() => handleAdd(item)}
-                        />
+                        <ItemCard {...item} handleAdd={() => handleAdd(item)} />
                       </Grid>
                     );
                   })}
