@@ -88,11 +88,12 @@ const ShippingForm = ({ getCart, onSubmit, initialValue }) => {
             />
           </Box>
           <Box>
-            <Button className="CheckOut-Btn" type="submit" onClick={() => handleEnable()}>
+            <Button className="CheckOut-Btn" onClick={() => handleEnable()}>
               {enable ? 'Edit Address' : 'Confirm'}
             </Button>
           </Box>
         </Box>
+
         <Box className="Checkout">
           <Typography variant="h4" mb="10px">
             Check Out
@@ -114,6 +115,7 @@ const ShippingForm = ({ getCart, onSubmit, initialValue }) => {
               {getSubTotal() === 0 || getSubTotal() === undefined ? 0 : getSubTotal() + 20}$
             </Typography>
           </Box>
+
           <Box className="Checkout__radio-container">
             <Box>
               <RadioInputField

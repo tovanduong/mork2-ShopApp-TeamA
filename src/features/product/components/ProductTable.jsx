@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Rating } from '@mui/material';
+import { Box, IconButton, Rating } from '@mui/material';
 import { StyledDataGrid } from '../../admin/components/dataTable/DataTable';
 import { Delete, Edit } from '../../admin/components/popupConfirm/PopupConfirm';
 import { CustomPagination } from '../../admin/components/pagination/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteProductById, getListProduct } from '../../admin/adminSlice';
-
+import deleteButton from '../../../assets/images/delete_button.svg';
 
 export function ProductTable() {
   const dispatch = useDispatch();
-
+  //   const navigate = useNavigate();
   const current = useSelector((state) => state.admin.current.result);
   const totalPages = useSelector((state) => state.admin.current.totalPages);
 
   const [pageCount, setPageCount] = useState(1);
+  const [isDataChange, setIsDataChange] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [rowProductId, setRowProductId] = useState();
+
+  const handleClickOpen = (params) => {
+    setOpen(true);
+    setRowProductId(params);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handlePageCount = (params) => {
     setPageCount(params);
@@ -29,15 +41,21 @@ export function ProductTable() {
       dispatch(response);
     };
     fetchGetListProduct();
-  }, [dispatch, pageCount]);
+  }, [dispatch, isDataChange, pageCount]);
 
   //delete by id
   const dispatchDelete = async (productId) => {
-    const params = {
-      id: productId,
-    };
-    console.log(params);
-    const response = await deleteProductById(params);
+    try {
+      const response = await deleteProductById(productId);
+      dispatch(response);
+      setOpen(false);
+      setIsDataChange(!isDataChange);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDelete = () => {
+    dispatchDelete(rowProductId);
   };
   //product row
   let rowsProduct = [];
@@ -279,9 +297,6 @@ export function ProductTable() {
     {
       sortable: false,
       renderCell: (params) => {
-        const handleDelete = () => {
-          dispatchDelete(params.row.productId);
-        };
         return (
           <div
             style={{
@@ -290,7 +305,12 @@ export function ProductTable() {
             }}
           >
             <Edit link={'/admin/product/add'} id={params.row.productId} subject={'product'} />
-            <Delete id={params.row.productId} subject={'product'} handleDelete={handleDelete} />
+            <IconButton
+              className="delete-button"
+              onClick={(e) => handleClickOpen(params.row.productId)}
+            >
+              <img src={deleteButton} />
+            </IconButton>
           </div>
         );
       },
@@ -311,6 +331,14 @@ export function ProductTable() {
         Pagination="null"
       />
       <CustomPagination onPageCount={handlePageCount} totalPages={totalPages} />
+      <Delete
+        id={rowProductId}
+        open={open}
+        subject={'product'}
+        handleDelete={handleDelete}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+      />
     </div>
   );
 }

@@ -10,24 +10,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import editButton from '../../../../assets/images/edit_button.svg';
-import deleteButton from '../../../../assets/images/delete_button.svg';
 
 export function Delete(props) {
-  const { id, subject, handleDelete } = props;
-  const [open, setOpen] = useState(false);
+  const { id, open, subject, handleDelete, handleClickOpen, handleClose } = props;
+  // const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
     <div className="popupConfirm-wrapper">
-      <IconButton className="delete-button" onClick={handleClickOpen}>
-        <img src={deleteButton} />
-      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -62,9 +58,9 @@ export function Delete(props) {
               fontFamily: 'Arial',
               fontStyle: 'normal',
               fontWeight: 400,
-
-              /* identical to box height */
-
+              fontSize: '18px',
+              lineHeight: '18px',
+              marginTop: '18px',
               color: ' #000000',
             }}
           >
@@ -79,7 +75,7 @@ export function Delete(props) {
           }}
         >
           <Button
-            onClick={handleClose}
+            // onClick={handleClose}
             sx={{
               background: '#C4C4C4',
               borderRadius: '5px',
@@ -88,6 +84,8 @@ export function Delete(props) {
               fontWeight: 400,
 
               color: '#000000',
+              marginRight: '10px',
+              textTransform: 'capitalize',
             }}
           >
             Cancel
@@ -102,6 +100,7 @@ export function Delete(props) {
               fontWeight: 400,
 
               color: '#FFFFFF',
+              textTransform: 'capitalize',
             }}
           >
             Delete

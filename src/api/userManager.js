@@ -1,4 +1,5 @@
 import {
+  DELETE_USER_BY_ID,
   GET_ALL_USERS,
   GET_USER_BY_ID,
   PATCH_UPDATE_USER,
@@ -18,7 +19,10 @@ const userManager = {
         console.log(err);
       });
   },
-
+  deleteUserById(id, params) {
+    const url = `${DELETE_USER_BY_ID}/${id}`;
+    return axiosClient.delete(url, params);
+  },
   postCreateUser: (params) => {
     const url = POST_CREATE_USER;
     return axiosClient.post(url, params);

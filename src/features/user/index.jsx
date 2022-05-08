@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../../components/common/header/Header';
 import CheckOut from './pages/Products/checkOut/checkOut';
+import SearchProduct from './pages/Products/searchProduct/SearchProduct';
 import ShoppingCart from './pages/Products/shoppingCart/ShoppingCart';
-import { fetchAddItemToCart, fetchCreateCart, fetchUpdateCart } from './userSlice';
+import {
+  countIncrease,
+  countProduct,
+  countRemove,
+  fetchAddItemToCart,
+  fetchCreateCart,
+  fetchUpdateCart,
+} from './userSlice';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Info = React.lazy(() => import('./pages/Info'));
 const Products = React.lazy(() => import('./pages/Products'));
+const ProductInfo = React.lazy(() => import('./pages/Products/ProductInfo/ProductInfo'));
 
 export default function User() {
   const dispatch = useDispatch();
@@ -24,6 +33,7 @@ export default function User() {
 
       const moreProduct = isCreatCart?.items.find((item) => item.itemCartInfo.id === product.id);
 
+      dispatch(countIncrease());
       if (productExits) {
         dispatch(
           fetchUpdateCart({
@@ -32,9 +42,9 @@ export default function User() {
             total: (product.quantity + 1) * product.price,
           })
         );
+
         return;
       }
-
       if (!moreProduct) {
         console.log('nothing: ', isCreatCart.cart.id);
         dispatch(
@@ -59,6 +69,7 @@ export default function User() {
         },
       ];
       dispatch(fetchCreateCart({ cart, itemArr }));
+      dispatch(countIncrease());
     }
   };
 
@@ -84,12 +95,14 @@ export default function User() {
       <Header />
       <Routes>
         <Route index element={<Home handleAdd={handleAddProduct} />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/myAccount/*" element={<Info />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/search/" element={<SearchProduct handleAdd={handleAddProduct} />} />
         <Route
           path="/cart"
           element={<ShoppingCart handleAdd={handleAddProduct} handleRemove={handleRemoveProduct} />}
         />
+        <Route path="/product/:productID" element={<ProductInfo />} />
         <Route path="/cart/:cartId" element={<CheckOut />} />
       </Routes>
     </>

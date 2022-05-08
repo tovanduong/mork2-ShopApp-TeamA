@@ -9,6 +9,10 @@ import {
   POST_CREATE_ITEM,
   DELETE_ITEM_CART,
   GET_ALL_CATEGORY,
+  POST_ORDER,
+  GET_ORDER,
+  PATCH_CONTACT,
+  PATCH_EMAIL,
 } from '../constants/SubUrl';
 import axiosClient from './axiosClient';
 
@@ -37,9 +41,9 @@ export function getProductId(id) {
     });
 }
 
-export function getAllProduct(params) {
+export function getAllProduct() {
   return axiosClient
-    .get(GET_PRODUCT, { params })
+    .get(GET_PRODUCT)
     .then((res) => {
       return res.data;
     })
@@ -133,6 +137,62 @@ export function getCate() {
       return res.data;
     })
     .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function postOrder({ orderCreate, itemArr }) {
+  return axiosClient
+    .post(POST_ORDER, {
+      order: orderCreate,
+      itemArr,
+    })
+    .then((res) => {
+      toast.success('Order Success');
+      return res.data;
+    })
+    .catch((err) => {
+      toast.error(`Order Error: ${err.response.data.message}`);
+    });
+}
+
+export function getOrder({ size, currentPage }) {
+  return axiosClient
+    .get(`${GET_ORDER}?size=${size}&page=${currentPage}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function patchContact(contact) {
+  return axiosClient
+    .patch(PATCH_CONTACT, {
+      contact: contact,
+    })
+    .then((res) => {
+      toast.success('Update Success');
+      return res.data;
+    })
+    .catch((err) => {
+      toast.error('Update Fail');
+      console.log(err);
+    });
+}
+
+export function patchEmail(email) {
+  return axiosClient
+    .patch(PATCH_EMAIL, {
+      email: email,
+    })
+    .then((res) => {
+      toast.success('Update Success');
+      return res.data;
+    })
+    .catch((err) => {
+      toast.error('Update Fail');
       console.log(err);
     });
 }
