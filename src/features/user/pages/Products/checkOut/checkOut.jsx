@@ -1,6 +1,6 @@
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Box, Breadcrumbs, Container, Grid, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchOrder } from '../../../userSlice';
@@ -40,6 +40,9 @@ const CheckOut = () => {
     dispatch(fetchOrder({ orderCreate, itemArr }));
     navigate('/');
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Container>
       <Box className="section-box">

@@ -40,6 +40,10 @@ const ShoppingCart = ({ handleAdd, handleRemove, handleClose }) => {
     navigate(`/cart/${item?.cart.id}`);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Container>
       <Box className="section-box">
